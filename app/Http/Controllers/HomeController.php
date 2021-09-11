@@ -10,7 +10,7 @@ class HomeController extends Controller
      * Create a new controller instance.
      *
      * @return void
-     */
+     *
     public function __construct()
     {
         $this->middleware('auth');
@@ -21,8 +21,23 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function home()
     {
-        return view('home');
+        return view('frontend.home');
+    }
+
+        public function loginpage()
+    {
+        return view('frontend.loginpage');
+    }
+
+        public function registerpage()
+    {
+        return view('frontend.registerpage');
+    }
+     
+        public function dashboard()
+    {
+        return view('backend.dashboard');
     }
 }

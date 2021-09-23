@@ -1,4 +1,4 @@
-@extends('backend.theme.indextheme')
+@extends('backend.theme.theme')
 @section('content')
 
 <div class="content-wrapper">
@@ -7,25 +7,26 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Group List</h1>
+                    <h1>Category List</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Group List</li>
+                        <li class="breadcrumb-item active">Category List</li>
                     </ol>
                 </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
-    <a href="{{route('backend.groups.create')}}" class="btn btn-sm btn-info">Add Group</a>    <!-- Main content -->
+    <a href="{{route('backend.categories.create')}}" class="btn btn-sm btn-info">Add Category</a>
+    <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-12">          
+                <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Group List</h3>
+                            <h3 class="card-title">Category List</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -33,32 +34,25 @@
                                 <thead>
                                     <tr>
                                         <th>S. No. </th>
-                                        <th>Image</th>
                                         <th>Name</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($groups as $key=>$group)
+                                    @foreach($categories as $key=>$category)
                                     <tr>
-                                        <td>{{$key+1}}</td>                                
-                                        <td><img src="{{$group->image}}" style="width: 150px; height: 75px"></td>
-                                        <td>{{$group->name}}</td>                             
+                                        <td>{{$key+1}}</td>
+                                        <td>{{$category->name}}</td>
                                         <td>
-                                            <a href="{{route('backend.groups.edit',$group->id)}}" class="btn btn-sm btn-success">Edit</a>
-                                            <a href="{{route('backend.groups.delete',$group->id)}}" class="btn btn-sm btn-danger">Delete</a>
+                                            <a href="{{route('backend.categories.edit',$category->id)}}"
+                                                class="btn btn-sm btn-success">Edit</a>
+                                            <a href="{{route('backend.categories.delete',$category->id)}}"
+                                                class="btn btn-sm btn-danger">Delete</a>
                                         </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>S. No. </th>
-                                        <th>Image</th>
-                                        <th>Name</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </tfoot>
+
                             </table>
                         </div>
                         <!-- /.card-body -->
@@ -74,4 +68,3 @@
     <!-- /.content -->
 </div>
 @stop
-

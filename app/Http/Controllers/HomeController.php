@@ -1,8 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; 
+use App\Http\Controllers\Controller; 
+use App\User; 
+use Auth;
+use Session; 
+use Validator;
+use Illuminate\Support\Facades\Hash;
+use Cookie;
 
 class HomeController extends Controller
 {
@@ -38,6 +44,6 @@ class HomeController extends Controller
      
         public function dashboard()
     {
-        return view('backend.dashboard');
+        return view('backend.dashboard',compact('user'));
     }
 }

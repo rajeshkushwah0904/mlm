@@ -18,11 +18,22 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 Route::get('/', 'HomeController@home')->name('home');
 Route::get('/home', 'HomeController@home')->name('home');
+Route::get('/about', 'HomeController@about')->name('about');
+Route::get('/founder_message', 'HomeController@founder_message')->name('founder_message');
+Route::get('/package', 'HomeController@package')->name('package');
+Route::get('/contact', 'HomeController@contact')->name('contact');
+Route::get('/faq', 'HomeController@faq')->name('faq');
+Route::get('/terms_and_condition', 'HomeController@terms_and_condition')->name('terms_and_condition');
+Route::get('/gallery', 'HomeController@gallery')->name('gallery');
+Route::get('/banking', 'HomeController@banking')->name('banking');
+Route::get('/product', 'HomeController@product')->name('product');
+Route::get('/product_details', 'HomeController@product_details')->name('product_details');
+
 Route::get('/loginpage', 'HomeController@loginpage')->name('loginpage');
 Route::get('/registerpage', 'HomeController@registerpage')->name('registerpage');
 Route::get('/dashboard', 'HomeController@dashboard')->name('backend.dashboard');
 
-
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('auth.logout');
 Route::get('/distributors/register', ['as' => 'distributors.register', 'uses' => 'DistributorController@register']);
 Route::post('/distributors/register', ['as' => 'distributors.register', 'uses' => 'DistributorController@register_store']);
 Route::get('/distributors/login', ['as' => 'distributors.login', 'uses' => 'DistributorController@login']);

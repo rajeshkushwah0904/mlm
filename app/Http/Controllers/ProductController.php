@@ -29,7 +29,11 @@ class ProductController extends Controller
         $products = \App\Product::all();
         return view('backend.products.index', compact('products'));
     }
-    
+
+        public function single_view($id) {
+        $product = \App\Product::find($id);
+        return view('backend.products.single_view', compact('product'));
+    }
 
     /**
      * Show the form for creating a new resource.

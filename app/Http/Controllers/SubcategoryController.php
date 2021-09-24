@@ -29,6 +29,12 @@ class SubcategoryController extends Controller
         $subcategories = \App\Subcategory::all();
         return view('backend.subcategories.index', compact('subcategories'));
     }
+
+        public function product_list($id) {
+        $subcategory = \App\Subcategory::find($id);
+        $products = \App\Product::where('subcategory_id',$id)->get();
+        return view('backend.subcategories.product_list', compact('subcategory','products'));
+    }
     
 
     /**

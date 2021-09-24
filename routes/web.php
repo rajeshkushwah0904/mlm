@@ -22,6 +22,7 @@ Route::get('/loginpage', 'HomeController@loginpage')->name('loginpage');
 Route::get('/registerpage', 'HomeController@registerpage')->name('registerpage');
 Route::get('/dashboard', 'HomeController@dashboard')->name('backend.dashboard');
 
+
 Route::get('/distributors/register', ['as' => 'distributors.register', 'uses' => 'DistributorController@register']);
 Route::post('/distributors/register', ['as' => 'distributors.register', 'uses' => 'DistributorController@register_store']);
 Route::get('/distributors/login', ['as' => 'distributors.login', 'uses' => 'DistributorController@login']);
@@ -64,6 +65,7 @@ Route::group(['prefix' => 'categories'], function() {
     Route::post('/{id}/edit', ['as' => 'backend.categories.edit', 'uses' => 'CategoryController@update']);
     Route::get('/{id}/approve', ['as' => 'backend.categories.approve', 'uses' => 'CategoryController@approve']);
     Route::get('/{id}/delete', ['as' => 'backend.categories.delete', 'uses' => 'CategoryController@destroy']);
+        Route::get('/{id}/product_list', ['as' => 'backend.categories.product_list', 'uses' => 'CategoryController@product_list']);
 });
 
 Route::group(['prefix' => 'subcategories'], function() {    
@@ -74,6 +76,7 @@ Route::group(['prefix' => 'subcategories'], function() {
     Route::post('/{id}/edit', ['as' => 'backend.subcategories.edit', 'uses' => 'SubcategoryController@update']);
     Route::get('/{id}/approve', ['as' => 'backend.subcategories.approve', 'uses' => 'SubcategoryController@approve']);
     Route::get('/{id}/delete', ['as' => 'backend.subcategories.delete', 'uses' => 'SubcategoryController@destroy']);
+    Route::get('/{id}/product_list', ['as' => 'backend.subcategories.product_list', 'uses' => 'SubcategoryController@product_list']);
 });
 
 Route::group(['prefix' => 'products'], function() {    
@@ -84,6 +87,7 @@ Route::group(['prefix' => 'products'], function() {
     Route::post('/{id}/edit', ['as' => 'backend.products.edit', 'uses' => 'ProductController@update']);
     Route::get('/{id}/approve', ['as' => 'backend.products.approve', 'uses' => 'ProductController@approve']);
     Route::get('/{id}/delete', ['as' => 'backend.products.delete', 'uses' => 'ProductController@destroy']);
+        Route::get('/{id}/single_view', ['as' => 'backend.products.single_view', 'uses' => 'ProductController@single_view']);
 });
 
 

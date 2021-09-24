@@ -15,7 +15,11 @@
                      alt="User Image">
              </div>
              <div class="info">
-                 <a href="#" class="d-block">Alexander Pierce</a>
+                 @if(\Auth::user()->role==1)
+                 <a href="#" class="d-block">{{\Auth::user()->name}}</a>
+                 @else
+                 <a href="#" class="d-block">{{\Auth::user()->distributor_tracking_id}}</a>
+                 @endif
              </div>
          </div>
 
@@ -111,6 +115,64 @@
                              Pin
                          </p>
                      </a>
+                 </li>
+                 <ul class="nav nav-treeview">
+                     <li class="nav-item">
+                         <a href="{{route('backend.categories.index')}}" class="nav-link">
+                             <i class="far fa-circle nav-icon"></i>
+                             <p>Category</p>
+                         </a>
+                     </li>
+                     <li class="nav-item">
+                         <a href="{{route('backend.subcategories.index')}}" class="nav-link">
+                             <i class="far fa-circle nav-icon"></i>
+                             <p>Sub Category</p>
+                         </a>
+                     </li>
+                     <li class="nav-item">
+                         <a href="{{route('backend.products.index')}}" class="nav-link">
+                             <i class="far fa-circle nav-icon"></i>
+                             <p>Product</p>
+                         </a>
+                     </li>
+
+                 </ul>
+                 </li>
+                 <li class="nav-item has-treeview">
+                     <a href="#" class="nav-link">
+                         <i class="nav-icon fas fa-circle"></i>
+                         <p>
+                             Ecommerce
+                             <i class="right fas fa-angle-left"></i>
+                         </p>
+                     </a>
+                     <?php
+                    $categories = \App\Category::all();
+                     ?>
+                     <ul class="nav nav-treeview">
+                         @foreach($categories as $category)
+                         <li class="nav-item has-treeview">
+                             <a href="{{route('backend.categories.product_list',$category->id)}}" class="nav-link">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>
+                                     {{$category->name}}
+                                     <i class="right fas fa-angle-left"></i>
+                                 </p>
+                             </a>
+                             <ul class="nav nav-treeview">
+                                 @foreach($category->subcategories as $subcategory)
+                                 <li class="nav-item">
+                                     <a href="{{route('backend.subcategories.product_list',$subcategory->id)}}"
+                                         class="nav-link">
+                                         <i class="far fa-dot-circle nav-icon"></i>
+                                         <p>{{$subcategory->name}}</p>
+                                     </a>
+                                 </li>
+                                 @endforeach
+                             </ul>
+                         </li>
+                         @endforeach
+                     </ul>
                  </li>
              </ul>
          </nav>

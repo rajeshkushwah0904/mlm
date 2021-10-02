@@ -66,6 +66,19 @@ class PinController extends Controller
                'generated_pin'=>rand(100000,999999),
         ]);
         }
+        $distributor =\App\Distributor::where('distributor_tracking_id',$request->input('transfer_to'))->first();
+       $package =\App\Package::find($request->input('package_id'));
+        $income = \App\Income::create([
+             'package_id' => $request->input('package_id'),
+             'amount' => $package->amount,
+              'distributor_tracking_id' => $distributor->distributor_tracking_id,
+             'income_type' =>1,
+              'sponsor_tracking_id' => $distributor->sponsor_tracking_id,
+             'sponsor_amount' => $package->sponsor_income,
+               'status' => 1, 
+        ]);
+
+
         session()->flash('success', 'New Pin is create Successfully');
         return redirect()->route('backend.pins.index');
     }

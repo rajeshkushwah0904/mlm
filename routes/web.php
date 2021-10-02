@@ -31,8 +31,8 @@ Route::get('/product_details', 'HomeController@product_details')->name('product_
 
 Route::get('/loginpage', 'HomeController@loginpage')->name('loginpage');
 Route::get('/registerpage', 'HomeController@registerpage')->name('registerpage');
-Route::get('/dashboard', 'HomeController@dashboard')->name('backend.dashboard');
-
+Route::get('/dashboard', 'DashboardController@dashboard')->name('backend.dashboard');
+Route::get('/profile', 'DashboardController@profile')->name('backend.profile');
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('auth.logout');
 Route::get('/distributors/register', ['as' => 'distributors.register', 'uses' => 'DistributorController@register']);
 Route::post('/distributors/register', ['as' => 'distributors.register', 'uses' => 'DistributorController@register_store']);
@@ -110,4 +110,15 @@ Route::group(['prefix' => 'pins'], function() {
     Route::post('/{id}/edit', ['as' => 'backend.pins.edit', 'uses' => 'PinController@update']);
     Route::get('/{id}/approve', ['as' => 'backend.pins.approve', 'uses' => 'PinController@approve']);
     Route::get('/{id}/delete', ['as' => 'backend.pins.delete', 'uses' => 'PinController@destroy']);
+});
+
+
+Route::group(['prefix' => 'incomes'], function() {    
+    Route::get('/direct_income', ['as' => 'backend.incomes.direct_income', 'uses' => 'IncomeController@direct_income']);
+    Route::get('/create', ['as' => 'backend.incomes.create', 'uses' => 'IncomeController@create']);
+    Route::post('/create', ['as' => 'backend.incomes.create', 'uses' => 'IncomeController@store']);
+    Route::get('/{id}/edit', ['as' => 'backend.incomes.edit', 'uses' => 'IncomeController@edit']);
+    Route::post('/{id}/edit', ['as' => 'backend.incomes.edit', 'uses' => 'IncomeController@update']);
+    Route::get('/{id}/approve', ['as' => 'backend.incomes.approve', 'uses' => 'IncomeController@approve']);
+    Route::get('/{id}/delete', ['as' => 'backend.incomes.delete', 'uses' => 'IncomeController@destroy']);
 });

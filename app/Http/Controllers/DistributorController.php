@@ -15,7 +15,8 @@ class DistributorController extends Controller
 {
     
    public function register(Request $request) { 
-        return view('distributors.register');
+       $sponsor_tracking_id = $request->sponsor_tracking_id;
+        return view('distributors.register',compact('sponsor_tracking_id'));
     }
     
   

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePinsTable extends Migration
+class CreateIncomesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,15 @@ class CreatePinsTable extends Migration
      */
     public function up()
     {
-        Schema::create('pins', function (Blueprint $table) {
+        Schema::create('incomes', function (Blueprint $table) {
             $table->id();
-             $table->bigInteger('package_id')->nullable();
-            $table->string('transfer_to')->nullable();
-           $table->string('used_by')->nullable();
+            $table->bigInteger('package_id')->nullable();
+            $table->decimal('amount',20,2)->nullable();
+            $table->string('distributor_tracking_id')->nullable();
+           $table->string('income_type',20)->nullable();
             $table->bigInteger('status')->nullable();
-          $table->bigInteger('added_id')->nullable();
-           $table->bigInteger('updated_id')->nullable();
-             $table->string('generated_pin',20)->nullable();
              $table->string('sponsor_tracking_id',20)->nullable();
+             $table->decimal('sponsor_amount',20,2)->nullable();
             $table->timestamps();
         });
     }
@@ -34,6 +33,6 @@ class CreatePinsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pins');
+        Schema::dropIfExists('incomes');
     }
 }

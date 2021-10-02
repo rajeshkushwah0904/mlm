@@ -82,8 +82,14 @@
                          </li>
 
                          <li class="rd-nav-item"><a class="rd-nav-link" href="contact">Contact</a></li>
+                         @guest
                          <li class="rd-nav-item"><a class="rd-nav-link" href="{{route('distributors.login')}}">login</a>
                          </li>
+                         @else
+                         <li class="rd-nav-item"><a class="rd-nav-link"
+                                 href="{{route('backend.dashboard')}}">Dashboard</a>
+                         </li>
+                         @endif
                          <!--  <li class="rd-nav-item"><a class="rd-nav-link" href="extras.html">Extras</a>
                     <ul class="rd-menu rd-navbar-dropdown">
                       <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="404.html">404</a>

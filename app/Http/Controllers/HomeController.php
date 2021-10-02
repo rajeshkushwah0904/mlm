@@ -41,11 +41,6 @@ class HomeController extends Controller
     {
         return view('frontend.registerpage');
     }
-     
-        public function dashboard()
-    {
-        return view('backend.dashboard',compact('user'));
-    }
 
 
     public function about()

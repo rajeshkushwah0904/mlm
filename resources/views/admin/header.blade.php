@@ -29,8 +29,9 @@
                      <!--RD Navbar Brand-->
                      <div class="rd-navbar-brand">
                          <!--Brand--><a class="brand" href="index.html"><img class="brand-logo-dark"
-                                 src="images/rightway future logo.jpg" alt="" width="155" height="35" /><img
-                                 class="brand-logo-light" src="images/rightway future logo.jpg" alt="" width="155"
+                                 src="{{asset('images\rightway_futurel_logo.jpg')}}" alt="" width="155"
+                                 height="35" /><img class="brand-logo-light"
+                                 src="{{asset('images\rightway_futurel_logo.jpg')}}" alt="" width="155"
                                  height="35" /></a>
                      </div>
                  </div>

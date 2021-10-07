@@ -31,8 +31,10 @@ Route::get('/product_details', 'HomeController@product_details')->name('product_
 
 Route::get('/loginpage', 'HomeController@loginpage')->name('loginpage');
 Route::get('/registerpage', 'HomeController@registerpage')->name('registerpage');
-Route::get('/dashboard', 'DashboardController@dashboard')->name('backend.dashboard');
-Route::get('/profile', 'DashboardController@profile')->name('backend.profile');
+Route::get('/dashboard', 'BackendController@dashboard')->name('backend.dashboard');
+Route::get('/dashboard/genealogy_tree', 'BackendController@genealogy_tree')->name('backend.genealogy_tree');
+
+Route::get('/profile', 'BackendController@profile')->name('backend.profile');
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('auth.logout');
 Route::get('/distributors/register', ['as' => 'distributors.register', 'uses' => 'DistributorController@register']);
 Route::post('/distributors/register', ['as' => 'distributors.register', 'uses' => 'DistributorController@register_store']);
@@ -53,9 +55,13 @@ Route::group(['prefix' => 'packages'], function() {
 
 
 Route::group(['prefix' => 'distributors'], function() {    
-    Route::get('/list/{id}', ['as' => 'backend.distributors.list', 'uses' => 'DistributorController@list']);
+    Route::get('/list', ['as' => 'backend.distributors.list', 'uses' => 'DistributorController@list']);
     Route::get('/{id}/approve', ['as' => 'backend.distributors.approve', 'uses' => 'DistributorController@approve']);
     Route::get('/{id}/delete', ['as' => 'backend.distributors.delete', 'uses' => 'DistributorController@destroy']);
+});
+
+Route::group(['prefix' => 'distributors'], function() {    
+    Route::get('/add_to_cart/{id}', ['as' => 'addtocarts.add_to_cart', 'uses' => 'AddtocartController@add_to_cart']);
 });
 
 Route::group(['prefix' => 'kycs'], function() {    
@@ -102,15 +108,7 @@ Route::group(['prefix' => 'products'], function() {
 });
 
 
-Route::group(['prefix' => 'pins'], function() {    
-    Route::get('/', ['as' => 'backend.pins.index', 'uses' => 'PinController@index']);
-    Route::get('/create', ['as' => 'backend.pins.create', 'uses' => 'PinController@create']);
-    Route::post('/create', ['as' => 'backend.pins.create', 'uses' => 'PinController@store']);
-    Route::get('/{id}/edit', ['as' => 'backend.pins.edit', 'uses' => 'PinController@edit']);
-    Route::post('/{id}/edit', ['as' => 'backend.pins.edit', 'uses' => 'PinController@update']);
-    Route::get('/{id}/approve', ['as' => 'backend.pins.approve', 'uses' => 'PinController@approve']);
-    Route::get('/{id}/delete', ['as' => 'backend.pins.delete', 'uses' => 'PinController@destroy']);
-});
+
 
 
 Route::group(['prefix' => 'incomes'], function() {    

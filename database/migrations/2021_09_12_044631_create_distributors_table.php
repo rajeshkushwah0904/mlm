@@ -22,7 +22,7 @@ class CreateDistributorsTable extends Migration
             $table->bigInteger('mobile');
             $table->bigInteger('status');
             $table->bigInteger('distributor_is_paid');
-            $table->string('sponsor_tracking_id')->nullable();
+            $table->string('sponsor_id')->nullable();
             $table->string('nominee')->nullable();
             $table->timestamp('joining_date')->nullable();
             $table->timestamp('activate_date')->nullable();

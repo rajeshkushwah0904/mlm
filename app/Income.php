@@ -9,9 +9,9 @@ class Income extends Model
     protected $fillable = [
       'package_id',
              'amount',
-              'distributor_tracking_id',
+              'distributor_id',
              'income_type',
-              'sponsor_tracking_id',
+              'sponsor_id',
              'sponsor_amount',
                'status', 
     ];

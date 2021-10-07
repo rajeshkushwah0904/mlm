@@ -11,7 +11,7 @@
          <!-- Sidebar user panel (optional) -->
          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
              <div class="image">
-                 <img src="{{asset('backendtheme/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2"
+                 <img src="{{asset('backendtheme/distributor_icon.png')}}" class="img-circle elevation-2"
                      alt="User Image">
              </div>
              <div class="info">
@@ -29,17 +29,25 @@
                  data-accordion="false">
                  <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-
                  <li class="nav-item">
-                     <a href="#" class="nav-link">
+                     <a href="{{route('backend.dashboard')}}#" class="nav-link">
+                         <i class="nav-icon far fa-image"></i>
+                         <p>
+                             Dashboard
+                         </p>
+                     </a>
+                 </li>
+                 <li class="nav-item">
+                     <a href="{{route('backend.profile')}}#" class="nav-link">
                          <i class="nav-icon far fa-image"></i>
                          <p>
                              Profile
                          </p>
                      </a>
                  </li>
+                 @if(\Auth::user()->role==1)
                  <li class="nav-item">
-                     <a href="{{route('backend.distributors.list',\Auth::user()->distributor_id)}}" class="nav-link">
+                     <a href="{{route('distributors.login')}}" class="nav-link">
                          <i class="nav-icon far fa-image"></i>
                          <p>
                              Distributor
@@ -54,31 +62,35 @@
                          </p>
                      </a>
                  </li>
-
-                 <li class="nav-item has-treeview">
-                     <a href="#" class="nav-link">
-                         <i class="nav-icon fas fa-chart-pie"></i>
+                 <li class="nav-item">
+                     <a href="{{route('backend.kycs.index')}}" class="nav-link">
+                         <i class="nav-icon far fa-image"></i>
                          <p>
-                             Kyc
-                             <i class="right fas fa-angle-left"></i>
+                             Kyc List
                          </p>
                      </a>
-                     <ul class="nav nav-treeview">
-                         <li class="nav-item">
-                             <a href="{{route('backend.kycs.index')}}" class="nav-link">
-                                 <i class="far fa-circle nav-icon"></i>
-                                 <p>Kyc List</p>
-                             </a>
-                         </li>
-                         <li class="nav-item">
-                             <a href="{{route('backend.kycs.create')}}" class="nav-link">
-                                 <i class="far fa-circle nav-icon"></i>
-                                 <p>Kyc</p>
-                             </a>
-                         </li>
-                     </ul>
                  </li>
+                 @else
 
+
+                 <li class="nav-item">
+                     <a href="{{route('backend.kycs.create')}}" class="nav-link">
+                         <i class="nav-icon far fa-image"></i>
+                         <p>
+                             KYC
+                         </p>
+                     </a>
+                 </li>
+                 @endif
+
+                 <li class="nav-item">
+                     <a href="{{route('backend.genealogy_tree')}}" class="nav-link">
+                         <i class="nav-icon far fa-image"></i>
+                         <p>
+                             Genealogy Tree
+                         </p>
+                     </a>
+                 </li>
                  <li class="nav-item has-treeview">
                      <a href="#" class="nav-link">
                          <i class="nav-icon fas fa-chart-pie"></i>
@@ -132,14 +144,7 @@
                          </li>
                      </ul>
                  </li>
-                 <li class="nav-item">
-                     <a href="{{route('backend.pins.index')}}" class="nav-link">
-                         <i class="nav-icon far fa-image"></i>
-                         <p>
-                             Pin
-                         </p>
-                     </a>
-                 </li>
+
                  <ul class="nav nav-treeview">
                      <li class="nav-item">
                          <a href="{{route('backend.categories.index')}}" class="nav-link">

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePackageProductsTable extends Migration
+class CreateDistributorLevelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreatePackageProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('package_products', function (Blueprint $table) {
+        Schema::create('distributor_levels', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('package_id')->nullable();
-            $table->bigInteger('product_id')->nullable();
-            $table->decimal('qty',20,2)->nullable();
+            $table->bigInteger('L0')->nullable();
+            $table->bigInteger('L1')->nullable();
+            $table->bigInteger('L2')->nullable();
+            $table->bigInteger('L3')->nullable();
+            $table->bigInteger('L4')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ class CreatePackageProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('package_products');
+        Schema::dropIfExists('distributor_levels');
     }
 }

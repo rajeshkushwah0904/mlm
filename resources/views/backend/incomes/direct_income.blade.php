@@ -18,7 +18,6 @@
             </div>
         </div><!-- /.container-fluid -->
     </section>
-    <a href="{{route('backend.categories.create')}}" class="btn btn-sm btn-info">Add Category</a>
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">

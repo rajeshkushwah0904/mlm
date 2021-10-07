@@ -125,10 +125,11 @@
                         </div>
 
                         <div class="mt-4">
-                            <div class="btn btn-primary btn-lg btn-flat">
+                            <a href="{{route('addtocarts.add_to_cart',$product->id)}}"
+                                class="btn btn-primary btn-lg btn-flat" style="color: white">
                                 <i class="fas fa-cart-plus fa-lg mr-2"></i>
                                 Add to Cart
-                            </div>
+                            </a>
 
                             <div class="btn btn-default btn-lg btn-flat">
                                 <i class="fas fa-heart fa-lg mr-2"></i>

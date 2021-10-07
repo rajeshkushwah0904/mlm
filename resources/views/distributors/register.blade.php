@@ -69,7 +69,7 @@
                         <div class="col-lg-8">
                             <div class="button-shadow inset-md-min bg-default round-large py-5 px-4">
                                 <h5 class="text-center">Create an Account</h5>
-                                <form class="text-start" method="POST" action="{{ route('register') }}">
+                                <form class="text-start" method="POST" action="{{ route('distributors.register') }}">
                                     @csrf
                                     <div class="row row-20 align-items-end">
                                         <div class="col-md-6">
@@ -91,15 +91,15 @@
                                         <div class="col-md-6">
                                             <div class="form-wrap form-wrap-validation validation-with-outside-label">
                                                 <label class="form-label-outside" for="forms-name">Mobile</label>
-                                                <input class="form-input" id="forms-name" type="text" name="mobile"
-                                                    placeholder="Mobile No." Required>
+                                                <input class="form-input" id="forms-name" type="text" MaxLength="10"
+                                                    name="mobile" placeholder="Mobile No." Required>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-wrap form-wrap-validation validation-with-outside-label">
                                                 <label class="form-label-outside" for="forms-last-name">OTP</label>
-                                                <input class="form-input" id="forms-last-name" type="text" name="otp"
-                                                    placeholder="OTP" Required>
+                                                <input class="form-input" id="forms-last-name" type="text" MaxLength="6"
+                                                    name="otp" placeholder="OTP" Required>
                                             </div>
                                         </div>
                                         <div class="col-md-6">

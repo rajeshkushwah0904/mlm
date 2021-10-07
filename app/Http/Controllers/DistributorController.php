@@ -29,11 +29,17 @@ class DistributorController extends Controller
 
         $this->validate($request, [            
             'name' => 'required',
-             'email' => 'required',
                'address' => 'required',
              'mobile' => 'required',
+             'email' => 'required',
               'nominee' => 'required',
         ]);
+        $random = rand(1000000,9999999);  
+          $distributor = \App\Distributor::where('distributor_tracking_id','RF1'.$random)->first();
+        if($distributor){
+           $random = rand(1000000,9999999);   
+        }
+        $sponsor_distributor = \App\Distributor::where('distributor_tracking_id',$request->input('sponsor_tracking_id'))->first();
 		$distributor = \App\Distributor::create([
 			 'name'=>$request->input('name'),
             'email'=>$request->input('email'),
@@ -41,24 +47,21 @@ class DistributorController extends Controller
             'mobile'=>$request->input('mobile'),
             'status'=>0,
             'distributor_is_paid'=>0,
-            'sponsor_tracking_id'=>$request->input('sponsor_tracking_id'),
+            'sponsor_id'=>$sponsor_distributor->id,
             'nominee'=>$request->input('nominee'),
             'joining_date'=>date('Y-m-d H:i:s'),
+            'distributor_tracking_id'=>'RF1'.$random,
                ]);              
-            $distributor->distributor_tracking_id='RF'.$distributor->id;
-            $distributor->save();
             
                 $user = \App\User::create([
                     'name' => $request->input('name'),
                     'email' => $request->input('email'),
-                    'distributor_tracking_id' => 'RF'.$distributor->id,
+                    'distributor_tracking_id' => $distributor->distributor_tracking_id,
                     'distributor_id' => $distributor->id,
                     'role'=>'3',
-                    'address' => $request->input('address'),
                     'status'=>1,
                     'mobile' => $request->input('mobile'),
-                    'nominee' => $request->input('nominee'),
-                    'password' => 1234567,
+                    'password' => Hash::make(1234567),
             ]);
             $abc = Auth::login($user);
 
@@ -66,8 +69,13 @@ class DistributorController extends Controller
         return redirect()->route('backend.dashboard');
     }
 
-       public function list(Request $request,$id) { 
-           $distributors = \App\Distributor::where('sponsor_tracking_id','=','RF'.$id)->get();
+       public function list(Request $request) { 
+           if(\Auth::user()->role==1){
+           $distributors = \App\Distributor::all();
+           }else{
+
+           $distributors = \App\Distributor::where('sponsor_tracking_id','=',\Auth::user()->distributor_tracking_id)->get();
+           }
         return view('backend.distributors.list', compact('distributors'));
     }
 

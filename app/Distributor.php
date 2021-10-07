@@ -14,9 +14,13 @@ class Distributor extends Model
             'mobile',
             'status',
             'distributor_is_paid',
-            'sponsor_tracking_id',
+            'sponsor_id',
             'nominee',
             'joining_date',
             'activate_date',
     ];
+
+    public function first_level_distributors(){
+		return $this->hasMany('App\Distributor','sponsor_id','id');
+	}
 }

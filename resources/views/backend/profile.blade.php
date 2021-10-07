@@ -100,9 +100,9 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Date Of Birth</label>
-                                        <input type="text" name="account_type"
-                                            value="{{\Auth::user()->dob->format('Y-m-d')}}" class="form-control"
-                                            id="exampleInputEmail1" placeholder="Account Type" Required>
+                                        <input type="text" name="account_type" value="{{\Auth::user()->dob}}"
+                                            class="form-control" id="exampleInputEmail1" placeholder="Account Type"
+                                            Required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">

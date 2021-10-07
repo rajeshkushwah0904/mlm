@@ -17,10 +17,10 @@ class CreateIncomesTable extends Migration
             $table->id();
             $table->bigInteger('package_id')->nullable();
             $table->decimal('amount',20,2)->nullable();
-            $table->string('distributor_tracking_id')->nullable();
+            $table->string('distributor_id')->nullable();
            $table->string('income_type',20)->nullable();
             $table->bigInteger('status')->nullable();
-             $table->string('sponsor_tracking_id',20)->nullable();
+             $table->string('sponsor_id',20)->nullable();
              $table->decimal('sponsor_amount',20,2)->nullable();
             $table->timestamps();
         });

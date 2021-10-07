@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class DistributerKeyIncreament extends Migration
+class RemoveColomnFromProducts extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class DistributerKeyIncreament extends Migration
      */
     public function up()
     {
-          $statement = "ALTER TABLE distributors AUTO_INCREMENT = 10000000;";
-        DB::unprepared($statement);
+        Schema::table('products', function (Blueprint $table) {
+           $table->dropColumn(['mrp','discount','actual_rate']);
+        });
     }
-
     /**
      * Reverse the migrations.
      *
@@ -24,6 +24,8 @@ class DistributerKeyIncreament extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('products', function (Blueprint $table) {
+            //
+        });
     }
 }

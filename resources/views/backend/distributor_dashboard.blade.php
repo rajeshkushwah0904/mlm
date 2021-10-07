@@ -30,8 +30,7 @@
                         <div class="card-body box-profile">
                             <div class="text-center">
                                 <img class="profile-user-img img-fluid img-circle"
-                                    src="{{asset('backendtheme/dist/img/user4-128x128.jpg')}}"
-                                    alt="User profile picture">
+                                    src="{{asset('backendtheme/distributor_icon.png')}}" alt="User profile picture">
                             </div>
 
                             <h3 class="profile-username text-center">{{\Auth::user()->distributor_tracking_id}}</h3>

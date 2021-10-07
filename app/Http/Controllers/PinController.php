@@ -26,7 +26,7 @@ class PinController extends Controller
      * @return Response
      */
     public function index() {
-        $pins = \App\Pin::all();
+        $pins = \App\Pin::where('transfer_to',\Auth::user()->distributor_tracking_id)->get();
         return view('backend.pins.index', compact('pins'));
     }
     

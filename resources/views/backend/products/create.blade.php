@@ -17,6 +17,7 @@
             </div>
         </div><!-- /.container-fluid -->
     </section>
+    @include('flash')
 
     <!-- Main content -->
     <section class="content">
@@ -107,28 +108,52 @@
                                     @endif
                                 </div>
 
-                                <label for="discount" class="col-md-2 control-label">discount</label>
+                                <label for="distributor_price" class="col-md-2 control-label">Distributor Price</label>
                                 <div class="col-md-10">
-                                    <input id="discount" type="text" class="form-control" name="discount"
-                                        value="{{ old('discount') }}" required autofocus>
-                                    @if ($errors->has('discount'))
+                                    <input id="distributor_price" type="text" class="form-control"
+                                        name="distributor_price" value="{{ old('distributor_price') }}" required
+                                        autofocus>
+                                    @if ($errors->has('distributor_price'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('discount') }}</strong>
+                                        <strong>{{ $errors->first('distributor_price') }}</strong>
                                     </span>
                                     @endif
                                 </div>
 
-                                <label for="actual_rate" class="col-md-2 control-label">Actual Rate</label>
+
+                                <label for="bussiness_volume" class="col-md-2 control-label">Bussiness Volume</label>
                                 <div class="col-md-10">
-                                    <input id="actual_rate" type="text" class="form-control" name="actual_rate"
-                                        value="{{ old('actual_rate') }}" required autofocus>
-                                    @if ($errors->has('actual_rate'))
+                                    <input id="bussiness_volume" type="text" class="form-control"
+                                        name="bussiness_volume" value="{{ old('bussiness_volume') }}" required
+                                        autofocus>
+                                    @if ($errors->has('bussiness_volume'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('actual_rate') }}</strong>
+                                        <strong>{{ $errors->first('bussiness_volume') }}</strong>
                                     </span>
                                     @endif
                                 </div>
 
+                                <label for="actual_price" class="col-md-2 control-label">Actual Price</label>
+                                <div class="col-md-10">
+                                    <input id="actual_price" type="text" class="form-control" name="actual_price"
+                                        value="{{ old('actual_price') }}" required autofocus>
+                                    @if ($errors->has('actual_price'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('actual_price') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+                                <label for="gst" class="col-md-2 control-label">GST</label>
+                                <div class="col-md-10">
+                                    <input id="gst" type="text" class="form-control" name="gst" value="{{ old('gst') }}"
+                                        required autofocus>
+                                    @if ($errors->has('gst'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('gst') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
                                 <label for="description" class="col-md-2 control-label">description</label>
                                 <div class="col-md-10">
                                     <input id="description" type="text" class="form-control" name="description"

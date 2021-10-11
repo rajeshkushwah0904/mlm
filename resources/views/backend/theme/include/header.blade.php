@@ -51,14 +51,14 @@ $addtocarts = \App\Addtocart::where('distributor_id',\Auth::user()->distributor_
                               </h3>
                               <p class="text-sm">Qty: {{$addtocart->qty}}</p>
                               <p class="text-sm text-muted">Rs.
-                                  {{$addtocart->product->actual_rate}}</p>
+                                  {{$addtocart->price}}</p>
                           </div>
                       </div>
                       <!-- Message End -->
                   </a>
                   <div class="dropdown-divider"></div>
                   <?php
-$cart_total = $cart_total + $addtocart->product->actual_rate*$addtocart->qty;
+$cart_total = $cart_total + $addtocart->price*$addtocart->qty;
                   ?>
                   @endforeach
                   <a href="#" class="dropdown-item dropdown-footer">Total Amount Rs. {{$cart_total}}.00</a>

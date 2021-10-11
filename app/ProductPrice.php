@@ -11,6 +11,7 @@ class ProductPrice extends Model
             'mrp',
             'distributor_price',
            'bussiness_volume',
-            'actual_price'
+            'actual_price',
+            'gst'
     ];
 }

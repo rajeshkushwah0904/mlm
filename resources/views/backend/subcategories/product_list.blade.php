@@ -32,7 +32,7 @@
                         <div class="card-body">
                             <div class="row">
                                 @foreach($products as $product)
-                                <div class="col-sm-3">
+                                <div class="col-sm-4">
                                     <a href="{{route('backend.products.single_view',$product->id)}}">
                                         <div class="position-relative">
                                             <img src="{{asset($product->image)}}" alt="Photo 1" class="img-fluid"
@@ -49,7 +49,7 @@
                                             <h4 class="card-title">
                                                 <a href="{{route('backend.products.single_view',$product->id)}}">
                                                     {{$product->name}} <span style="text-align:right;">Rs.
-                                                        {{$product->actual_rate}}</span>
+                                                        {{$product->product_price->distributor_price}}</span>
                                                 </a>
                                             </h4>
                                         </div>

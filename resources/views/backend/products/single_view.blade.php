@@ -117,10 +117,11 @@
 
                         <div class="bg-gray py-2 px-3 mt-4">
                             <h2 class="mb-0">
-                                Price: <i class="fa fa-rupee"></i>{{$product->actual_rate}} /-
+                                Price: <i class="fa fa-rupee"></i>{{$product->product_price->distributor_price}} /-
                             </h2>
                             <h4 class="mt-0">
-                                <small>MRP: <i class="fa fa-rupee"></i><del>{{$product->mrp}}</del> /- </small>
+                                <small>MRP: <i class="fa fa-rupee"></i><del>{{$product->product_price->mrp}}</del> /-
+                                </small>
                             </h4>
                         </div>
 

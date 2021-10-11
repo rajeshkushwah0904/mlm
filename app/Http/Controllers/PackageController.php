@@ -34,11 +34,13 @@ class PackageController extends Controller
      * @return Response
      */
     public function create() { 
-        return view('backend.packages.create');
+                $products = \App\Product::all();
+        return view('backend.packages.create',compact('products'));
     }
 
     public function add_product(Request $request) { 
-        return view('backend.packages.add_product');
+        $products = \App\Product::all();
+        return view('backend.packages.add_product',compact('products'));
     }
     
   
@@ -61,14 +63,12 @@ class PackageController extends Controller
                  'sponsor_income' => $request->input('sponsor_income')         
         ]);
         $input = $request->all();
-        for($i = 0; $i < count($input['service_name']); $i++) {
+        for($i = 0; $i < count($input['product_id']); $i++) {
 
 		$package_product = \App\PackageProduct::create([
 			'package_id'=>$package->id,
-            'service_name'=>$input['service_name'][$i],
-            'price'=>$input['price'][$i],
-            'hsn_sac'=>$input['hsn_sac'][$i],
-            'gst_rate'=>$input['gst_rate'][$i],
+            'product_id'=>$input['product_id'][$i],
+            'qty'=>$input['qty'][$i]
                ]);
 		}
         session()->flash('success', 'New Package is create Successfully');
@@ -83,14 +83,78 @@ class PackageController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id) {
-        $package = \App\Package::find($id);
-        
-        if ($package) {
-            return view('backend.packages.show', compact('category'));
+    public function purchase_package() {
+        $packages = \App\Package::all();
+        if ($packages) {
+            return view('backend.packages.purchase_package', compact('packages'));
         }
-        return redirect()->route('backend.packages.index');
     } 
+
+
+        public function purchase_package_store(Request $request) {
+            $package = \App\Package::find($request->package_id);
+            $distributor = \App\Distributor::find(\Auth::user()->distributor_id);
+            $distributor->package_id = $package->id;
+            $distributor->save();
+               $distributor_level = \App\DistributorLevel::where('L0',\Auth::user()->distributor_id)->first();
+              if($distributor_level->L1){  
+            $level1_income = $package->amount*$package->sponsor_income/100;
+                $income = \App\Income::create([
+                    'distributor_id'=>\Auth::user()->distributor_id,
+                    'amount'=>$package->amount,
+                   'package_id'=>$package->id,
+                    'income_type'=>1,
+                    'status'=>1,
+                    'level'=>'L1',
+                    'level_percentage'=>$package->sponsor_income,
+                    'sponsor_id'=>$distributor_level->L1,
+                    'sponsor_amount'=>$level1_income,
+               ]);
+              }
+              if($distributor_level->L2){
+             $level2_income = $package->amount*5/100;
+                $income = \App\Income::create([
+                     'distributor_id'=>\Auth::user()->distributor_id,
+                    'amount'=>$package->amount,
+                   'package_id'=>$package->id,
+                    'income_type'=>1,
+                    'status'=>1,
+                    'level'=>'L2',
+                    'level_percentage'=>5,
+                    'sponsor_id'=>$distributor_level->L2,
+                    'sponsor_amount'=>$level2_income,
+               ]);
+              }
+              if($distributor_level->L3){
+                 $level3_income = $package->amount*3/100;
+                $income = \App\Income::create([
+                     'distributor_id'=>\Auth::user()->distributor_id,
+                    'amount'=>$package->amount,
+                   'package_id'=>$package->id,
+                    'income_type'=>1,
+                    'status'=>1,
+                    'level'=>'L3',
+                    'level_percentage'=>3,
+                    'sponsor_id'=>$distributor_level->L3,
+                    'sponsor_amount'=>$level3_income,
+               ]);
+              }
+              if($distributor_level->L4){
+              $level4_income = $package->amount*2/100;
+                $income = \App\Income::create([
+                     'distributor_id'=>\Auth::user()->distributor_id,
+                    'amount'=>$package->amount,
+                   'package_id'=>$package->id,
+                    'income_type'=>1,
+                    'status'=>1,
+                    'level'=>'L4',
+                    'level_percentage'=>2,
+                    'sponsor_id'=>$distributor_level->L4,
+                    'sponsor_amount'=>$level4_income,
+               ]);
+              }
+return redirect()->route('backend.dashboard');
+    }
    
 
     /**

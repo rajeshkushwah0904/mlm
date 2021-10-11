@@ -109,4 +109,18 @@ class HomeController extends Controller
     {
         return view('layouts.product_details');
     }
+
+        public function changepasswordpost(Request $request) {
+        $this->validate($request, [
+            'oldpassword' => 'required',
+            'newpassword' => 'required',
+            'renewpassword' => 'required|same:newpassword'
+        ]);
+        $user = \Auth::user();
+        $user->update([
+            'password' => \Hash::make($request->input('newpassword')),
+        ]);
+        session()->flash('success', 'Your Password is Change Successfully');
+        return redirect()->route('backend.dashboard');
+    }
 }

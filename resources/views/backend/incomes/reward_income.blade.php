@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Direct income List</h1>
+                    <h1>Reward income List</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Direct income List</li>
+                        <li class="breadcrumb-item active">Reward income List</li>
                     </ol>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Direct income List</h3>
+                            <h3 class="card-title">Reward income List</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">

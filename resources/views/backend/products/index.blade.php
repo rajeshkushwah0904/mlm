@@ -39,10 +39,11 @@
                                         <th>HSN Code</th>
                                         <th>Serial No.</th>
                                         <th>MRP</th>
-                                        <th>Discount</th>
+                                        <th>Distributor Price</th>
+                                        <th>Business Volume</th>
                                         <th>Actual Rate</th>
-                                        <th>Category Rate</th>
-                                        <th>Subcategory Rate</th>
+                                        <th>Category</th>
+                                        <th>Subcategory</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -54,9 +55,11 @@
                                         <td>{{$product->product_code}}</td>
                                         <td>{{$product->hsn_code}}</td>
                                         <td>{{$product->serial_no}}</td>
-                                        <td>{{$product->mrp}}</td>
-                                        <td>{{$product->discount}}</td>
-                                        <td>{{$product->actual_rate}}</td>
+                                        <td>{{$product->product_price->mrp}}</td>
+                                        <td>{{$product->product_price->distributor_price}}</td>
+
+                                        <td>{{$product->product_price->bussiness_volume}}</td>
+                                        <td>{{$product->product_price->actual_price}}</td>
                                         <td>{{$product->category->name}}</td>
                                         <td>{{$product->subcategory->name}}</td>
                                         <td>

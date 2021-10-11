@@ -127,13 +127,13 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text">Wallet Income</span>
-                            <span class="info-box-number">41,410</span>
+                            <span class="info-box-number">0</span>
 
                             <div class="progress">
                                 <div class="progress-bar" style="width: 70%"></div>
                             </div>
                             <span class="progress-description">
-                                70% Increase in 30 Days
+                                0% Increase in 30 Days
                             </span>
                         </div>
                         <!-- /.info-box-content -->
@@ -146,8 +146,8 @@
                         <span class="info-box-icon"><i class="far fa-thumbs-up"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">My Directs</span>
-                            <span class="info-box-number">41,410</span>
+                            <span class="info-box-text">Direct Income</span>
+                            <span class="info-box-number">{{$direct_incomes}}</span>
 
                             <div class="progress">
                                 <div class="progress-bar" style="width: 70%"></div>
@@ -166,14 +166,14 @@
                         <span class="info-box-icon"><i class="far fa-calendar-alt"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Total Dowline</span>
-                            <span class="info-box-number">41,410</span>
+                            <span class="info-box-text">Repuchase Income</span>
+                            <span class="info-box-number">{{$repuchase_incomes}}</span>
 
                             <div class="progress">
                                 <div class="progress-bar" style="width: 70%"></div>
                             </div>
                             <span class="progress-description">
-                                70% Increase in 30 Days
+                                0% Increase in 30 Days
                             </span>
                         </div>
                         <!-- /.info-box-content -->
@@ -186,14 +186,14 @@
                         <span class="info-box-icon"><i class="fas fa-comments"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Total Earning</span>
-                            <span class="info-box-number">41,410</span>
+                            <span class="info-box-text">Reward Income</span>
+                            <span class="info-box-number">{{$reward_incomes}}</span>
 
                             <div class="progress">
                                 <div class="progress-bar" style="width: 70%"></div>
                             </div>
                             <span class="progress-description">
-                                70% Increase in 30 Days
+                                0% Increase in 30 Days
                             </span>
                         </div>
                         <!-- /.info-box-content -->

@@ -14,9 +14,6 @@ class Product extends Model
             'category_id',
             'subcategory_id',
             'serial_no',
-            'mrp',
-            'discount',
-            'actual_rate',
             'description',
             'image',
     ];
@@ -26,5 +23,9 @@ class Product extends Model
         public function subcategory(){
 	  return $this->belongsTo('App\Subcategory','category_id','id');
 	} 
+
+      		public function product_price(){
+		return $this->hasOne('App\ProductPrice','product_id','id');
+	}
 
 }

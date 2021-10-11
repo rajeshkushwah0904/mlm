@@ -9,16 +9,17 @@ class AddtocartController extends Controller
             public function add_to_cart($id)
     {
         $product = \App\Product::find($id);
-        $add_to_cart = \App\Addtocart::where('product_id',$id)->where('distributor_tracking_id',\Auth::user()->distributor_tracking_id)->first();
+        
+        $add_to_cart = \App\Addtocart::where('product_id',$id)->where('distributor_id',\Auth::user()->distributor_id)->first();
         if($add_to_cart){
               $add_to_cart->qty=$add_to_cart->qty + 1;
                $add_to_cart->save();
         }else{
     $add_to_cart = \App\Addtocart::create([
             'product_id'=>$product->id,
-             'price'=>$product->price,
+             'price'=>$product->product_price->distributor_price,
               'qty'=>1,
-               'distributor_tracking_id'=>\Auth::user()->distributor_tracking_id,
+               'distributor_id'=>\Auth::user()->distributor_id,
         ]);
         }
         

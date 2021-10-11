@@ -61,8 +61,9 @@ class ProductController extends Controller
             'subcategory_id' => 'required',
             'serial_no' => 'required',
             'mrp' => 'required',
-            'discount' => 'required',
-            'actual_rate' => 'required',
+            'distributor_price' => 'required',
+            'bussiness_volume' => 'required',
+            'actual_price' => 'required',
             'description' => 'required',
             'image' => 'required'
         ]);
@@ -73,10 +74,7 @@ class ProductController extends Controller
                   'product_code' => $request->input('product_code'),   
                'category_id' => $request->input('category_id'),  
                  'subcategory_id' => $request->input('subcategory_id'),  
-                  'serial_no' => $request->input('serial_no'),   
-               'mrp' => $request->input('mrp'),  
-                 'discount' => $request->input('discount'),  
-                  'actual_rate' => $request->input('actual_rate'),   
+                  'serial_no' => $request->input('serial_no'),    
                'description' => $request->input('description')
         ]);
         if($request->file('image')) {
@@ -86,6 +84,15 @@ class ProductController extends Controller
             $file->move("upload", $fullname);   
             $product->image = 'upload/' . $fullname;
         }
+        $product_price = \App\ProductPrice::create([
+              'product_id' => $product->id,
+               'mrp' => $request->input('mrp'),  
+               'gst' => $request->input('gst'), 
+                 'distributor_price' => $request->input('distributor_price'),  
+                  'bussiness_volume' => $request->input('bussiness_volume'),  
+                   'actual_price' => $request->input('actual_price'), 
+                    ]);
+    
        
         $product->save();
         session()->flash('success', 'New Package is create Successfully');

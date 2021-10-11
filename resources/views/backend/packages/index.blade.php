@@ -48,7 +48,7 @@
                                         <td>{{$key+1}}</td>
                                         <td>{{$package->package_name}}</td>
                                         <td>{{$package->amount}}</td>
-                                        <td>{{$package->sponsor_income}}</td>
+                                        <td>{{$package->sponsor_income}}%</td>
                                         <td>
                                             <a href="{{route('backend.packages.edit',$package->id)}}"
                                                 class="btn btn-sm btn-success">Edit</a>

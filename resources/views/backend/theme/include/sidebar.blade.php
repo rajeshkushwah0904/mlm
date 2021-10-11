@@ -81,6 +81,14 @@
                          </p>
                      </a>
                  </li>
+                 <li class="nav-item">
+                     <a href="{{route('backend.packages.purchase_package')}}" class="nav-link">
+                         <i class="nav-icon far fa-image"></i>
+                         <p>
+                             Package
+                         </p>
+                     </a>
+                 </li>
                  @endif
 
                  <li class="nav-item">
@@ -107,9 +115,15 @@
                              </a>
                          </li>
                          <li class="nav-item">
-                             <a href="#" class="nav-link">
+                             <a href="{{route('backend.incomes.repurchase_income')}}" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
                                  <p>Repurchase Income</p>
+                             </a>
+                         </li>
+                         <li class="nav-item">
+                             <a href="{{route('backend.incomes.reward_income')}}" class="nav-link">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>Reward Income</p>
                              </a>
                          </li>
                      </ul>

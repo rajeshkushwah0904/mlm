@@ -17,7 +17,10 @@ class BackendController extends Controller
     {
         $site_route = $request->getSchemeAndHttpHost();
         if(\Auth::user()->role==3){
-        return view('backend.distributor_dashboard',compact('site_route'));
+            $direct_incomes= \App\Income::where('income_type',1)->where('sponsor_id', \Auth::user()->distributor_id)->sum('sponsor_amount');
+            $repuchase_incomes= \App\Income::where('income_type',2)->where('sponsor_id', \Auth::user()->distributor_id)->sum('sponsor_amount');
+            $reward_incomes= \App\Income::where('income_type',3)->where('sponsor_id', \Auth::user()->distributor_id)->sum('sponsor_amount');
+        return view('backend.distributor_dashboard',compact('site_route','direct_incomes','repuchase_incomes','reward_incomes'));
         }else if(\Auth::user()->role==1){
          $packages= \App\Package::all();  
          $distributors= \App\Distributor::all();  

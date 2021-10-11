@@ -40,6 +40,7 @@ class DistributorController extends Controller
            $random = rand(1000000,9999999);   
         }
         $sponsor_distributor = \App\Distributor::where('distributor_tracking_id',$request->input('sponsor_tracking_id'))->first();
+
 		$distributor = \App\Distributor::create([
 			 'name'=>$request->input('name'),
             'email'=>$request->input('email'),
@@ -63,6 +64,21 @@ class DistributorController extends Controller
                     'mobile' => $request->input('mobile'),
                     'password' => Hash::make(1234567),
             ]);
+
+            $ditributor_level=\App\DistributorLevel::create([
+            'L0'=>$distributor->id,
+            'L1'=>$sponsor_distributor->id,
+            'L2'=>$sponsor_distributor->sponsor_id,
+            ]);
+            $lever_l3 =\App\Distributor::find($sponsor_distributor->sponsor_id);
+           if($lever_l3){
+            $ditributor_level->L3=$lever_l3->sponsor_id;
+           }
+           $lever_l4 =\App\Distributor::find($lever_l3->sponsor_id);;
+           if($lever_l4){
+            $ditributor_level->L4=$lever_l4->sponsor_id;
+           }
+        $ditributor_level->save();
             $abc = Auth::login($user);
 
         session()->flash('success', 'New Package is create Successfully');

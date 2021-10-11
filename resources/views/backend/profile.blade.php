@@ -16,10 +16,12 @@
                 </div>
             </div>
             @include('flash')
-            {!!Form::open(['files'=>true,'class'=>'form-horizontal'])!!}
-            {{csrf_field()}}
+
             <div class="row">
+
                 <div class="col-md-3">
+                    {!!Form::open(['route'=>['myaccount.changepassword'],'files'=>true,'class'=>'form-horizontal'])!!}
+                    {{csrf_field()}}
                     <div class="card card-default">
                         <div class="card-header">
                             <h3 class="card-title">Change Password</h3>
@@ -38,8 +40,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Retype Password</label>
-                                <input type="number" name="retype_password" class="form-control"
-                                    value="{{old('retype_password')}}" id="exampleInputEmail1"
+                                <input type="number" name="renew_password" class="form-control"
+                                    value="{{old('renew_password')}}" id="exampleInputEmail1"
                                     placeholder="Enter Retype Password" Required>
                             </div>
                             <div class="row">
@@ -53,7 +55,10 @@
                             </div>
                         </div>
                     </div>
+
+                    {!!Form::close()!!}
                 </div>
+
                 <div class="col-md-9">
                     <div class="card card-default">
                         <div class="card-header">
@@ -100,7 +105,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Date Of Birth</label>
-                                        <input type="text" name="account_type" value="{{\Auth::user()->dob}}"
+                                        <input type="date" name="dob" value="{{\Auth::user()->dob}}"
                                             class="form-control" id="exampleInputEmail1" placeholder="Account Type"
                                             Required>
                                     </div>

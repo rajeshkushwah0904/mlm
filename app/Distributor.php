@@ -23,4 +23,8 @@ class Distributor extends Model
     public function first_level_distributors(){
 		return $this->hasMany('App\Distributor','sponsor_id','id');
 	}
+
+      	public function package(){
+	  return $this->belongsTo('App\Package','package_id','id');
+	} 
 }

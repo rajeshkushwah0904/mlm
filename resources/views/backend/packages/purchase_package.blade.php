@@ -33,34 +33,65 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
+                    @if($distributor->package_id)
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>S. No. </th>
+                                <th>Package Name</th>
+                                <th>Amount</th>
+                                <th>Sponsor Income</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr>
+                                <td>1</td>
+                                <td>{{$distributor->package->package_name}}</td>
+                                <td>{{$distributor->package->amount}}</td>
+                                <td>{{$distributor->package->sponsor_income}}%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    @else
                     <div class="row">
                         <div class="col-md-12">
-                            {!!Form::open(['files'=>true,'class'=>'form-horizontal'])!!}
-                            {{csrf_field()}}
+
+                            {!!Form::open(['files'=>true,'method'=>'GET','class'=>'form-horizontal'])!!}
                             <div class="form-group">
                                 <label for="package_id" class="col-md-2 control-label">Package</label>
                                 <div class="col-md-10">
-                                    <select id="package_id" class="form-control" name="package_id" required autofocus>
+                                    <select id="package_id" class="form-control" name="package_id" onchange="submit()"
+                                        required autofocus>
                                         <option value="">---- Select ----</option>
                                         @foreach($packages as $package)
-                                        <option value="{{$package->id}}">
+                                        <option value="{{$package->id}}"
+                                            {{$select_package->id==$package->id?'selected':''}}>
                                             {{$package->package_name}} ( {{$package->amount}} )
                                         </option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="col-md-8 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        Submit
-                                    </button>
-                                </div>
-                            </div>
+                            {!!Form::close()!!}
+                            {!!Form::open(['files'=>true,'class'=>'form-horizontal'])!!}
+                            @csrf
+                            @if($select_package)
+                            <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="{{ env('RAZOR_KEY') }}"
+                                data-amount="{{$select_package->amount}}"
+                                data-buttontext="Pay {{$select_package->amount}} INR" data-name="{{$distributor->name}}"
+                                data-package_id="{{$select_package->id}}" data-description="{{$select_package->id}}"
+                                data-image="{{asset('images\rightway_futurel_logo.jpg')}}"
+                                data-prefill.name="Rightway Future" data-prefill.email="{{$distributor->email}}"
+                                data-theme.color="#ff7529">
+                            </script>
+                            @endif
                             {!!Form::close()!!}
                         </div>
                         <!-- /.col -->
                     </div>
+
+                    @endif
                     <!-- /.row -->
                 </div>
             </div>

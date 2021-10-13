@@ -21,9 +21,9 @@
             <div class="row row-30">
                 <div class="col-md-6 col-xl-4">
                     <div class="navbar-brand">
-                        <!--Brand--><a class="brand" href="index.html"><img class="brand-logo-dark"
-                                src="images/rightway future logo.jpg" alt="" width="155" height="35" /><img
-                                class="brand-logo-light" src="images/rightway future logo.jpg" alt="" width="155"
+                        <!--Brand--><a class="brand" href="{{url('/')}}"><img class="brand-logo-dark"
+                                src="{{asset('logo.png')}}" alt="" width="155" height="35" /><img
+                                class="brand-logo-light" src="{{asset('logo.png')}}" alt="" width="155"
                                 height="35" /></a>
                     </div>
 

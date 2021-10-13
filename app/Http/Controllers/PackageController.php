@@ -8,6 +8,9 @@ use Mail;
 use App\Mail\SendMail;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Razorpay\Api\Api;
+use Session;
+use Redirect;
 
 class PackageController extends Controller
 {
@@ -83,16 +86,37 @@ class PackageController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function purchase_package() {
+    public function purchase_package(Request $request) {
+        $distributor = \App\Distributor::find(\Auth::user()->distributor_id);
+        $select_package = null;
+        if($request->package_id){
+        $select_package = \App\Package::find($request->package_id);
+        }
         $packages = \App\Package::all();
         if ($packages) {
-            return view('backend.packages.purchase_package', compact('packages'));
+            return view('backend.packages.purchase_package', compact('packages','select_package','distributor'));
         }
     } 
 
 
         public function purchase_package_store(Request $request) {
-            $package = \App\Package::find($request->package_id);
+              $input = $request->all();
+           $api = new Api(env('RAZOR_KEY'), env('RAZOR_SECRET'));
+
+        $payment = $api->payment->fetch($input['razorpay_payment_id']);
+
+        if(count($input)  && !empty($input['razorpay_payment_id'])) {
+            try {
+                $response = $api->payment->fetch($input['razorpay_payment_id'])->capture(array('amount'=>$payment['amount'])); 
+
+            } catch (\Exception $e) {
+                return  $e->getMessage();
+                \Session::put('error',$e->getMessage());
+                return redirect()->back();
+            }
+        }
+        $package_id = $response['description'];
+            $package = \App\Package::find($package_id);
             $distributor = \App\Distributor::find(\Auth::user()->distributor_id);
             $distributor->package_id = $package->id;
             $distributor->save();
@@ -153,7 +177,7 @@ class PackageController extends Controller
                     'sponsor_amount'=>$level4_income,
                ]);
               }
-return redirect()->route('backend.dashboard');
+return redirect()->back();
     }
    
 

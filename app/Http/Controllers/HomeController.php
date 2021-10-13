@@ -5,10 +5,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller; 
 use App\User; 
 use Auth;
-use Session; 
 use Validator;
 use Illuminate\Support\Facades\Hash;
 use Cookie;
+use Razorpay\Api\Api;
+use Session;
+use Redirect;
 
 class HomeController extends Controller
 {
@@ -62,7 +64,8 @@ class HomeController extends Controller
     {
         $title = "Package";
        $page_content = "Subscribe to a marketing plan, which decides your passive income";
-        return view('layouts.package', compact('title', 'page_content'));
+       $packages = \App\Package::all();
+        return view('layouts.package', compact('title', 'page_content','packages'));
     }
 
        public function contact()
@@ -100,27 +103,77 @@ class HomeController extends Controller
         return view('layouts/banking',compact('title','page_content'));
     }
 
-         public function product()
+
+    
+         public function allproducts()
     {
-        return view('layouts.product');
+        
+        $products=\App\Product::paginate(10);
+        $title = "Product Detail";
+       $page_content = "Manage your financial details.";
+        return view('layouts.allproducts',compact('title','page_content','products'));
     }
 
-          public function product_details()
+          public function product_detail($id)
     {
-        return view('layouts.product_details');
+        $product=\App\Product::find($id);
+        $title = "Product Detail";
+       $page_content = "Manage your financial details.";
+        return view('layouts.product_detail',compact('title','page_content','product'));
     }
 
-        public function changepasswordpost(Request $request) {
-        $this->validate($request, [
-            'oldpassword' => 'required',
-            'newpassword' => 'required',
-            'renewpassword' => 'required|same:newpassword'
-        ]);
-        $user = \Auth::user();
-        $user->update([
-            'password' => \Hash::make($request->input('newpassword')),
-        ]);
-        session()->flash('success', 'Your Password is Change Successfully');
-        return redirect()->route('backend.dashboard');
+    
+          public function cart()
+    {
+        if(\Auth::user()){
+          
+        $add_to_carts=\App\Addtocart::where('distributor_id',\Auth::user()->id)->get();
+        $title = "Product Detail";
+       $page_content = "Manage your financial details.";
+        return view('layouts.cart',compact('title','page_content','add_to_carts'));  
+        }else{
+    return redirect()->back();
+        }
     }
+
+            public function checkout()
+    {
+        if(\Auth::user()){
+          
+        $add_to_carts=\App\Addtocart::where('distributor_id',\Auth::user()->id)->get();
+        $distributor = \App\Distributor::find(\Auth::user()->distributor_id);
+        $title = "Proceed To Checkout";
+       $page_content = "Manage your financial details.";
+        return view('layouts.checkout',compact('title','page_content','add_to_carts','distributor'));  
+        }else{
+    return redirect()->back();
+        }
+    }
+
+        public function checkout_store(Request $request)
+    {
+        $input = $request->all();
+
+        $api = new Api(env('RAZOR_KEY'), env('RAZOR_SECRET'));
+
+        $payment = $api->payment->fetch($input['razorpay_payment_id']);
+
+        if(count($input)  && !empty($input['razorpay_payment_id'])) {
+            try {
+                $response = $api->payment->fetch($input['razorpay_payment_id'])->capture(array('amount'=>$payment['amount'])); 
+
+            } catch (\Exception $e) {
+                return  $e->getMessage();
+                \Session::put('error',$e->getMessage());
+                return redirect()->back();
+            }
+        }
+        
+        \Session::put('success', 'Payment successful');
+        return redirect()->back();
+    }
+
+    
+
+
 }

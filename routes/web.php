@@ -26,8 +26,11 @@ Route::get('/faq', 'HomeController@faq')->name('faq');
 Route::get('/terms_and_condition', 'HomeController@terms_and_condition')->name('terms_and_condition');
 Route::get('/gallery', 'HomeController@gallery')->name('gallery');
 Route::get('/banking', 'HomeController@banking')->name('banking');
-Route::get('/product', 'HomeController@product')->name('product');
-Route::get('/product_details', 'HomeController@product_details')->name('product_details');
+Route::get('/allproducts', 'HomeController@allproducts')->name('allproducts');
+Route::get('/product_detail/{id}', 'HomeController@product_detail')->name('product_detail');
+Route::get('/cart', 'HomeController@cart')->name('cart')->middleware('auth');
+Route::get('/checkout', 'HomeController@checkout')->name('checkout')->middleware('auth');
+Route::post('/checkout', 'HomeController@checkout_store')->name('checkout')->middleware('auth');
 
 Route::get('/loginpage', 'HomeController@loginpage')->name('loginpage');
 Route::get('/registerpage', 'HomeController@registerpage')->name('registerpage');
@@ -63,7 +66,7 @@ Route::group(['prefix' => 'distributors'], function() {
 });
 
 Route::group(['prefix' => 'distributors'], function() {    
-    Route::get('/add_to_cart/{id}', ['as' => 'addtocarts.add_to_cart', 'uses' => 'AddtocartController@add_to_cart']);
+    Route::get('/add_to_cart/{id}', ['as' => 'addtocarts.add_to_cart', 'uses' => 'AddtocartController@add_to_cart'])->middleware('auth');
 });
 
 Route::group(['prefix' => 'kycs'], function() {    

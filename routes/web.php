@@ -32,6 +32,7 @@ Route::get('/cart', 'HomeController@cart')->name('cart')->middleware('auth');
 Route::get('/checkout', 'HomeController@checkout')->name('checkout')->middleware('auth');
 Route::post('/checkout', 'HomeController@checkout_store')->name('checkout')->middleware('auth');
 
+Route::get('/send_otp', 'UserController@send_otp')->name('send_otp');
 Route::get('/loginpage', 'HomeController@loginpage')->name('loginpage');
 Route::get('/registerpage', 'HomeController@registerpage')->name('registerpage');
 Route::get('/dashboard', 'BackendController@dashboard')->name('backend.dashboard');

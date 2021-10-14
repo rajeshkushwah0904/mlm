@@ -29,6 +29,25 @@
     html.lt-ie-10 .ie-panel {
         display: block;
     }
+
+    #rcorners1 {
+        border-radius: 100px 0px 0px 100px;
+        height: 50px;
+        color: #a7b0b4;
+        background-color: #f5f5f5;
+        background-image: none;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 24px;
+        padding: 12px 25px;
+
+    }
+
+    #rcorners2 {
+        border-radius: 0px 100px 100px 0px;
+        height: 50px;
+
+    }
     </style>
 </head>
 
@@ -74,7 +93,7 @@
                                     <div class="row row-20 align-items-end">
                                         <div class="col-md-6">
                                             <div class="form-wrap form-wrap-validation validation-with-outside-label">
-                                                <label class="form-label-outside" for="forms-name">Name</label>
+                                                <label class="form-label-outside name" for="forms-name">Name</label>
                                                 <input class="form-input" id="forms-name" type="text" name="name"
                                                     placeholder="Your First Name" Required>
                                             </div>
@@ -88,11 +107,21 @@
                                                     placeholder="Your Last Name" readonly>
                                             </div>
                                         </div>
+
                                         <div class="col-md-6">
                                             <div class="form-wrap form-wrap-validation validation-with-outside-label">
                                                 <label class="form-label-outside" for="forms-name">Mobile</label>
-                                                <input class="form-input" id="forms-name" type="text" MaxLength="10"
-                                                    name="mobile" placeholder="Mobile No." Required>
+
+                                                <div class="input-group">
+                                                    <input id="rcorners1" type="text" class="form-control mobile"
+                                                        MaxLength="10" name="mobile" placeholder="Mobile No." Required>
+                                                    <span class="input-group-btn">
+                                                        <button id="rcorners2"
+                                                            style="background-color: #14A5EB; color: #fff"
+                                                            class="btn btn-default" type="button">Get OTP</button>
+                                                    </span>
+                                                </div>
+
                                             </div>
                                         </div>
                                         <div class="col-md-6">

@@ -35,11 +35,11 @@ $addtocarts = \App\Addtocart::where('distributor_id',\Auth::user()->distributor_
          </div>
          <!--RD Navbar Nav-->
          <ul class="rd-navbar-nav">
-             <li class="rd-nav-item active"><a class="rd-nav-link" href="home">Home</a>
+             <li class="rd-nav-item active"><a class="rd-nav-link" href="{{route('home')}}">Home</a>
              </li>
              <li class="rd-nav-item"><a class="rd-nav-link" href="#">Who we are</a>
                  <ul class="rd-menu rd-navbar-dropdown">
-                     <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="about">About Us</a>
+                     <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="{{route('about')}}">About Us</a>
                      </li>
                      <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="founder_message">Message
                              From CEO </a>
@@ -47,7 +47,7 @@ $addtocarts = \App\Addtocart::where('distributor_id',\Auth::user()->distributor_
                  </ul>
              </li>
 
-             <li class="rd-nav-item"><a class="rd-nav-link" href="package">Packages</a>
+             <li class="rd-nav-item"><a class="rd-nav-link" href="{{route('package')}}">Packages</a>
              </li>
 
              <li class="rd-nav-item"><a class="rd-nav-link" href="{{route('allproducts')}}">Product</a>
@@ -55,19 +55,20 @@ $addtocarts = \App\Addtocart::where('distributor_id',\Auth::user()->distributor_
 
              <li class="rd-nav-item"><a class="rd-nav-link" href="#">Resources</a>
                  <ul class="rd-menu rd-navbar-dropdown">
-                     <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="gallery">Gallery</a>
+                     <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="{{route('gallery')}}">Gallery</a>
                      </li>
-                     <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="banking">Banking</a>
+                     <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="{{route('banking')}}">Banking</a>
                      </li>
-                     <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="faq">FAQ</a>
+                     <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="{{route('faq')}}">FAQ</a>
                      </li>
-                     <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="terms_and_condition">Terms &
+                     <li class="rd-dropdown-item"><a class="rd-dropdown-link"
+                             href="{{route('terms_and_condition')}}">Terms &
                              conditions</a>
                      </li>
                  </ul>
              </li>
 
-             <li class="rd-nav-item"><a class="rd-nav-link" href="contact">Contact</a></li>
+             <li class="rd-nav-item"><a class="rd-nav-link" href="{{route('contact')}}">Contact</a></li>
              @guest
              <li class="rd-nav-item"><a class="rd-nav-link" href="{{route('distributors.login')}}">login</a>
              </li>

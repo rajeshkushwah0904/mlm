@@ -59,8 +59,7 @@
                 <section class="section section-border">
                     <ol class="breadcrumb">
                         <li><a href="index.html">Home</a></li>
-                        <li><a href="#">Extras</a></li>
-                        <li class="active">Login Page</li>
+                        <li class="active">Login</li>
                     </ol>
                 </section>
             </div>

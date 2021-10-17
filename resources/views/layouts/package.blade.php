@@ -71,9 +71,9 @@
                                 <h4 class="fw-bold letter-spacing-1">Rs. {{$package->amount}}</h4><br>
                                 <hr>
                                 <h4>Sponsor Income</h4>
-                                <p>Rs. {{$package->sponsor_income}}</p>
-                                <a class="button button-variant-1 button-default button-sm round-xl"
-                                    href="{{ url('checkout/'.$package->id) }}">Buy Now</a>
+                                <p> {{$package->sponsor_income}} %</p>
+                                <a class="button button-variant-1 button-default button-sm round-xl" href="#">Buy
+                                    Now</a>
                             </div>
                         </div>
                     </div>

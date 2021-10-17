@@ -37,7 +37,8 @@
                                         <th>Distributer Amount</th>
                                         <th>Sponsor Tracking ID</th>
                                         <th>Sponsor Level</th>
-                                        <th>Sponsor Income Amount</th>
+                                        <th>Sponsor Income (in Percentage)</th>
+                                        <th>Sponsor Income (in Amount)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -51,6 +52,7 @@
                                         <td>{{$income->amount}}</td>
                                         <td>{{$income->sponsor->distributor_tracking_id}}</td>
                                         <td>{{$income->level}}</td>
+                                        <td>{{$income->level_percentage}} %</td>
                                         <td style="background: Yellow">Rs. {{$income->sponsor_amount}}</td>
                                         <?php
 $total =$total + $income->sponsor_amount;
@@ -58,7 +60,7 @@ $total =$total + $income->sponsor_amount;
                                     </tr>
                                     @endforeach
                                     <tr>
-                                        <td colspan="5">Total Income</td>
+                                        <td colspan="6">Total Income</td>
                                         <td style="background: Yellow">Rs. {{number_format((float)$total,2,'.','')}}
                                         </td>
                                     </tr>

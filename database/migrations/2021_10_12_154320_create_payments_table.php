@@ -15,6 +15,15 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->string('method')->nullable();
+            $table->decimal('amount',20,2)->nullable();
+            $table->bigInteger('name')->nullable();
+            $table->string('entity')->nullable();
+            $table->string('currency')->nullable();
+            $table->decimal('amount_refunded',20,2)->nullable();
+            $table->bigInteger('distributor_id')->nullable();
+            $table->bigInteger('order_id')->nullable();
+            $table->timestamp('order_date')->nullable();
             $table->timestamps();
         });
     }

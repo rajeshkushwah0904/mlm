@@ -158,35 +158,173 @@ right connector from last child*/
                                 class="fas fa-times"></i></button>
                     </div>
                 </div>
+
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <div class="tree">
-
+                    <div class="tree" style="margin-left: 200px">
                         <ul>
-                            <li>
-                                <img class="profile-user-img img-fluid img-circle"
-                                    src="{{asset('backendtheme/distributor_icon.png')}}" alt="User profile picture"><br>
+                            <li class="nav-item dropdown">
+                                <a data-toggle="dropdown" href="#">
+                                    <img class="profile-user-img img-fluid img-circle"
+                                        src="{{asset('backendtheme/distributor_icon.png')}}" alt="User profile picture">
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                                    <span
+                                        class="dropdown-item dropdown-header">{{$distributor->distributor_tracking_id}}</span>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="#" class="dropdown-item">
+                                        Joining Date
+                                        <span class="float-right text-muted text-sm">
+                                            @if($distributor->created_at)
+                                            {{$distributor->created_at->format('d-M-Y')}}
+                                            @endif
+                                        </span>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="#" class="dropdown-item"> Activation Date
+                                        <span class="float-right text-muted text-sm">
+                                            @if($distributor->updated_at)
+                                            {{$distributor->updated_at->format('d-M-Y')}}
+                                            @endif
+                                        </span>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="#" class="dropdown-item"> Package
+                                        <span class="float-right text-muted text-sm">
+                                            @if($distributor->package)
+                                            {{$distributor->package->package_name}}
+                                            ({{$distributor->package->amount}} )
+                                            @else
+                                            Free
+                                            @endif
+                                        </span>
+                                    </a>
+                                </div>
+                                <br>
                                 <a href="#">{{$distributor->distributor_tracking_id}}</a>
                                 <ul>
                                     @foreach($distributor->first_level_distributors as $first_level_distributor1)
-                                    <li><img class="profile-user-img img-fluid img-circle"
-                                            src="{{asset('backendtheme/distributor_icon.png')}}"
-                                            alt="User profile picture"><br>
+                                    <li><a data-toggle="dropdown" href="#">
+                                            <img class="profile-user-img img-fluid img-circle"
+                                                src="{{asset('backendtheme/distributor_icon.png')}}"
+                                                alt="User profile picture">
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                                            <span
+                                                class="dropdown-item dropdown-header">{{$first_level_distributor1->distributor_tracking_id}}</span>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item">
+                                                Joining Date
+                                                <span class="float-right text-muted text-sm">
+                                                    @if($first_level_distributor1->created_at)
+                                                    {{$first_level_distributor1->created_at->format('d-M-Y')}}
+                                                    @endif
+                                                </span>
+                                            </a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item"> Activation Date
+                                                <span class="float-right text-muted text-sm">
+                                                    @if($first_level_distributor1->updated_at)
+                                                    {{$first_level_distributor1->updated_at->format('d-M-Y')}}
+                                                    @endif
+                                                </span>
+                                            </a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item"> Package
+                                                <span class="float-right text-muted text-sm">
+                                                    @if($first_level_distributor1->package)
+                                                    {{$first_level_distributor1->package->package_name}}
+                                                    ({{$first_level_distributor1->package->amount}} )
+                                                    @else
+                                                    Free
+                                                    @endif
+                                                </span>
+                                            </a>
+                                        </div><br>
                                         <a href="#">{{$first_level_distributor1->distributor_tracking_id}}</a>
                                         <ul>
                                             @foreach($first_level_distributor1->first_level_distributors as
                                             $first_level_distributor2)
-                                            <li><img class="profile-user-img img-fluid img-circle"
-                                                    src="{{asset('backendtheme/distributor_icon.png')}}"
-                                                    alt="User profile picture"><br>
+                                            <li><a data-toggle="dropdown" href="#">
+                                                    <img class="profile-user-img img-fluid img-circle"
+                                                        src="{{asset('backendtheme/distributor_icon.png')}}"
+                                                        alt="User profile picture">
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                                                    <span
+                                                        class="dropdown-item dropdown-header">{{$first_level_distributor2->distributor_tracking_id}}</span>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a href="#" class="dropdown-item">
+                                                        Joining Date
+                                                        <span class="float-right text-muted text-sm">
+                                                            @if($first_level_distributor2->created_at)
+                                                            {{$first_level_distributor2->created_at->format('d-M-Y')}}
+                                                            @endif
+                                                        </span>
+                                                    </a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a href="#" class="dropdown-item"> Activation Date
+                                                        <span class="float-right text-muted text-sm">
+                                                            @if($first_level_distributor2->updated_at)
+                                                            {{$first_level_distributor2->updated_at->format('d-M-Y')}}
+                                                            @endif
+                                                        </span>
+                                                    </a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a href="#" class="dropdown-item"> Package
+                                                        <span class="float-right text-muted text-sm">
+                                                            @if($first_level_distributor2->package)
+                                                            {{$first_level_distributor2->package->package_name}}
+                                                            ({{$first_level_distributor2->package->amount}} )
+                                                            @else
+                                                            Free
+                                                            @endif
+                                                        </span>
+                                                    </a>
+                                                </div><br>
                                                 <a href="#">{{ $first_level_distributor2->distributor_tracking_id}}</a>
                                                 <ul>
                                                     @foreach($first_level_distributor2->first_level_distributors as
                                                     $first_level_distributor3)
 
-                                                    <li><img class="profile-user-img img-fluid img-circle"
-                                                            src="{{asset('backendtheme/distributor_icon.png')}}"
-                                                            alt="User profile picture"><br>
+                                                    <li><a data-toggle="dropdown" href="#">
+                                                            <img class="profile-user-img img-fluid img-circle"
+                                                                src="{{asset('backendtheme/distributor_icon.png')}}"
+                                                                alt="User profile picture">
+                                                        </a>
+                                                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                                                            <span
+                                                                class="dropdown-item dropdown-header">{{$first_level_distributor3->distributor_tracking_id}}</span>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a href="#" class="dropdown-item">
+                                                                Joining Date
+                                                                <span class="float-right text-muted text-sm">
+                                                                    @if($first_level_distributor3->created_at)
+                                                                    {{$first_level_distributor3->created_at->format('d-M-Y')}}
+                                                                    @endif
+                                                                </span>
+                                                            </a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a href="#" class="dropdown-item"> Activation Date
+                                                                <span class="float-right text-muted text-sm">
+                                                                    @if($first_level_distributor3->updated_at)
+                                                                    {{$first_level_distributor3->updated_at->format('d-M-Y')}}
+                                                                    @endif
+                                                                </span>
+                                                            </a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a href="#" class="dropdown-item"> Package
+                                                                <span class="float-right text-muted text-sm">
+                                                                    @if($first_level_distributor3->package)
+                                                                    {{$first_level_distributor3->package->package_name}}
+                                                                    ({{$first_level_distributor3->package->amount}}
+                                                                    )
+                                                                    @else
+                                                                    Free
+                                                                    @endif
+                                                                </span>
+                                                            </a>
+                                                        </div><br>
                                                         <a
                                                             href="#">{{$first_level_distributor3->distributor_tracking_id}}</a>
                                                     </li>

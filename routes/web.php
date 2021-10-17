@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 Route::get('/', 'HomeController@home')->name('home');
 Route::get('/home', 'HomeController@home')->name('home');
+Route::get('category/{id}', 'HomeController@category')->name('layout.category');
+Route::get('/subcategory/{id}', 'HomeController@category')->name('layout.subcategory');
 Route::get('/about', 'HomeController@about')->name('about');
 Route::get('/founder_message', 'HomeController@founder_message')->name('founder_message');
 Route::get('/package', 'HomeController@package')->name('package');
@@ -44,7 +46,7 @@ Route::get('/distributors/register', ['as' => 'distributors.register', 'uses' =>
 Route::post('/distributors/register', ['as' => 'distributors.register', 'uses' => 'DistributorController@register_store']);
 Route::get('/distributors/login', ['as' => 'distributors.login', 'uses' => 'DistributorController@login']);
 Route::post('/distributors/login', ['as' => 'distributors.login', 'uses' => 'DistributorController@login_store']);
-
+Route::post('/distributors/register_send_otp', ['as' => 'distributors.register_send_otp', 'uses' => 'DistributorController@register_send_otp']);
 
 Route::group(['prefix' => 'packages'], function() {    
     Route::get('/packages/add_product', ['as' => 'backend.packages.add_product', 'uses' => 'PackageController@add_product']);
@@ -68,6 +70,7 @@ Route::group(['prefix' => 'distributors'], function() {
 
 Route::group(['prefix' => 'distributors'], function() {    
     Route::get('/add_to_cart/{id}', ['as' => 'addtocarts.add_to_cart', 'uses' => 'AddtocartController@add_to_cart'])->middleware('auth');
+    Route::get('/remove_from_cart/{id}', ['as' => 'addtocarts.remove_from_cart', 'uses' => 'AddtocartController@remove_from_cart'])->middleware('auth');
 });
 
 Route::group(['prefix' => 'kycs'], function() {    

@@ -50,84 +50,67 @@
         <header class="page-header subpage_header">
             <!--RD Navbar-->
             @include('admin.internal_header')
-            <section>
-                <!--Swiper-->
-                <div class="swiper-container swiper-slider" data-swiper='{"autoplay":{"delay":5000},"effect":"fade"}'>
-                    <div class="jumbotron text-center">
-                        <h1><small>Shop</small>Your Shopping Cart
-                        </h1>
-                        <p class="big"></p>
-                    </div>
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide" data-slide-bg="images/header-1.jpg">
-                            <div class="swiper-slide-caption"></div>
-                        </div>
-                        <div class="swiper-slide" data-slide-bg="images/header-3.jpg">
-                            <div class="swiper-slide-caption"></div>
-                        </div>
-                        <div class="swiper-slide" data-slide-bg="images/header-4.jpg">
-                            <div class="swiper-slide-caption"></div>
-                        </div>
-                    </div>
+
+            <section class="section-border text-center text-lg-start">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#">Shop</a></li>
+                        <li class="active"><a class="text-gray-light" href="#">Shopping cart</a></li>
+                    </ol>
                 </div>
             </section>
-        </header>
-        <section class="section-border text-center text-lg-start">
-            <div class="container">
-                <ol class="breadcrumb">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="#">Shop</a></li>
-                    <li class="active"><a class="text-gray-light" href="#">Shopping cart</a></li>
-                </ol>
-            </div>
-        </section>
-        <section class="section section-sm section-border shop-cart">
-            <div class="container">
-                <div class="row align-items-center row-30">
-                    <div class="col-12">
-                        <div class="table-responsive">
-                            <table class="table order text-center text-lg-start">
-                                <thead>
-                                    <tr class="bg-lighter text-uppercase text-darker-clr font-secondary section-border">
-                                        <th></th>
-                                        <th></th>
-                                        <th>Product</th>
-                                        <th>Price</th>
-                                        <th>Quantity</th>
-                                        <th>Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
+            <section class="section section-sm section-border shop-cart">
+                <div class="container">
+                    <div class="row align-items-center row-30">
+                        <div class="col-12">
+                            <div class="table-responsive">
+                                <table class="table order text-center text-lg-start">
+                                    <thead>
+                                        <tr
+                                            class="bg-lighter text-uppercase text-darker-clr font-secondary section-border">
+                                            <th></th>
+                                            <th></th>
+                                            <th>Product</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
                                     $total=0;
                                     ?>
-                                    @foreach($add_to_carts as $add_to_cart)
-                                    <?php
+                                        @foreach($add_to_carts as $add_to_cart)
+                                        <?php
                                     $subtotal=0;
                                     $subtotal = $add_to_cart->price*$add_to_cart->qty;
                                     $total = $total + $subtotal;
                                     ?>
-                                    <tr class="section-border">
-                                        <td class="text-center"><a class="fa-trash-o h5 text-light-clr" href="#"></a>
-                                        </td>
-                                        <td class="text-center"><a href="single-product.html"><img
-                                                    src="images/shop-14.jpg" alt="" /></a></td>
-                                        <td class="text-start">
-                                            <h6 class="text-dark-variant-4"><a
-                                                    href="single-product.html">{{$add_to_cart->product->name}}</a></h6>
-                                        </td>
-                                        <td><span class="price">{{$add_to_cart->price}}</span></td>
-                                        <td><span class="quantity round-xl">
-                                                <input type="number" value="{{$add_to_cart->qty}}"></span></td>
-                                        <td><span class="price">{{$subtotal}}</span></td>
-                                    </tr>
-                                    @endforeach
+                                        <tr class="section-border">
+                                            <td class="text-center"><a class="fa-trash-o h5 text-light-clr"
+                                                    href="{{route('addtocarts.remove_from_cart',$add_to_cart->id)}}"></a>
+                                            </td>
+                                            <td class="text-center"><a href="single-product.html"><img
+                                                        src="{{asset($add_to_cart->product->image)}}"
+                                                        style="width: 70px" alt="" /></a></td>
+                                            <td class="text-start">
+                                                <h6 class="text-dark-variant-4"><a
+                                                        href="single-product.html">{{$add_to_cart->product->name}}</a>
+                                                </h6>
+                                            </td>
+                                            <td><span class="price">{{$add_to_cart->price}}</span></td>
+                                            <td><span class="quantity round-xl">
+                                                    <input type="number" value="{{$add_to_cart->qty}}"></span></td>
+                                            <td><span class="price">{{$subtotal}}</span></td>
+                                        </tr>
+                                        @endforeach
 
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-md-8 text-center text-md-start">
+                        <!-- <div class="col-12 col-md-8 text-center text-md-start">
                         <form class="form-shop">
                             <div class="form-wrap">
                                 <input class="form-input round-small" type="text" placeholder="Coupon Code"
@@ -153,40 +136,42 @@
                                     <th class="bg-lighter total text-end"><span class="price">{{$total}}</span></th>
                                 </tr>
                             </thead>
-                        </table>
+                        </table> -->
+                        @if($total>0)
                         <div class="text-center text-md-end"><a class="button button-primary button-xs round-small"
                                 href="{{route('checkout')}}">Proceed to checkout</a></div>
+                        @endif
                     </div>
                 </div>
+    </div>
+    </section>
+    <!--Footer-->
+    <footer class="page-footer footer-centered text-center">
+        <div class="footer-content">
+            <div class="container">
+                <!--Brand--><a class="brand" href="index.html"><img class="brand-logo-dark"
+                        src="images/logo-default-311x70.png" alt="" width="155" height="35" /><img
+                        class="brand-logo-light" src="images/logo-inverse-311x70.png" alt="" width="155"
+                        height="35" /></a>
+                <p class="big">We believe in Simple, Creative & Flexible Design Standards.</p>
+                <ul class="list-inline">
+                    <li class="list-inline-item"><a class="fa-facebook" href="#"></a></li>
+                    <li class="list-inline-item"><a class="fa-pinterest-p" href="#"></a></li>
+                    <li class="list-inline-item"><a class="fa-twitter" href="#"></a></li>
+                    <li class="list-inline-item"><a class="fa-google-plus" href="#"></a></li>
+                    <li class="list-inline-item"><a class="fa-instagram" href="#"></a></li>
+                </ul>
             </div>
-        </section>
-        <!--Footer-->
-        <footer class="page-footer footer-centered text-center">
-            <div class="footer-content">
-                <div class="container">
-                    <!--Brand--><a class="brand" href="index.html"><img class="brand-logo-dark"
-                            src="images/logo-default-311x70.png" alt="" width="155" height="35" /><img
-                            class="brand-logo-light" src="images/logo-inverse-311x70.png" alt="" width="155"
-                            height="35" /></a>
-                    <p class="big">We believe in Simple, Creative & Flexible Design Standards.</p>
-                    <ul class="list-inline">
-                        <li class="list-inline-item"><a class="fa-facebook" href="#"></a></li>
-                        <li class="list-inline-item"><a class="fa-pinterest-p" href="#"></a></li>
-                        <li class="list-inline-item"><a class="fa-twitter" href="#"></a></li>
-                        <li class="list-inline-item"><a class="fa-google-plus" href="#"></a></li>
-                        <li class="list-inline-item"><a class="fa-instagram" href="#"></a></li>
-                    </ul>
-                </div>
+        </div>
+        <div class="copyright">
+            <div class="container">
+                <p class="rights"><span>&copy;&nbsp;</span><span
+                        class="copyright-year"></span><span>&nbsp;</span><span>Modicate</span><span>&nbsp;</span><span>All
+                        Rights Reserved</span><span>.&nbsp;</span><a href="terms-of-service.html">Privacy Policy</a>
+                </p>
             </div>
-            <div class="copyright">
-                <div class="container">
-                    <p class="rights"><span>&copy;&nbsp;</span><span
-                            class="copyright-year"></span><span>&nbsp;</span><span>Modicate</span><span>&nbsp;</span><span>All
-                            Rights Reserved</span><span>.&nbsp;</span><a href="terms-of-service.html">Privacy Policy</a>
-                    </p>
-                </div>
-            </div>
-        </footer>
+        </div>
+    </footer>
     </div>
     <!-- Global Mailform Output-->
     <div class="snackbars" id="form-output-global"></div>

@@ -69,6 +69,7 @@
         <header class="bg-image bg-image-2 inset-bottom-3 header-custom">
             <!--RD Navbar-->
             @include('admin.loginregister_header')
+            @include('flash')
             <div class="text-center">
                 <div class="jumbotron text-center margin-large">
                     <h1><small>Register Page</small>Let's Create Something Together!</h1>
@@ -82,11 +83,15 @@
                     </ol>
                 </section>
             </div>
+
             <div class="section-sm">
                 <div class="container">
                     <div class="row row-30 justify-content-center">
                         <div class="col-lg-8">
                             <div class="button-shadow inset-md-min bg-default round-large py-5 px-4">
+                                <center>
+                                    <div class="message" style="color: red"></div>
+                                </center>
                                 <h5 class="text-center">Create an Account</h5>
                                 <form class="text-start" method="POST" action="{{ route('distributors.register') }}">
                                     @csrf
@@ -94,8 +99,8 @@
                                         <div class="col-md-6">
                                             <div class="form-wrap form-wrap-validation validation-with-outside-label">
                                                 <label class="form-label-outside name" for="forms-name">Name</label>
-                                                <input class="form-input" id="forms-name" type="text" name="name"
-                                                    placeholder="Your First Name" Required>
+                                                <input class="form-input distributor_name" id="forms-name" type="text"
+                                                    name="name" placeholder="Your First Name" Required>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -104,7 +109,7 @@
                                                     ID</label>
                                                 <input class="form-input" id="forms-last-name" type="text"
                                                     name="sponsor_tracking_id" value="{{$sponsor_tracking_id}}"
-                                                    placeholder="Your Last Name" readonly>
+                                                    placeholder="Your Last Name">
                                             </div>
                                         </div>
 
@@ -115,10 +120,11 @@
                                                 <div class="input-group">
                                                     <input id="rcorners1" type="text" class="form-control mobile"
                                                         MaxLength="10" name="mobile" placeholder="Mobile No." Required>
-                                                    <span class="input-group-btn">
+                                                    <span class="input-group-btn mobile">
                                                         <button id="rcorners2"
                                                             style="background-color: #14A5EB; color: #fff"
-                                                            class="btn btn-default" type="button">Get OTP</button>
+                                                            class="btn btn-default" type="button"
+                                                            onclick="register_send_otp();">Get OTP</button>
                                                     </span>
                                                 </div>
 
@@ -180,6 +186,30 @@
         <!--Footer-->
         @include('admin.footer')
     </div>
+
+    <script>
+    function register_send_otp() {
+        var distributor_name = $('.distributor_name').val();
+        var mobile = $('.mobile').val();
+        if (distributor_name && mobile) {
+            $.ajax({
+                type: "POST",
+                url: "{{ route('distributors.register_send_otp') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    distributor_name: distributor_name,
+                    mobile: mobile,
+                },
+                success: function(data) {
+
+                    $('.message').html(data.message);
+                }
+            });
+        } else {
+            $('.message').html("Please Enter Distributor Name and Mobile No.");
+        }
+    }
+    </script>
     <!-- Global Mailform Output-->
     <div class="snackbars" id="form-output-global"></div>
     <!--Scripts-->

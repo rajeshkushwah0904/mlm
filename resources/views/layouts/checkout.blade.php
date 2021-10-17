@@ -308,9 +308,11 @@
                         {!!Form::open(['files'=>true,'class'=>'form-horizontal'])!!}
                         @csrf
                         <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="{{ env('RAZOR_KEY') }}"
-                            data-amount="{{$total}}" data-buttontext="Click Here  To Pay {{$total}} INR"
-                            data-name="{{$distributor->name}}" data-description="{{$distributor->id}}"
-                            data-image="{{asset('logo.png')}}" data-prefill.name="Rightway Future"
+                            data-amount="{{number_format($total, 2, '.', '')}}"
+                            data-buttontext="Click Here  To Pay {{number_format($total, 2, '.', '')}} INR"
+                            data-name="{{$distributor->name}}"
+                            data-description="{{$distributor->distributor_tracking_id}}"
+                            data-image="{{asset('logo.png')}}" data-prefill.name="{{$distributor->name}}"
                             data-prefill.email="{{$distributor->email}}" data-theme.color="#ff7529">
                         </script>
 

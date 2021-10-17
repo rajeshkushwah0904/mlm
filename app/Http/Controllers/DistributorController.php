@@ -9,12 +9,14 @@ use Session;
 use Validator;
 use Illuminate\Support\Facades\Hash;
 use Cookie;
+use Illuminate\Support\Facades\Response;
 
 
 class DistributorController extends Controller
 {
     
    public function register(Request $request) { 
+        
        $sponsor_tracking_id = $request->sponsor_tracking_id;
         return view('distributors.register',compact('sponsor_tracking_id'));
     }
@@ -25,11 +27,68 @@ class DistributorController extends Controller
      *
      * @return Response
      */
+
+
+     
+     
+    public function register_send_otp(Request $request) { 
+        $username="Rightwayfuture";
+$password="Benchmark@123";
+$sender="RWFTPL";
+
+//---------------------------------
+
+    $distributor_name=$request->mobile;
+	$mobile=$request->mobile;
+    $otp = rand(100000,999999);
+    $minutes = 60;
+    $cookie = cookie('otp_mobile', $mobile.",".$otp, $minutes);
+	$message="Dear ".$distributor_name.", ".$otp." is the OTP for your login at Rightway Future. In case you have not requested this, please contact us at info@rightwayfuture.com Rightway Future";
+	$username=urlencode($username);
+	$password=urlencode($password);
+	$sender=urlencode($sender);
+	$message=urlencode($message);
+
+	$parameters="username=".$username."&password=".$password."&mobile=".$mobile."&sendername=".$sender."&message=".$message."&templateid=1707163395171735226";
+
+	$url="http://priority.muzztech.in/sms_api/sendsms.php";
+
+	$ch = curl_init($url);
+
+	if(isset($_POST))
+	{
+        curl_setopt($ch, CURLOPT_POST,1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS,$parameters);
+	}
+	else
+	{
+		$get_url=$url."?".$parameters;
+		curl_setopt($ch, CURLOPT_POST,0);
+		curl_setopt($ch, CURLOPT_URL, $get_url);
+	}
+
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION,1); 
+	curl_setopt($ch, CURLOPT_HEADER,0);  // DO NOT RETURN HTTP HEADERS 
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);  // RETURN THE CONTENTS OF THE CALL
+	$return_val = curl_exec($ch);
+       if($mobile){
+         return response()->json(['status'=>true,'message'=>'OTP Send Successfully'], 200)->cookie($cookie);
+          }else{
+            return response()->json(['status'=>false,'message'=>'Error Data Does Not Found. Please Try Again'], 401);                
+          }
+
+
+
+    }
+
     public function register_store(Request $request) {
+$value = request()->cookie('otp_mobile');
+$otp_mobile = explode(',',$value);
+if($otp_mobile[0]==$request->mobile&&$otp_mobile[1]==$request->otp){
 
         $this->validate($request, [            
-            'name' => 'required',
-               'address' => 'required',
+             'name' => 'required',
+             'address' => 'required',
              'mobile' => 'required',
              'email' => 'required',
               'nominee' => 'required',
@@ -81,8 +140,12 @@ class DistributorController extends Controller
         $ditributor_level->save();
             $abc = Auth::login($user);
 
-        session()->flash('success', 'New Package is create Successfully');
+        session()->flash('success', 'New Distributor Register Successfully');
         return redirect()->route('backend.dashboard');
+}else{
+            session()->flash('error', 'New Package is create Successfully');
+        return redirect()->back();
+}
     }
 
        public function list(Request $request) { 

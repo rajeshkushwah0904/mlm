@@ -65,10 +65,17 @@
                                         required autofocus>
                                         <option value="">---- Select ----</option>
                                         @foreach($packages as $package)
+                                        @if($select_package)
                                         <option value="{{$package->id}}"
                                             {{$select_package->id==$package->id?'selected':''}}>
                                             {{$package->package_name}} ( {{$package->amount}} )
                                         </option>
+                                        @else
+                                        <option value="{{$package->id}}">
+                                            {{$package->package_name}} ( {{$package->amount}} )
+                                        </option>
+                                        @endif
+
                                         @endforeach
                                     </select>
                                 </div>

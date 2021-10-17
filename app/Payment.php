@@ -6,5 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Payment extends Model
 {
-    //
+  protected $fillable = [
+                     'method',
+            'amount',
+            'name',
+            'entity',
+            'currency',
+            'amount_refunded',
+    ];
 }

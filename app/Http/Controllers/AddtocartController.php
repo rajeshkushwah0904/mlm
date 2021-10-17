@@ -28,7 +28,7 @@ class AddtocartController extends Controller
     }
 
 
-                public function remove_to_cart($id)
+                public function remove_from_cart($id)
     {
              $add_to_cart = \App\Addtocart::find($id);
         if ($add_to_cart->count()) {

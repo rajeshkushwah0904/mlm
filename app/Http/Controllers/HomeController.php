@@ -114,6 +114,26 @@ class HomeController extends Controller
         return view('layouts.allproducts',compact('title','page_content','products'));
     }
 
+             public function category($id)
+    {
+        
+        $products=\App\Product::where('category_id',$id)->paginate(10);
+        $title = "Product Detail";
+       $page_content = "Manage your financial details.";
+        return view('layouts.allproducts',compact('title','page_content','products'));
+    }
+
+
+             public function subcategory($id)
+    {
+        
+        $products=\App\Product::where('subcategory_id',$id)->paginate(10);
+        $title = "Product Detail";
+       $page_content = "Manage your financial details.";
+        return view('layouts.allproducts',compact('title','page_content','products'));
+    }
+
+
           public function product_detail($id)
     {
         $product=\App\Product::find($id);
@@ -128,8 +148,8 @@ class HomeController extends Controller
         if(\Auth::user()){
           
         $add_to_carts=\App\Addtocart::where('distributor_id',\Auth::user()->id)->get();
-        $title = "Product Detail";
-       $page_content = "Manage your financial details.";
+        $title = "Cart";
+       $page_content = "Your Shopping Cart";
         return view('layouts.cart',compact('title','page_content','add_to_carts'));  
         }else{
     return redirect()->back();
@@ -168,7 +188,112 @@ class HomeController extends Controller
                 return redirect()->back();
             }
         }
-        
+
+
+        $distributor=\App\Distributor::find(\Auth::user()-> distributor_id);
+        $order= \App\Order::create([
+            'distributor_id'=>\Auth::user()-> distributor_id,
+            'distributor_name'=>\Auth::user()->distributor_tracking_id,
+            'email'=>\Auth::user()->email,
+            'mobile'=>\Auth::user()->mobile,
+            'gender',
+            'address'=>$distributor->address,
+            'pincode'=>$distributor->pincode, 
+        ]);
+        $total_taxable_amount =0;
+        $total_gst_amount = 0;
+        $delivery_amount= 50;
+        $total_discount = 0;
+        $total_amount = 0;
+         $add_to_carts=\App\Addtocart::where('distributor_id',\Auth::user()->id)->get();
+        foreach($add_to_carts as $add_to_cart){
+            $product_price= \App\ProductPrice::where('product_id',$add_to_cart->product->id)->first();
+             $order_product= \App\OrderProduct::create([
+           'order_id'=>$order->id,
+            'product_name'=>$add_to_cart->product->name,
+            'product_taxable_amount'=>$product_price->actual_price,
+            'product_gst_amount'=>$product_price->actual_price*$product_price->gst/100,
+            'product_amount'=>$product_price->bussiness_volume,
+            'qty'=>$add_to_cart->qty,
+        ]);   
+        $total_taxable_amount = $total_taxable_amount +  $product_price->actual_price; 
+        $total_gst_amount = $total_gst_amount +   $product_price->actual_price*$product_price->gst/100;
+        $total_amount  = $total_amount  + $product_price->bussiness_volume;
+    }
+
+        $payment= \App\Payment::create([
+            'amount'=>$response['amount'],
+            'entity'=>$response['entity'],
+            'currency'=>$response['currency'],
+            'amount_refunded'=>$response['amount_refunded'],
+            'distributor_id'=>\Auth::user()-> distributor_id, 
+            'order_id'=>$order->id,
+            'order_date'=>date('Y-m-d')
+        ]);
+
+        $order->total_taxable_amount=$total_taxable_amount;
+        $order->total_gst_amount=$total_gst_amount;
+        $order->delivery_amount=$delivery_amount;
+        $order->total_discount=$total_discount;
+        $order->total_amount=$total_amount;
+        $order->save();
+        $add_to_carts=\App\Addtocart::where('distributor_id',\Auth::user()->id)->delete();
+        $package = \App\Package::find($distributor->package_id);
+        $distributor_level = \App\DistributorLevel::where('L0',\Auth::user()->distributor_id)->first();
+              if($distributor_level->L0){  
+            $level0_income = $total_amount*$package->sponsor_income/100;
+                $income = \App\Income::create([
+                    'distributor_id'=>\Auth::user()->distributor_id,
+                    'amount'=>$total_amount,
+                    'income_type'=>2,
+                    'status'=>1,
+                    'level'=>'L0',
+                    'level_percentage'=>$package->sponsor_income,
+                    'sponsor_id'=>$distributor_level->L0,
+                    'sponsor_amount'=>$level0_income,
+               ]);
+              }
+              if($distributor_level->L1){
+             $level1_income = $total_amount*5/100;
+                $income = \App\Income::create([
+                     'distributor_id'=>\Auth::user()->distributor_id,
+                    'amount'=>$total_amount,
+                    'income_type'=>2,
+                    'status'=>1,
+                    'level'=>'L1',
+                    'level_percentage'=>5,
+                    'sponsor_id'=>$distributor_level->L1,
+                    'sponsor_amount'=>$level1_income,
+               ]);
+              }
+              if($distributor_level->L2){
+                 $level2_income = $total_amount*3/100;
+                $income = \App\Income::create([
+                     'distributor_id'=>\Auth::user()->distributor_id,
+                    'amount'=>$total_amount,
+
+                    'income_type'=>2,
+                    'status'=>1,
+                    'level'=>'L2',
+                    'level_percentage'=>3,
+                    'sponsor_id'=>$distributor_level->L2,
+                    'sponsor_amount'=>$level2_income,
+               ]);
+              }
+              if($distributor_level->L3){
+              $level3_income = $total_amount*2/100;
+                $income = \App\Income::create([
+                     'distributor_id'=>\Auth::user()->distributor_id,
+                    'amount'=>$total_amount,
+
+                    'income_type'=>2,
+                    'status'=>1,
+                    'level'=>'L3',
+                    'level_percentage'=>2,
+                    'sponsor_id'=>$distributor_level->L3,
+                    'sponsor_amount'=>$level3_income,
+               ]);
+              }
         \Session::put('success', 'Payment successful');
         return redirect()->back();
     }

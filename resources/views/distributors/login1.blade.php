@@ -56,41 +56,31 @@
                 src="images/ie8-panel/warning_bar_0000_us.jpg" height="42" width="820"
                 alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."></a>
     </div>
-    <div class="preloader">
+    <!-- <div class="preloader">
         <div class="preloader-body">
             <div class="cssload-container">
                 <div class="cssload-speeding-wheel"></div>
             </div>
             <p>Loading...</p>
         </div>
-    </div>
+    </div> -->
     <!--The Main Wrapper-->
     <div class="page">
         <header class="bg-image bg-image-2 inset-bottom-3 header-custom">
             <!--RD Navbar-->
             @include('admin.loginregister_header')
-
-            <div class="text-center">
+            <div class="text-center" style="margin-top: -60px">
                 <div class="jumbotron text-center margin-large">
                     <h1><small>Login Page</small>Let's Create Something Together!</h1>
                 </div>
-                <!-- Breadcrumbs-->
-                <section class="section section-border">
-                    <ol class="breadcrumb">
-                        <li><a href="index.html">Home</a></li>
-                        <li class="active">Login Page</li>
-                    </ol>
-                </section>
-            </div>
 
+            </div>
             <div class="section-sm" style="margin-top: -60px">
                 <div class="container">
                     <div class="row row-30 justify-content-center">
                         <div class="col-lg-6">
                             <div class="button-shadow bg-default py-5 px-3 round-large">
-
                                 <h5 class="text-center">Sign in</h5>
-                                @include('flash')
                                 <form class="max-width" method="POST" action="{{ route('distributors.login') }}">
                                     @csrf
                                     <div class="row row-20 align-items-end">
@@ -149,36 +139,11 @@
         <!--Footer-->
         @include('admin.footer')
     </div>
-
-    <script>
-    function register_send_otp() {
-        var first_name_class = $('.first_name_class').val();
-        var mobile_no = $('.mobile_no').val();
-
-        if (first_name_class && mobile_no) {
-            $.ajax({
-                type: "POST",
-                url: "{{ route('distributors.register_send_otp') }}",
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    name: first_name_class,
-                    mobile: mobile_no,
-                },
-                success: function(data) {
-
-                    $('.message').html(data.message);
-                }
-            });
-        } else {
-            $('.message').html("Please Enter Distributor Name and Mobile No.");
-        }
-    }
-    </script>
     <!-- Global Mailform Output-->
     <div class="snackbars" id="form-output-global"></div>
     <!--Scripts-->
-    <script src="{{asset('js/core.min.js')}}"></script>
-    <script src="{{asset('js/script.js')}}"></script>
+    <script href="{{asset('js/core.min.js')}}"></script>
+    <script href="{{asset('js/script.js')}}"></script>
 </body>
 
 </html>

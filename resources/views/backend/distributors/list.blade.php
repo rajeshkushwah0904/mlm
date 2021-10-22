@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Package List</h1>
+                    <h1>Distributor List</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -25,10 +25,9 @@
             <div class="row">
 
                 <div class="col-12">
-                    <a href="{{route('backend.packages.create')}}" class="btn btn-sm btn-info">Add Package</a>
                     <div class="card" style="overflow-x:scroll;">
                         <div class="card-header">
-                            <h3 class="card-title">Distributor List List</h3>
+                            <h3 class="card-title">Distributor List</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -57,19 +56,42 @@
                                         <td>{{$key+1}}</td>
                                         <td>{{$distributor->joining_date}}</td>
                                         <td>{{$distributor->activate_date}}</td>
-                                        <td>RF{{$distributor->id}}</td>
+                                        <td>{{$distributor->distributor_tracking_id}}</td>
                                         <td>{{$distributor->name}}</td>
                                         <td>{{$distributor->mobile}}</td>
                                         <td></td>
-                                        <td>{{\Auth::user()->id}}</td>
-                                        <td>{{\Auth::user()->name}}</td>
-                                        <td>{{\Auth::user()->mobile}}</td>
+                                        @if($distributor->my_sponsor)
+                                        <td>{{$distributor->my_sponsor->distributor_tracking_id}}</td>
+                                        <td>{{$distributor->my_sponsor->name}}</td>
+                                        <td>{{$distributor->my_sponsor->mobile}}</td>
+                                        @else
                                         <td></td>
                                         <td></td>
+                                        <td></td>
+                                        @endif
                                         <td></td>
                                         <td>
-                                            Activate
+                                            @if($distributor->package)
+                                            {{$distributor->package->package_name}}
+                                            @else
+                                            Free
+                                            @endif
                                         </td>
+                                        <td>
+                                            @if($distributor->package)
+                                            Activate
+                                            @else
+                                            Free
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($distributor->package)
+                                            {{$distributor->package->amount}}
+                                            @else
+                                            Free
+                                            @endif
+                                        </td>
+
                                     </tr>
                                     @endforeach
                                 </tbody>

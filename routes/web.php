@@ -11,9 +11,7 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
-
-
+ */
 
 Auth::routes();
 Route::get('/', 'HomeController@home')->name('home');
@@ -33,22 +31,25 @@ Route::get('/product_detail/{id}', 'HomeController@product_detail')->name('produ
 Route::get('/cart', 'HomeController@cart')->name('cart')->middleware('auth');
 Route::get('/checkout', 'HomeController@checkout')->name('checkout')->middleware('auth');
 Route::post('/checkout', 'HomeController@checkout_store')->name('checkout')->middleware('auth');
+Route::get('/invoice/{id}', 'HomeController@invoice')->name('layouts.invoice')->middleware('auth');
 
 Route::get('/send_otp', 'UserController@send_otp')->name('send_otp');
 Route::get('/loginpage', 'HomeController@loginpage')->name('loginpage');
 Route::get('/registerpage', 'HomeController@registerpage')->name('registerpage');
-Route::get('/dashboard', 'BackendController@dashboard')->name('backend.dashboard');
-Route::get('/dashboard/genealogy_tree', 'BackendController@genealogy_tree')->name('backend.genealogy_tree');
+Route::get('/dashboard', 'BackendController@dashboard')->name('backend.dashboard')->middleware('auth');
+Route::get('distributor/dashboard', 'BackendController@distributor_dashboard')->name('backend.distributor.dashboard')->middleware('auth');
+Route::get('/dashboard/genealogy_tree', 'BackendController@genealogy_tree')->name('backend.genealogy_tree')->middleware('auth');
 
-Route::get('/profile', 'BackendController@profile')->name('backend.profile');
-Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('auth.logout');
+Route::get('/profile', 'BackendController@profile')->name('backend.profile')->middleware('auth');
+Route::post('/profile', 'BackendController@profile_update')->name('backend.profile')->middleware('auth');
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('auth.logout')->middleware('auth');
 Route::get('/distributors/register', ['as' => 'distributors.register', 'uses' => 'DistributorController@register']);
 Route::post('/distributors/register', ['as' => 'distributors.register', 'uses' => 'DistributorController@register_store']);
 Route::get('/distributors/login', ['as' => 'distributors.login', 'uses' => 'DistributorController@login']);
 Route::post('/distributors/login', ['as' => 'distributors.login', 'uses' => 'DistributorController@login_store']);
 Route::post('/distributors/register_send_otp', ['as' => 'distributors.register_send_otp', 'uses' => 'DistributorController@register_send_otp']);
 
-Route::group(['prefix' => 'packages'], function() {    
+Route::group(['prefix' => 'packages', 'middleware' => ['auth']], function () {
     Route::get('/packages/add_product', ['as' => 'backend.packages.add_product', 'uses' => 'PackageController@add_product']);
     Route::get('/', ['as' => 'backend.packages.index', 'uses' => 'PackageController@index']);
     Route::get('/create', ['as' => 'backend.packages.create', 'uses' => 'PackageController@create']);
@@ -58,32 +59,38 @@ Route::group(['prefix' => 'packages'], function() {
     Route::get('/{id}/approve', ['as' => 'backend.packages.approve', 'uses' => 'PackageController@approve']);
     Route::get('/{id}/delete', ['as' => 'backend.packages.delete', 'uses' => 'PackageController@destroy']);
     Route::get('/purchase_package', ['as' => 'backend.packages.purchase_package', 'uses' => 'PackageController@purchase_package']);
-    Route::post('/purchase_package', ['as' => 'backend.packages.purchase_package', 'uses' => 'PackageController@purchase_package_store']);   
+    Route::post('/purchase_package', ['as' => 'backend.packages.purchase_package', 'uses' => 'PackageController@purchase_package_store']);
 });
 
-
-Route::group(['prefix' => 'distributors'], function() {    
+Route::group(['prefix' => 'distributors', 'middleware' => ['auth']], function () {
     Route::get('/list', ['as' => 'backend.distributors.list', 'uses' => 'DistributorController@list']);
     Route::get('/{id}/approve', ['as' => 'backend.distributors.approve', 'uses' => 'DistributorController@approve']);
     Route::get('/{id}/delete', ['as' => 'backend.distributors.delete', 'uses' => 'DistributorController@destroy']);
 });
 
-Route::group(['prefix' => 'distributors'], function() {    
+Route::group(['prefix' => 'distributors'], function () {
     Route::get('/add_to_cart/{id}', ['as' => 'addtocarts.add_to_cart', 'uses' => 'AddtocartController@add_to_cart'])->middleware('auth');
     Route::get('/remove_from_cart/{id}', ['as' => 'addtocarts.remove_from_cart', 'uses' => 'AddtocartController@remove_from_cart'])->middleware('auth');
 });
 
-Route::group(['prefix' => 'kycs'], function() {    
+Route::group(['prefix' => 'kycs', 'middleware' => ['auth']], function () {
     Route::get('/', ['as' => 'backend.kycs.index', 'uses' => 'KycController@index']);
+    Route::get('/{id}/approved', ['as' => 'backend.kycs.approved', 'uses' => 'KycController@approved']);
+    Route::get('/{id}/rejected', ['as' => 'backend.kycs.rejected', 'uses' => 'KycController@rejected']);
+
+    Route::get('/update', ['as' => 'backend.kycs.update', 'uses' => 'KycController@update']);
+    Route::post('/update', ['as' => 'backend.kycs.update', 'uses' => 'KycController@update_store']);
+
     Route::get('/create', ['as' => 'backend.kycs.create', 'uses' => 'KycController@create']);
     Route::post('/create', ['as' => 'backend.kycs.create', 'uses' => 'KycController@store']);
     Route::get('/{id}/edit', ['as' => 'backend.kycs.edit', 'uses' => 'KycController@edit']);
-    Route::post('/{id}/edit', ['as' => 'backend.kycs.edit', 'uses' => 'KycController@update']);
+    Route::post('/{id}/edit', ['as' => 'backend.kycs.edit', 'uses' => 'KycController@edit_store']);
     Route::get('/{id}/approve', ['as' => 'backend.kycs.approve', 'uses' => 'KycController@approve']);
     Route::get('/{id}/delete', ['as' => 'backend.kycs.delete', 'uses' => 'KycController@destroy']);
+
 });
 
-Route::group(['prefix' => 'categories'], function() {    
+Route::group(['prefix' => 'categories', 'middleware' => ['auth']], function () {
     Route::get('/', ['as' => 'backend.categories.index', 'uses' => 'CategoryController@index']);
     Route::get('/create', ['as' => 'backend.categories.create', 'uses' => 'CategoryController@create']);
     Route::post('/create', ['as' => 'backend.categories.create', 'uses' => 'CategoryController@store']);
@@ -91,10 +98,10 @@ Route::group(['prefix' => 'categories'], function() {
     Route::post('/{id}/edit', ['as' => 'backend.categories.edit', 'uses' => 'CategoryController@update']);
     Route::get('/{id}/approve', ['as' => 'backend.categories.approve', 'uses' => 'CategoryController@approve']);
     Route::get('/{id}/delete', ['as' => 'backend.categories.delete', 'uses' => 'CategoryController@destroy']);
-        Route::get('/{id}/product_list', ['as' => 'backend.categories.product_list', 'uses' => 'CategoryController@product_list']);
+    Route::get('/{id}/product_list', ['as' => 'backend.categories.product_list', 'uses' => 'CategoryController@product_list']);
 });
 
-Route::group(['prefix' => 'subcategories'], function() {    
+Route::group(['prefix' => 'subcategories', 'middleware' => ['auth']], function () {
     Route::get('/', ['as' => 'backend.subcategories.index', 'uses' => 'SubcategoryController@index']);
     Route::get('/create', ['as' => 'backend.subcategories.create', 'uses' => 'SubcategoryController@create']);
     Route::post('/create', ['as' => 'backend.subcategories.create', 'uses' => 'SubcategoryController@store']);
@@ -105,7 +112,7 @@ Route::group(['prefix' => 'subcategories'], function() {
     Route::get('/{id}/product_list', ['as' => 'backend.subcategories.product_list', 'uses' => 'SubcategoryController@product_list']);
 });
 
-Route::group(['prefix' => 'products'], function() {    
+Route::group(['prefix' => 'products', 'middleware' => ['auth']], function () {
     Route::get('/', ['as' => 'backend.products.index', 'uses' => 'ProductController@index']);
     Route::get('/create', ['as' => 'backend.products.create', 'uses' => 'ProductController@create']);
     Route::post('/create', ['as' => 'backend.products.create', 'uses' => 'ProductController@store']);
@@ -113,14 +120,10 @@ Route::group(['prefix' => 'products'], function() {
     Route::post('/{id}/edit', ['as' => 'backend.products.edit', 'uses' => 'ProductController@update']);
     Route::get('/{id}/approve', ['as' => 'backend.products.approve', 'uses' => 'ProductController@approve']);
     Route::get('/{id}/delete', ['as' => 'backend.products.delete', 'uses' => 'ProductController@destroy']);
-        Route::get('/{id}/single_view', ['as' => 'backend.products.single_view', 'uses' => 'ProductController@single_view']);
+    Route::get('/{id}/single_view', ['as' => 'backend.products.single_view', 'uses' => 'ProductController@single_view']);
 });
 
-
-
-
-
-Route::group(['prefix' => 'incomes'], function() {    
+Route::group(['prefix' => 'incomes', 'middleware' => ['auth']], function () {
     Route::get('/direct_income', ['as' => 'backend.incomes.direct_income', 'uses' => 'IncomeController@direct_income']);
     Route::get('/reward_income', ['as' => 'backend.incomes.reward_income', 'uses' => 'IncomeController@reward_income']);
     Route::get('/repurchase_income', ['as' => 'backend.incomes.repurchase_income', 'uses' => 'IncomeController@repurchase_income']);
@@ -132,7 +135,7 @@ Route::group(['prefix' => 'incomes'], function() {
     Route::get('/{id}/delete', ['as' => 'backend.incomes.delete', 'uses' => 'IncomeController@destroy']);
 });
 
-Route::group(['prefix' => 'users', 'middleware' => ['auth']], function() {
+Route::group(['prefix' => 'users', 'middleware' => ['auth']], function () {
     Route::get('/changepassword', ['as' => 'myaccount.changepassword', 'uses' => 'UserController@changepassword']);
     Route::post('/changepassword', ['as' => 'myaccount.changepassword', 'uses' => 'UserController@changepasswordpost']);
 });

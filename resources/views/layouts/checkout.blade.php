@@ -267,8 +267,8 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                  $total = 0;
-                                  ?>
+$total = 0;
+?>
                                     @foreach($add_to_carts as $add_to_cart)
                                     <tr class="section-border">
                                         <td class="bg-default section-border text-dark-variant-2">
@@ -278,8 +278,8 @@
                                         </td>
                                     </tr>
                                     <?php
-                                    $total = $total+$add_to_cart->price;
-                                    ?>
+$total = $total + $add_to_cart->price;
+?>
                                     @endforeach
                                     <tr class="section-border">
                                         <th
@@ -308,7 +308,7 @@
                         {!!Form::open(['files'=>true,'class'=>'form-horizontal'])!!}
                         @csrf
                         <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="{{ env('RAZOR_KEY') }}"
-                            data-amount="{{number_format($total, 2, '.', '')}}"
+                            data-amount="{{number_format($total*100, 2, '.', '')}}"
                             data-buttontext="Click Here  To Pay {{number_format($total, 2, '.', '')}} INR"
                             data-name="{{$distributor->name}}"
                             data-description="{{$distributor->distributor_tracking_id}}"

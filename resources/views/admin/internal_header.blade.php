@@ -34,13 +34,13 @@
                 <p class="big"></p>
             </div>
             <div class="swiper-wrapper">
-                <div class="swiper-slide" data-slide-bg="images/header-1.jpg">
+                <div class="swiper-slide" data-slide-bg="{{asset('images/header-1.jpg')}}">
                     <div class="swiper-slide-caption"></div>
                 </div>
-                <div class="swiper-slide" data-slide-bg="images/header-3.jpg">
+                <div class="swiper-slide" data-slide-bg="{{asset('images/header-3.jpg')}}">
                     <div class="swiper-slide-caption"></div>
                 </div>
-                <div class="swiper-slide" data-slide-bg="images/header-4.jpg">
+                <div class="swiper-slide" data-slide-bg="{{asset('images/header-4.jpg')}}">
                     <div class="swiper-slide-caption"></div>
                 </div>
             </div>

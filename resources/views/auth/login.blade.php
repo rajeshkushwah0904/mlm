@@ -68,6 +68,7 @@
                     <div class="row row-30 justify-content-center">
                         <div class="col-lg-6">
                             <div class="button-shadow bg-default py-5 px-3 round-large">
+                                @include('flash')
                                 <h5 class="text-center">Sign in</h5>
                                 <form class="max-width" method="POST" action="{{ route('login') }}">
                                     @csrf

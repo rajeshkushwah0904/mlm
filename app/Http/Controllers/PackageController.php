@@ -119,6 +119,7 @@ class PackageController extends Controller
             $package = \App\Package::find($package_id);
             $distributor = \App\Distributor::find(\Auth::user()->distributor_id);
             $distributor->package_id = $package->id;
+            $distributor->activate_date = date('Y-m-d H:i:s');
             $distributor->save();
                $distributor_level = \App\DistributorLevel::where('L0',\Auth::user()->distributor_id)->first();
               if($distributor_level->L1){  

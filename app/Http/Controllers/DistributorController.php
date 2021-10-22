@@ -38,7 +38,7 @@ $sender="RWFTPL";
 
 //---------------------------------
 
-    $distributor_name=$request->mobile;
+    $distributor_name=$request->name;
 	$mobile=$request->mobile;
     $otp = rand(100000,999999);
     $minutes = 60;
@@ -82,15 +82,20 @@ $sender="RWFTPL";
     }
 
     public function register_store(Request $request) {
+      
 $value = request()->cookie('otp_mobile');
 $otp_mobile = explode(',',$value);
+
+        $sponsor_distributor = \App\Distributor::where('distributor_tracking_id',$request->input('sponsor_tracking_id'))->first();
+        
+if($sponsor_distributor){
 if($otp_mobile[0]==$request->mobile&&$otp_mobile[1]==$request->otp){
 
         $this->validate($request, [            
              'name' => 'required',
              'address' => 'required',
-             'mobile' => 'required',
-             'email' => 'required',
+             'mobile' => ['required', 'string', 'max:255', 'unique:users'],
+             'email' => ['required', 'string', 'max:255', 'unique:users'],
               'nominee' => 'required',
         ]);
         $random = rand(1000000,9999999);  
@@ -98,7 +103,7 @@ if($otp_mobile[0]==$request->mobile&&$otp_mobile[1]==$request->otp){
         if($distributor){
            $random = rand(1000000,9999999);   
         }
-        $sponsor_distributor = \App\Distributor::where('distributor_tracking_id',$request->input('sponsor_tracking_id'))->first();
+
 
 		$distributor = \App\Distributor::create([
 			 'name'=>$request->input('name'),
@@ -132,18 +137,23 @@ if($otp_mobile[0]==$request->mobile&&$otp_mobile[1]==$request->otp){
             $lever_l3 =\App\Distributor::find($sponsor_distributor->sponsor_id);
            if($lever_l3){
             $ditributor_level->L3=$lever_l3->sponsor_id;
-           }
-           $lever_l4 =\App\Distributor::find($lever_l3->sponsor_id);;
+            $lever_l4 =\App\Distributor::find($lever_l3->sponsor_id);;
            if($lever_l4){
             $ditributor_level->L4=$lever_l4->sponsor_id;
            }
+           }
+           
         $ditributor_level->save();
             $abc = Auth::login($user);
 
         session()->flash('success', 'New Distributor Register Successfully');
         return redirect()->route('backend.dashboard');
 }else{
-            session()->flash('error', 'New Package is create Successfully');
+    session()->flash('error', 'OTP does not Match ! Please try Again');
+        return redirect()->back();
+}
+}else{
+            session()->flash('error', 'Sponsor ID is Incorrect');
         return redirect()->back();
 }
     }
@@ -167,11 +177,11 @@ if($otp_mobile[0]==$request->mobile&&$otp_mobile[1]==$request->otp){
             if($user){
             if(Hash::check($request->password, $user->password)) {
                 $abc = Auth::login($user);
-        session()->flash('success', 'Distributor is Login Successfully');
-              return redirect()->route('backend.dashboard');
+                   session()->flash('success', 'Distributor is Login Successfully');
+              return redirect()->route('backend.distributor.dashboard');
             }else{
-        session()->flash('error', 'Data does not match please try Again');
-                     return redirect()->back();   
+                    session()->flash('error', 'Data does not match please try Again');
+              return redirect()->back();   
             }
         }
 

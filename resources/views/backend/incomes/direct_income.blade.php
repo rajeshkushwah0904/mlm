@@ -43,20 +43,28 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $total = 0.00;
-                                    ?>
+$total = 0.00;
+?>
                                     @foreach($incomes as $key=>$income)
                                     <tr>
                                         <td>{{$key+1}}</td>
-                                        <td>{{$income->distributor->distributor_tracking_id}}</td>
+                                        <td>
+                                            @if($income->distributor)
+                                            {{$income->distributor->distributor_tracking_id}}
+                                            @endif
+                                        </td>
                                         <td>{{$income->amount}}</td>
-                                        <td>{{$income->sponsor->distributor_tracking_id}}</td>
+                                        <td>
+                                            @if($income->sponsor)
+                                            {{$income->sponsor->distributor_tracking_id}}
+                                            @endif
+                                        </td>
                                         <td>{{$income->level}}</td>
                                         <td>{{$income->level_percentage}} %</td>
                                         <td style="background: Yellow">Rs. {{$income->sponsor_amount}}</td>
                                         <?php
-$total =$total + $income->sponsor_amount;
-                                        ?>
+$total = $total + $income->sponsor_amount;
+?>
                                     </tr>
                                     @endforeach
                                     <tr>

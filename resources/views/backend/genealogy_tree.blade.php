@@ -183,8 +183,8 @@ right connector from last child*/
                                     <div class="dropdown-divider"></div>
                                     <a href="#" class="dropdown-item"> Activation Date
                                         <span class="float-right text-muted text-sm">
-                                            @if($distributor->updated_at)
-                                            {{$distributor->updated_at->format('d-M-Y')}}
+                                            @if($distributor->activate_date)
+                                            {{$distributor->activate_date->format('d-M-Y')}}
                                             @endif
                                         </span>
                                     </a>
@@ -196,6 +196,14 @@ right connector from last child*/
                                             ({{$distributor->package->amount}} )
                                             @else
                                             Free
+                                            @endif
+                                        </span>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="#" class="dropdown-item"> Total Direct
+                                        <span class="float-right text-muted text-sm">
+                                            @if($distributor->total_direct)
+                                            {{count($distributor->total_direct)}}
                                             @endif
                                         </span>
                                     </a>
@@ -224,8 +232,8 @@ right connector from last child*/
                                             <div class="dropdown-divider"></div>
                                             <a href="#" class="dropdown-item"> Activation Date
                                                 <span class="float-right text-muted text-sm">
-                                                    @if($first_level_distributor1->updated_at)
-                                                    {{$first_level_distributor1->updated_at->format('d-M-Y')}}
+                                                    @if($first_level_distributor1->activate_date)
+                                                    {{$first_level_distributor1->activate_date->format('d-M-Y')}}
                                                     @endif
                                                 </span>
                                             </a>
@@ -237,6 +245,14 @@ right connector from last child*/
                                                     ({{$first_level_distributor1->package->amount}} )
                                                     @else
                                                     Free
+                                                    @endif
+                                                </span>
+                                            </a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item"> Total Direct
+                                                <span class="float-right text-muted text-sm">
+                                                    @if($first_level_distributor1->total_direct)
+                                                    {{count($first_level_distributor1->total_direct)}}
                                                     @endif
                                                 </span>
                                             </a>
@@ -265,8 +281,8 @@ right connector from last child*/
                                                     <div class="dropdown-divider"></div>
                                                     <a href="#" class="dropdown-item"> Activation Date
                                                         <span class="float-right text-muted text-sm">
-                                                            @if($first_level_distributor2->updated_at)
-                                                            {{$first_level_distributor2->updated_at->format('d-M-Y')}}
+                                                            @if($first_level_distributor2->activate_date)
+                                                            {{$first_level_distributor2->activate_date->format('d-M-Y')}}
                                                             @endif
                                                         </span>
                                                     </a>
@@ -278,6 +294,14 @@ right connector from last child*/
                                                             ({{$first_level_distributor2->package->amount}} )
                                                             @else
                                                             Free
+                                                            @endif
+                                                        </span>
+                                                    </a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a href="#" class="dropdown-item"> Total Direct
+                                                        <span class="float-right text-muted text-sm">
+                                                            @if($first_level_distributor2->total_direct)
+                                                            {{count($first_level_distributor2->total_direct)}}
                                                             @endif
                                                         </span>
                                                     </a>
@@ -307,8 +331,8 @@ right connector from last child*/
                                                             <div class="dropdown-divider"></div>
                                                             <a href="#" class="dropdown-item"> Activation Date
                                                                 <span class="float-right text-muted text-sm">
-                                                                    @if($first_level_distributor3->updated_at)
-                                                                    {{$first_level_distributor3->updated_at->format('d-M-Y')}}
+                                                                    @if($first_level_distributor3->activate_date)
+                                                                    {{$first_level_distributor3->activate_date->format('d-M-Y')}}
                                                                     @endif
                                                                 </span>
                                                             </a>
@@ -317,10 +341,17 @@ right connector from last child*/
                                                                 <span class="float-right text-muted text-sm">
                                                                     @if($first_level_distributor3->package)
                                                                     {{$first_level_distributor3->package->package_name}}
-                                                                    ({{$first_level_distributor3->package->amount}}
-                                                                    )
+                                                                    ({{$first_level_distributor3->package->amount}})
                                                                     @else
                                                                     Free
+                                                                    @endif
+                                                                </span>
+                                                            </a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a href="#" class="dropdown-item"> Total Direct
+                                                                <span class="float-right text-muted text-sm">
+                                                                    @if($first_level_distributor3->total_direct)
+                                                                    {{count($first_level_distributor3->total_direct)}}
                                                                     @endif
                                                                 </span>
                                                             </a>

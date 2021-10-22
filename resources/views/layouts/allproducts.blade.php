@@ -67,8 +67,9 @@
                                                 href="{{route('product_detail',$product->id)}}"><img
                                                     src="{{asset($product->image)}}" alt="" /></a>
                                             <div class="caption">
-                                                <h6><a href="product_details">{{$product->name}}</a></h6><span
-                                                    class="price">
+                                                <h6><a
+                                                        href="{{route('product_detail',$product->id)}}">{{$product->name}}</a>
+                                                </h6><span class="price">
                                                     <del>Rs. {{$product->product_price->mrp}}</del></span><span
                                                     class="price sale">Rs.
                                                     {{$product->product_price->distributor_price}}</span>
@@ -95,8 +96,8 @@
                     </div>
                     <div class="col-lg-2">
                         <?php
-                    $categories = \App\Category::all();
-                     ?>
+$categories = \App\Category::all();
+?>
                         < <h5>Categories</h5>
                             @foreach($categories as $category)
                             <div class="w3-dropdown-hover">

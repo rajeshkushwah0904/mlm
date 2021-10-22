@@ -39,10 +39,32 @@
 
                             <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">
-                                    <b>Package</b> <a class="float-right">Free</a>
+                                    <b>Package</b> <a class="float-right">
+                                        @if($distributor->package)
+                                        {{$distributor->package->package_name}} ( {{$distributor->package->amount}} )
+                                        @else
+                                        Free
+                                        @endif
+                                    </a>
                                 </li>
                                 <li class="list-group-item">
-                                    <b>KYC</b> <a class="float-right">Not Updated</a>
+                                    <b>KYC</b> <a class="float-right">
+                                        @if($distributor->kyc)
+                                        @if($distributor->kyc->status==1)
+                                        <button class="btn btn-sm btn-info">Waiting For Approvel</button>
+                                        @elseif($distributor->kyc->status==2)
+                                        <button class="btn btn-sm btn-danger">Reject By Admin</button>
+                                        @elseif($distributor->kyc->status==3)
+                                        <button class="btn btn-sm btn-primary">Resend For Approvel</button>
+                                        @elseif($distributor->kyc->status==4)
+                                        <button class="btn btn-sm btn-success">Approved By Admin</button>
+                                        @endif
+                                        @else
+                                        <button class="btn btn-sm btn-default">Not Updated</button>
+                                        @endif
+
+
+                                    </a>
                                 </li>
 
                             </ul>
@@ -61,12 +83,12 @@
                     <hr>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <button type="button" class="btn btn-danger">Copy</button>
+                            <button type="button" class="btn btn-danger copied_id" onclick="copyText()">Copy</button>
                         </div>
                         <!-- /btn-group -->
                         <input type="text"
                             value="{{$site_route}}/distributors/register?sponsor_tracking_id={{\Auth::user()->distributor_tracking_id}}"
-                            class="form-control">
+                            class="form-control" id="myInput">
                     </div>
                     <!-- About Me Box -->
                     <div class="card card-primary">
@@ -127,7 +149,7 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text">Wallet Income</span>
-                            <span class="info-box-number">0</span>
+                            <span class="info-box-number">{{$wallet_incomes}}</span>
 
                             <div class="progress">
                                 <div class="progress-bar" style="width: 70%"></div>
@@ -146,8 +168,8 @@
                         <span class="info-box-icon"><i class="far fa-thumbs-up"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Direct Income</span>
-                            <span class="info-box-number">{{$direct_incomes}}</span>
+                            <span class="info-box-text">My Direct</span>
+                            <span class="info-box-number">{{$my_direct}}</span>
 
                             <div class="progress">
                                 <div class="progress-bar" style="width: 70%"></div>
@@ -166,8 +188,8 @@
                         <span class="info-box-icon"><i class="far fa-calendar-alt"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Repuchase Income</span>
-                            <span class="info-box-number">{{$repuchase_incomes}}</span>
+                            <span class="info-box-text">Total Income</span>
+                            <span class="info-box-number">{{$total_incomes}}</span>
 
                             <div class="progress">
                                 <div class="progress-bar" style="width: 70%"></div>
@@ -186,8 +208,8 @@
                         <span class="info-box-icon"><i class="fas fa-comments"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Reward Income</span>
-                            <span class="info-box-number">{{$reward_incomes}}</span>
+                            <span class="info-box-text">Total Downline</span>
+                            <span class="info-box-number">{{$total_downline}}</span>
 
                             <div class="progress">
                                 <div class="progress-bar" style="width: 70%"></div>
@@ -208,4 +230,19 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+<script>
+function copyText() {
+    /* Get the text field */
+    var copyText = document.getElementById("myInput");
+
+    /* Select the text field */
+    copyText.select();
+
+    /* Copy the text inside the text field */
+    document.execCommand("copy");
+    $('.copied_id').html('Copied');
+    /* Alert the copied text */
+}
+</script>
+
 @stop

@@ -85,7 +85,7 @@
                             @csrf
                             @if($select_package)
                             <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="{{ env('RAZOR_KEY') }}"
-                                data-amount="{{$select_package->amount}}"
+                                data-amount="{{$select_package->amount*100}}"
                                 data-buttontext="Pay {{$select_package->amount}} INR" data-name="{{$distributor->name}}"
                                 data-package_id="{{$select_package->id}}" data-description="{{$select_package->id}}"
                                 data-image="{{asset('images\rightway_futurel_logo.jpg')}}"

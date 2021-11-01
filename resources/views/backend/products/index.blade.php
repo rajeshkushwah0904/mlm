@@ -1,7 +1,7 @@
 @extends('backend.theme.theme')
 @section('content')
 
-<div class="content-wrapper">
+<div class="content-wrapper" style="width: 100%">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
@@ -34,6 +34,9 @@
                                 <thead>
                                     <tr>
                                         <th>S. No. </th>
+
+                                        <th>Action</th>
+                                        <th>Image</th>
                                         <th>Name</th>
                                         <th>Product Code</th>
                                         <th>HSN Code</th>
@@ -44,13 +47,36 @@
                                         <th>Actual Rate</th>
                                         <th>Category</th>
                                         <th>Subcategory</th>
-                                        <th>Action</th>
+                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($products as $key=>$product)
                                     <tr>
                                         <td>{{$key+1}}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-info btn-sm dropdown-toggle"
+                                                    data-toggle="dropdown">
+                                                    <i class="fa fa-list"></i>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <a class="dropdown-item"
+                                                            href="{{route('backend.products.edit',$product->id)}}">Edit</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item"
+                                                            href="{{route('backend.products.active',$product->id)}}">Active</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item"
+                                                            href="{{route('backend.products.deactive',$product->id)}}">Deactive</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                        <td><img src="{{asset($product->image)}}" style="width: 120px"></td>
                                         <td>{{$product->name}}</td>
                                         <td>{{$product->product_code}}</td>
                                         <td>{{$product->hsn_code}}</td>
@@ -62,12 +88,13 @@
                                         <td>{{$product->product_price->actual_price}}</td>
                                         <td>{{$product->category->name}}</td>
                                         <td>{{$product->subcategory->name}}</td>
-                                        <td>
-                                            <a href="{{route('backend.products.edit',$product->id)}}"
-                                                class="btn btn-sm btn-success">Edit</a>
-                                            <a href="{{route('backend.products.delete',$product->id)}}"
-                                                class="btn btn-sm btn-danger">Delete</a>
+                                        <td>@if($product->status==1)
+                                            Active
+                                            @else
+                                            Deactive
+                                            @endif
                                         </td>
+
                                     </tr>
                                     @endforeach
                                 </tbody>

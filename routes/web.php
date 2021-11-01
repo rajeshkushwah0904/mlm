@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
  */
+$user_login = ((int) request()->segment(2) > 0 ? 'u/' . request()->segment(2) : '');
 
 Auth::routes();
 Route::get('/', 'HomeController@home')->name('home');
@@ -30,8 +31,11 @@ Route::get('/allproducts', 'HomeController@allproducts')->name('allproducts');
 Route::get('/product_detail/{id}', 'HomeController@product_detail')->name('product_detail');
 Route::get('/cart', 'HomeController@cart')->name('cart')->middleware('auth');
 Route::get('/checkout', 'HomeController@checkout')->name('checkout')->middleware('auth');
+Route::post('/checkout_wallet', 'HomeController@checkout_wallet')->name('checkout_wallet')->middleware('auth');
 Route::post('/checkout', 'HomeController@checkout_store')->name('checkout')->middleware('auth');
 Route::get('/invoice/{id}', 'HomeController@invoice')->name('layouts.invoice')->middleware('auth');
+Route::get('/privacy_policy', 'HomeController@privacy_policy')->name('privacy_policy');
+Route::get('/refund_policy', 'HomeController@refund_policy')->name('refund_policy');
 
 Route::get('/send_otp', 'UserController@send_otp')->name('send_otp');
 Route::get('/loginpage', 'HomeController@loginpage')->name('loginpage');
@@ -46,6 +50,8 @@ Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name(
 Route::get('/distributors/register', ['as' => 'distributors.register', 'uses' => 'DistributorController@register']);
 Route::post('/distributors/register', ['as' => 'distributors.register', 'uses' => 'DistributorController@register_store']);
 Route::get('/distributors/login', ['as' => 'distributors.login', 'uses' => 'DistributorController@login']);
+Route::get('/distributors/as_login', ['as' => 'distributors.as_login', 'uses' => 'DistributorController@as_login']);
+
 Route::post('/distributors/login', ['as' => 'distributors.login', 'uses' => 'DistributorController@login_store']);
 Route::post('/distributors/register_send_otp', ['as' => 'distributors.register_send_otp', 'uses' => 'DistributorController@register_send_otp']);
 
@@ -64,6 +70,7 @@ Route::group(['prefix' => 'packages', 'middleware' => ['auth']], function () {
 
 Route::group(['prefix' => 'distributors', 'middleware' => ['auth']], function () {
     Route::get('/list', ['as' => 'backend.distributors.list', 'uses' => 'DistributorController@list']);
+    Route::post('/distributor_filter_data', ['as' => 'backend.distributors.distributor_filter_data', 'uses' => 'DistributorController@distributor_filter_data']);
     Route::get('/{id}/approve', ['as' => 'backend.distributors.approve', 'uses' => 'DistributorController@approve']);
     Route::get('/{id}/delete', ['as' => 'backend.distributors.delete', 'uses' => 'DistributorController@destroy']);
 });
@@ -118,21 +125,74 @@ Route::group(['prefix' => 'products', 'middleware' => ['auth']], function () {
     Route::post('/create', ['as' => 'backend.products.create', 'uses' => 'ProductController@store']);
     Route::get('/{id}/edit', ['as' => 'backend.products.edit', 'uses' => 'ProductController@edit']);
     Route::post('/{id}/edit', ['as' => 'backend.products.edit', 'uses' => 'ProductController@update']);
-    Route::get('/{id}/approve', ['as' => 'backend.products.approve', 'uses' => 'ProductController@approve']);
+    Route::get('/{id}/active', ['as' => 'backend.products.active', 'uses' => 'ProductController@active']);
+    Route::get('/{id}/deactive', ['as' => 'backend.products.deactive', 'uses' => 'ProductController@deactive']);
     Route::get('/{id}/delete', ['as' => 'backend.products.delete', 'uses' => 'ProductController@destroy']);
     Route::get('/{id}/single_view', ['as' => 'backend.products.single_view', 'uses' => 'ProductController@single_view']);
 });
 
+Route::group(['prefix' => 'rewards', 'middleware' => ['auth']], function () {
+    Route::get('/', ['as' => 'backend.rewards.index', 'uses' => 'RewardController@index']);
+    Route::get('/create', ['as' => 'backend.rewards.create', 'uses' => 'RewardController@create']);
+    Route::post('/create', ['as' => 'backend.rewards.create', 'uses' => 'RewardController@store']);
+    Route::get('/{id}/edit', ['as' => 'backend.rewards.edit', 'uses' => 'RewardController@edit']);
+    Route::post('/{id}/edit', ['as' => 'backend.rewards.edit', 'uses' => 'RewardController@update']);
+    Route::get('/{id}/active', ['as' => 'backend.rewards.active', 'uses' => 'RewardController@active']);
+    Route::get('/{id}/deactive', ['as' => 'backend.rewards.deactive', 'uses' => 'RewardController@deactive']);
+    Route::get('/{id}/delete', ['as' => 'backend.rewards.delete', 'uses' => 'RewardController@destroy']);
+    Route::get('/{id}/single_view', ['as' => 'backend.rewards.single_view', 'uses' => 'RewardController@single_view']);
+});
+
+Route::group(['prefix' => 'webcontents', 'middleware' => ['auth']], function () {
+    Route::get('/', ['as' => 'backend.webcontents.index', 'uses' => 'WebcontentController@index']);
+    Route::get('/add_logo', ['as' => 'backend.webcontents.add_logo', 'uses' => 'WebcontentController@add_logo']);
+    Route::post('/create', ['as' => 'backend.webcontents.create', 'uses' => 'WebcontentController@store']);
+    Route::get('/{id}/edit', ['as' => 'backend.webcontents.edit', 'uses' => 'WebcontentController@edit']);
+    Route::post('/{id}/edit', ['as' => 'backend.webcontents.edit', 'uses' => 'WebcontentController@update']);
+    Route::get('/{id}/active', ['as' => 'backend.webcontents.active', 'uses' => 'WebcontentController@active']);
+    Route::get('/{id}/deactive', ['as' => 'backend.webcontents.deactive', 'uses' => 'WebcontentController@deactive']);
+    Route::get('/{id}/delete', ['as' => 'backend.webcontents.delete', 'uses' => 'WebcontentController@destroy']);
+    Route::get('/{id}/single_view', ['as' => 'backend.webcontents.single_view', 'uses' => 'WebcontentController@single_view']);
+});
+
+Route::group(['prefix' => 'banks', 'middleware' => ['auth']], function () {
+    Route::get('/', ['as' => 'backend.banks.index', 'uses' => 'BankController@index']);
+    Route::get('/create', ['as' => 'backend.banks.create', 'uses' => 'BankController@create']);
+    Route::post('/create', ['as' => 'backend.banks.create', 'uses' => 'BankController@store']);
+    Route::get('/{id}/edit', ['as' => 'backend.banks.edit', 'uses' => 'BankController@edit']);
+    Route::post('/{id}/edit', ['as' => 'backend.banks.edit', 'uses' => 'BankController@update']);
+    Route::get('/{id}/approved', ['as' => 'backend.banks.approved', 'uses' => 'BankController@approved']);
+    Route::get('/{id}/rejected', ['as' => 'backend.banks.rejected', 'uses' => 'BankController@rejected']);
+    Route::get('/{id}/delete', ['as' => 'backend.banks.delete', 'uses' => 'BankController@destroy']);
+});
+
 Route::group(['prefix' => 'incomes', 'middleware' => ['auth']], function () {
+
+    Route::get('/all_direct_income', ['as' => 'backend.incomes.all_direct_income', 'uses' => 'IncomeController@all_direct_income']);
     Route::get('/direct_income', ['as' => 'backend.incomes.direct_income', 'uses' => 'IncomeController@direct_income']);
     Route::get('/reward_income', ['as' => 'backend.incomes.reward_income', 'uses' => 'IncomeController@reward_income']);
     Route::get('/repurchase_income', ['as' => 'backend.incomes.repurchase_income', 'uses' => 'IncomeController@repurchase_income']);
+    Route::get('/all_repurchase_income', ['as' => 'backend.incomes.all_repurchase_income', 'uses' => 'IncomeController@all_repurchase_income']);
+
     Route::get('/create', ['as' => 'backend.incomes.create', 'uses' => 'IncomeController@create']);
     Route::post('/create', ['as' => 'backend.incomes.create', 'uses' => 'IncomeController@store']);
     Route::get('/{id}/edit', ['as' => 'backend.incomes.edit', 'uses' => 'IncomeController@edit']);
     Route::post('/{id}/edit', ['as' => 'backend.incomes.edit', 'uses' => 'IncomeController@update']);
     Route::get('/{id}/approve', ['as' => 'backend.incomes.approve', 'uses' => 'IncomeController@approve']);
     Route::get('/{id}/delete', ['as' => 'backend.incomes.delete', 'uses' => 'IncomeController@destroy']);
+});
+
+Route::group(['prefix' => 'orders', 'middleware' => ['auth']], function () {
+    Route::get('/', ['as' => 'backend.orders.index', 'uses' => 'OrderController@index']);
+    Route::get('/view', ['as' => 'backend.orders.view', 'uses' => 'OrderController@view']);
+    Route::get('/print', ['as' => 'backend.orders.print', 'uses' => 'OrderController@print']);
+
+    Route::post('/create', ['as' => 'backend.orders.create', 'uses' => 'OrderController@store']);
+    Route::get('/{id}/edit', ['as' => 'backend.orders.edit', 'uses' => 'OrderController@edit']);
+    Route::post('/{id}/edit', ['as' => 'backend.orders.edit', 'uses' => 'OrderController@update']);
+    Route::get('/{id}/approve', ['as' => 'backend.orders.approve', 'uses' => 'OrderController@approve']);
+    Route::get('/{id}/delete', ['as' => 'backend.orders.delete', 'uses' => 'OrderController@destroy']);
+    Route::get('/{id}/product_list', ['as' => 'backend.orders.product_list', 'uses' => 'OrderController@product_list']);
 });
 
 Route::group(['prefix' => 'users', 'middleware' => ['auth']], function () {

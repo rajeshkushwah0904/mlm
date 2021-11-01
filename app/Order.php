@@ -9,6 +9,7 @@ class Order extends Model
     protected $fillable = [
         'distributor_id',
         'distributor_name',
+        'gst_no',
         'email',
         'mobile',
         'gender',
@@ -19,6 +20,8 @@ class Order extends Model
         'delivery_amount',
         'total_discount',
         'total_amount',
+        'invoice_no',
+        'grand_total',
     ];
 
     public function distributor()

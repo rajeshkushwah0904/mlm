@@ -3,7 +3,7 @@
 
 <head>
     <!--Site Title-->
-    <title>Shopping cart</title>
+    <title>Rightway Future</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -79,14 +79,14 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                    $total=0;
-                                    ?>
+$total = 0;
+?>
                                         @foreach($add_to_carts as $add_to_cart)
                                         <?php
-                                    $subtotal=0;
-                                    $subtotal = $add_to_cart->price*$add_to_cart->qty;
-                                    $total = $total + $subtotal;
-                                    ?>
+$subtotal = 0;
+$subtotal = $add_to_cart->price * $add_to_cart->qty;
+$total = $total + $subtotal;
+?>
                                         <tr class="section-border">
                                             <td class="text-center"><a class="fa-trash-o h5 text-light-clr"
                                                     href="{{route('addtocarts.remove_from_cart',$add_to_cart->id)}}"></a>
@@ -96,7 +96,7 @@
                                                         style="width: 70px" alt="" /></a></td>
                                             <td class="text-start">
                                                 <h6 class="text-dark-variant-4"><a
-                                                        href="single-product.html">{{$add_to_cart->product->name}}</a>
+                                                        href="#">{{$add_to_cart->product->name}}</a>
                                                 </h6>
                                             </td>
                                             <td><span class="price">{{$add_to_cart->price}}</span></td>
@@ -110,33 +110,7 @@
                                 </table>
                             </div>
                         </div>
-                        <!-- <div class="col-12 col-md-8 text-center text-md-start">
-                        <form class="form-shop">
-                            <div class="form-wrap">
-                                <input class="form-input round-small" type="text" placeholder="Coupon Code"
-                                    id="exampleInputText1">
-                            </div>
-                            <button class="button button-default button-xs round-small text-dark-variant-3"
-                                type="submit">Apply Coupon</button>
-                        </form>
-                    </div>
-                    <div class="col-12 col-md-4 text-center text-md-end"><a
-                            class="button button-default button-xs round-small text-dark-variant-3" href="#">Update
-                            cart</a></div>
-                    <div class="col-12 margin-5">
-                        <p class="text-uppercase text-darker-clr font-secondary letter-spacing-1">Cart Totals</p>
-                        <table class="table cart-total">
-                            <thead>
-                                <tr class="font-secondary text-base section-border">
-                                    <th class="bg-lighter">Subtotal</th>
-                                    <th class="bg-lighter text-end"><span class="price">{{$total}}</span></th>
-                                </tr>
-                                <tr class="font-secondary text-base">
-                                    <th class="bg-lighter">Total</th>
-                                    <th class="bg-lighter total text-end"><span class="price">{{$total}}</span></th>
-                                </tr>
-                            </thead>
-                        </table> -->
+
                         @if($total>0)
                         <div class="text-center text-md-end"><a class="button button-primary button-xs round-small"
                                 href="{{route('checkout')}}">Proceed to checkout</a></div>

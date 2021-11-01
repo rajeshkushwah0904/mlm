@@ -29,8 +29,13 @@
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center">
+                                @if($distributor->gender=='Female')
+                                <img class="profile-user-img img-fluid img-circle"
+                                    src="{{asset('backendtheme/female_user.png')}}" alt="User profile picture">
+                                @else
                                 <img class="profile-user-img img-fluid img-circle"
                                     src="{{asset('backendtheme/distributor_icon.png')}}" alt="User profile picture">
+                                @endif
                             </div>
 
                             <h3 class="profile-username text-center">{{\Auth::user()->distributor_tracking_id}}</h3>

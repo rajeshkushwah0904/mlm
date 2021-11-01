@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Providers;
+
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use \App\Webcontent;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-       Schema::defaultStringLength(191);
+        $logo = \App\Webcontent::where('webcontent_type', 1)->orderBy('id', 'DESC')->first();
+        view()->share('site_logo', $logo);
+
+        Schema::defaultStringLength(191);
     }
 }

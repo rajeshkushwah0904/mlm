@@ -14,6 +14,7 @@ class Kyc extends Model
         'account_holder_name',
         'account_number',
         'account_type',
+        'backend_aadhaar_card_file',
         'ifsc_code',
         'bank_name',
         'bank_branch',

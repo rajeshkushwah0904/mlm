@@ -96,7 +96,8 @@ class HomeController extends Controller
     {
         $title = "Banking";
         $page_content = "Manage your financial details.";
-        return view('layouts/banking', compact('title', 'page_content'));
+        $banks = \App\Bank::where('status', 4)->get();
+        return view('layouts.banking', compact('title', 'page_content', 'banks'));
     }
 
     public function allproducts()
@@ -190,7 +191,9 @@ class HomeController extends Controller
             'gender' => $distributor->gender,
             'address' => $distributor->address,
             'pincode' => $distributor->pincode,
+
         ]);
+
         $total_taxable_amount = 0;
         $total_gst_amount = 0;
         $delivery_amount = 50;
@@ -203,13 +206,14 @@ class HomeController extends Controller
                 'order_id' => $order->id,
                 'product_name' => $add_to_cart->product->name,
                 'product_taxable_amount' => $product_price->actual_price,
+                'total_product_taxable_amount' => $product_price->actual_price * $add_to_cart->qty,
                 'product_gst_amount' => $product_price->actual_price * $product_price->gst / 100,
                 'product_amount' => $product_price->bussiness_volume * $add_to_cart->qty,
                 'qty' => $add_to_cart->qty,
             ]);
-            $total_taxable_amount = $total_taxable_amount + $product_price->actual_price;
-            $total_gst_amount = $total_gst_amount + $product_price->actual_price * $product_price->gst / 100;
-            $total_amount = $total_amount + $product_price->bussiness_volume;
+            $total_taxable_amount = $total_taxable_amount + $product_price->actual_price * $add_to_cart->qty;
+            $total_gst_amount = $total_gst_amount + $product_price->actual_price * $add_to_cart->qty * $product_price->gst / 100;
+            $total_amount = $total_amount + $product_price->bussiness_volume * $add_to_cart->qty;
         }
 
         $payment = \App\Payment::create([
@@ -221,12 +225,13 @@ class HomeController extends Controller
             'order_id' => $order->id,
             'order_date' => date('Y-m-d'),
         ]);
-
+        $order->invoice_no = date('Y/m') . "/FR/" . $order->id;
         $order->total_taxable_amount = $total_taxable_amount;
         $order->total_gst_amount = $total_gst_amount;
         $order->delivery_amount = $delivery_amount;
         $order->total_discount = $total_discount;
         $order->total_amount = $total_amount;
+        $order->grand_total = $total_amount + $order->delivery_amount - $order->total_discount;
         $order->save();
         $add_to_carts = \App\Addtocart::where('distributor_id', \Auth::user()->id)->delete();
         $package = \App\Package::find($distributor->package_id);
@@ -292,7 +297,135 @@ class HomeController extends Controller
             ]);
         }
         \Session::put('success', 'Payment successful');
-        return redirect()->route('layout.invoice', $order->id);
+        return redirect()->route('layouts.invoice', $order->id);
+    }
+
+    public function checkout_wallet(Request $request)
+    {
+
+        $input = $request->all();
+
+        $distributor = \App\Distributor::find(\Auth::user()->distributor_id);
+        $distributor->used_wallet_amount = $distributor->used_wallet_amount + $input['amount'];
+        $distributor->remaining_wallet_amount = $distributor->remaining_wallet_amount - $input['amount'];
+        $distributor->save();
+
+        $order = \App\Order::create([
+            'distributor_id' => \Auth::user()->distributor_id,
+            'distributor_name' => \Auth::user()->distributor_tracking_id,
+            'distributor_name' => $distributor->name,
+            'email' => $distributor->email,
+            'mobile' => $distributor->mobile,
+            'gender' => $distributor->gender,
+            'address' => $distributor->address,
+            'pincode' => $distributor->pincode,
+
+        ]);
+
+        $total_taxable_amount = 0;
+        $total_gst_amount = 0;
+        $delivery_amount = 50;
+        $total_discount = 0;
+        $total_amount = 0;
+        $add_to_carts = \App\Addtocart::where('distributor_id', \Auth::user()->id)->get();
+        foreach ($add_to_carts as $add_to_cart) {
+            $product_price = \App\ProductPrice::where('product_id', $add_to_cart->product->id)->first();
+            $order_product = \App\OrderProduct::create([
+                'order_id' => $order->id,
+                'product_name' => $add_to_cart->product->name,
+                'product_taxable_amount' => $product_price->actual_price,
+                'total_product_taxable_amount' => $product_price->actual_price * $add_to_cart->qty,
+                'product_gst_amount' => $product_price->actual_price * $product_price->gst / 100,
+                'product_amount' => $product_price->bussiness_volume * $add_to_cart->qty,
+                'qty' => $add_to_cart->qty,
+            ]);
+            $total_taxable_amount = $total_taxable_amount + $product_price->actual_price * $add_to_cart->qty;
+            $total_gst_amount = $total_gst_amount + $product_price->actual_price * $add_to_cart->qty * $product_price->gst / 100;
+            $total_amount = $total_amount + $product_price->bussiness_volume * $add_to_cart->qty;
+        }
+
+        $payment = \App\Payment::create([
+            'amount' => $input['amount'],
+            'entity' => $input['entity'],
+            'currency' => $input['currency'],
+            'amount_refunded' => $input['amount_refunded'],
+            'distributor_id' => \Auth::user()->distributor_id,
+            'order_id' => $order->id,
+            'order_date' => date('Y-m-d'),
+        ]);
+        $order->invoice_no = date('Y/m') . "/FR/" . $order->id;
+        $order->total_taxable_amount = $total_taxable_amount;
+        $order->total_gst_amount = $total_gst_amount;
+        $order->delivery_amount = $delivery_amount;
+        $order->total_discount = $total_discount;
+        $order->total_amount = $total_amount;
+        $order->grand_total = $total_amount + $order->delivery_amount - $order->total_discount;
+        $order->save();
+        $add_to_carts = \App\Addtocart::where('distributor_id', \Auth::user()->id)->delete();
+        $package = \App\Package::find($distributor->package_id);
+        $distributor_level = \App\DistributorLevel::where('L0', \Auth::user()->distributor_id)->first();
+        if ($distributor_level->L0) {
+            $income = \App\Income::create([
+                'distributor_id' => \Auth::user()->distributor_id,
+                'amount' => $total_amount,
+                'income_type' => 2,
+                'status' => 1,
+                'level' => 'L0',
+                'sponsor_id' => $distributor_level->L0,
+            ]);
+            if ($package) {
+                $level0_income = $total_amount * $package->sponsor_income / 100;
+                $income->level_percentage = $package->sponsor_income;
+                $income->sponsor_amount = $level0_income;
+            } else {
+                $income->level_percentage = 0;
+                $income->sponsor_amount = 0;
+            }
+            $income->save();
+        }
+        if ($distributor_level->L1) {
+            $level1_income = $total_amount * 5 / 100;
+            $income = \App\Income::create([
+                'distributor_id' => \Auth::user()->distributor_id,
+                'amount' => $total_amount,
+                'income_type' => 2,
+                'status' => 1,
+                'level' => 'L1',
+                'level_percentage' => 5,
+                'sponsor_id' => $distributor_level->L1,
+                'sponsor_amount' => $level1_income,
+            ]);
+        }
+        if ($distributor_level->L2) {
+            $level2_income = $total_amount * 3 / 100;
+            $income = \App\Income::create([
+                'distributor_id' => \Auth::user()->distributor_id,
+                'amount' => $total_amount,
+
+                'income_type' => 2,
+                'status' => 1,
+                'level' => 'L2',
+                'level_percentage' => 3,
+                'sponsor_id' => $distributor_level->L2,
+                'sponsor_amount' => $level2_income,
+            ]);
+        }
+        if ($distributor_level->L3) {
+            $level3_income = $total_amount * 2 / 100;
+            $income = \App\Income::create([
+                'distributor_id' => \Auth::user()->distributor_id,
+                'amount' => $total_amount,
+
+                'income_type' => 2,
+                'status' => 1,
+                'level' => 'L3',
+                'level_percentage' => 2,
+                'sponsor_id' => $distributor_level->L3,
+                'sponsor_amount' => $level3_income,
+            ]);
+        }
+        \Session::put('success', 'Payment successful');
+        return redirect()->route('layouts.invoice', $order->id);
     }
 
     public function invoice($id)
@@ -301,5 +434,18 @@ class HomeController extends Controller
         $title = "Invoice Detail";
         $page_content = "Last Order Invoice Detail";
         return view('layouts.invoice', compact('title', 'page_content', 'order'));
+    }
+    public function privacy_policy()
+    {
+        $title = "Privacy policy";
+        $page_content = "We care your privacy, get the freedom to use our services";
+        return view('layouts.privacy_policy', compact('title', 'page_content'));
+    }
+
+    public function refund_policy()
+    {
+        $title = "Cancellation/ Refund Policy";
+        $page_content = "Hassle free refund/Cancellation services";
+        return view('layouts.refund_policy', compact('title', 'page_content'));
     }
 }

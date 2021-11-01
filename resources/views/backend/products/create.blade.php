@@ -36,16 +36,16 @@
                 </div>
                 {!!Form::open(['files'=>true])!!}
                 <?php
-                $categoriesOp = '';
-                $subcategoriesOp = '';
+$categoriesOp = '';
+$subcategoriesOp = '';
 
-                foreach ($categories as $category) {
-                    $categoriesOp = $categoriesOp . '<option value="' . $category->id . '">' . $category->name . '</option>';
-                    foreach ($category->subcategories as $subcategory) {
-                        $subcategoriesOp = $subcategoriesOp . '<option value="' . $subcategory->id . '" class="' . $category->id . '">' . $subcategory->name . '</option>';
-                    }
-                }
-                ?>
+foreach ($categories as $category) {
+    $categoriesOp = $categoriesOp . '<option value="' . $category->id . '">' . $category->name . '</option>';
+    foreach ($category->subcategories as $subcategory) {
+        $subcategoriesOp = $subcategoriesOp . '<option value="' . $subcategory->id . '" class="' . $category->id . '">' . $subcategory->name . '</option>';
+    }
+}
+?>
                 <!-- /.card-header -->
                 <div class="card-body">
                     <div class="row">
@@ -66,7 +66,7 @@
 
                                 <label for="name" class="col-md-2 control-label">hsn_code</label>
                                 <div class="col-md-10">
-                                    <input id="hsn_code" type="text" class="form-control" name="hsn_code"
+                                    <input id="hsn_code" type="number" class="form-control" name="hsn_code"
                                         value="{{ old('hsn_code') }}" required autofocus>
                                     @if ($errors->has('hsn_code'))
                                     <span class="help-block">
@@ -77,7 +77,7 @@
 
                                 <label for="name" class="col-md-2 control-label">product_code</label>
                                 <div class="col-md-10">
-                                    <input id="product_code" type="text" class="form-control" name="product_code"
+                                    <input id="product_code" type="number" class="form-control" name="product_code"
                                         value="{{ old('product_code') }}" required autofocus>
                                     @if ($errors->has('product_code'))
                                     <span class="help-block">
@@ -99,8 +99,9 @@
 
                                 <label for="mrp" class="col-md-2 control-label">mrp</label>
                                 <div class="col-md-10">
-                                    <input id="mrp" type="text" class="form-control" name="mrp" value="{{ old('mrp') }}"
-                                        required autofocus>
+                                    <input id="mrp" type="text" class="form-control" name="mrp"
+                                        onkeyup="this.value=this.value.replace(/[^0-9.+-]/g, '')"
+                                        value="{{ old('mrp') }}" required autofocus>
                                     @if ($errors->has('mrp'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('mrp') }}</strong>
@@ -111,8 +112,9 @@
                                 <label for="distributor_price" class="col-md-2 control-label">Distributor Price</label>
                                 <div class="col-md-10">
                                     <input id="distributor_price" type="text" class="form-control"
-                                        name="distributor_price" value="{{ old('distributor_price') }}" required
-                                        autofocus>
+                                        name="distributor_price"
+                                        onkeyup="this.value=this.value.replace(/[^0-9.+-]/g, '')"
+                                        value="{{ old('distributor_price') }}" required autofocus>
                                     @if ($errors->has('distributor_price'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('distributor_price') }}</strong>
@@ -124,8 +126,9 @@
                                 <label for="bussiness_volume" class="col-md-2 control-label">Bussiness Volume</label>
                                 <div class="col-md-10">
                                     <input id="bussiness_volume" type="text" class="form-control"
-                                        name="bussiness_volume" value="{{ old('bussiness_volume') }}" required
-                                        autofocus>
+                                        name="bussiness_volume"
+                                        onkeyup="this.value=this.value.replace(/[^0-9.+-]/g, '')"
+                                        value="{{ old('bussiness_volume') }}" required autofocus>
                                     @if ($errors->has('bussiness_volume'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('bussiness_volume') }}</strong>
@@ -135,8 +138,9 @@
 
                                 <label for="actual_price" class="col-md-2 control-label">Actual Price</label>
                                 <div class="col-md-10">
-                                    <input id="actual_price" type="text" class="form-control" name="actual_price"
-                                        value="{{ old('actual_price') }}" required autofocus>
+                                    <input id="actual_price" type="text"
+                                        onkeyup="this.value=this.value.replace(/[^0-9.+-]/g, '')" class="form-control"
+                                        name="actual_price" value="{{ old('actual_price') }}" required autofocus>
                                     @if ($errors->has('actual_price'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('actual_price') }}</strong>
@@ -146,8 +150,9 @@
 
                                 <label for="gst" class="col-md-2 control-label">GST</label>
                                 <div class="col-md-10">
-                                    <input id="gst" type="text" class="form-control" name="gst" value="{{ old('gst') }}"
-                                        required autofocus>
+                                    <input id="gst" type="text"
+                                        onkeyup="this.value=this.value.replace(/[^0-9.+-]/g, '')" class="form-control"
+                                        name="gst" value="{{ old('gst') }}" required autofocus>
                                     @if ($errors->has('gst'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('gst') }}</strong>

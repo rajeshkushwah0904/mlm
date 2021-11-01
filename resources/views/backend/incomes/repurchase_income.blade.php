@@ -36,7 +36,20 @@
                                         <th>Distributer Tracking ID</th>
                                         <th>Distributer Amount</th>
                                         <th>Sponsor Tracking ID</th>
-                                        <th>Sponsor Level</th>
+                                        <th>Sponsor Level
+                                            {!!Form::open(['method'=>'GET','files'=>true,'class'=>'form-horizontal'])!!}
+                                            <div class="form-group">
+                                                <select class="form-control select2" name="level" style="width: 100%;"
+                                                    onchange="submit();">
+                                                    <option value="">All</option>
+                                                    <option value="L0" {{'L0' == $level  ? 'selected' : ''}}>L0</option>
+                                                    <option value="L1" {{'L1' == $level ? 'selected' : ''}}>L1</option>
+                                                    <option value="L2" {{'L2' == $level  ? 'selected' : ''}}>L2</option>
+                                                    <option value="L3" {{'L3' == $level  ? 'selected' : ''}}>L3</option>
+                                                </select>
+                                            </div>
+                                            {!!Form::close()!!}
+                                        </th>
                                         <th>Sponsor Income (in Percentage)</th>
                                         <th>Sponsor Income (in Amount)</th>
                                     </tr>

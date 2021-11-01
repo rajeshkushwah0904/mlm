@@ -7,25 +7,25 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Reward income List</h1>
+                    <h1>reward List</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Reward income List</li>
+                        <li class="breadcrumb-item active">Reward List</li>
                     </ol>
                 </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
-    <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Reward income List</h3>
+                            <h3 class="card-title">Reward List</h3>
+
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -33,37 +33,34 @@
                                 <thead>
                                     <tr>
                                         <th>S. No. </th>
-                                        <th>Distributer Tracking ID</th>
-                                        <th>Distributer Amount</th>
-                                        <th>Sponsor Tracking ID</th>
-                                        <th>Sponsor Level</th>
-                                        <th>Sponsor Income Amount</th>
+                                        <th>Tag</th>
+                                        <th>Creteria</th>
+                                        <th>Cash</th>
+                                        <th>Reward</th>
+                                        <th>Status</th>
+                                        <th>Achievement</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
-                                    $total = 0.00;
-                                    ?>
-                                    @foreach($incomes as $key=>$income)
+                                    @foreach($rewards as $key=>$reward)
                                     <tr>
                                         <td>{{$key+1}}</td>
-                                        <td>{{$income->distributor->distributor_tracking_id}}</td>
-                                        <td>{{$income->amount}}</td>
-                                        <td>{{$income->sponsor->distributor_tracking_id}}</td>
-                                        <td>{{$income->level}}</td>
-                                        <td style="background: Yellow">Rs. {{$income->sponsor_amount}}</td>
-                                        <?php
-$total =$total + $income->sponsor_amount;
-                                        ?>
-                                    </tr>
-                                    @endforeach
-                                    <tr>
-                                        <td colspan="5">Total Income</td>
-                                        <td style="background: Yellow">Rs. {{number_format((float)$total,2,'.','')}}
+                                        <td>{{$reward->tag}}</td>
+                                        <td>{{$reward->criteria}}</td>
+                                        <td>{{$reward->cash}}</td>
+                                        <td>{{$reward->reward}}</td>
+                                        <td>
+                                            @if($reward->status==2)
+                                            <button class="btn btn-sm btn-success"> Achievement</button>
+                                            @else
+                                            <button class="btn btn-sm btn-info"> Pending</button>
+                                            @endif
+                                        </td>
+                                        <td>
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
-
                             </table>
                         </div>
                         <!-- /.card-body -->

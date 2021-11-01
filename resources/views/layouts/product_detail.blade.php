@@ -3,7 +3,7 @@
 
 <head>
     <!--Site Title-->
-    <title>Product Detail</title>
+    <title>Rightway Future</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

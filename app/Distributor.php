@@ -24,6 +24,9 @@ class Distributor extends Model
         'gender',
         'profile_image',
         'pincode',
+        'total_wallet_amount',
+        'used_wallet_amount',
+        'remaining_wallet_amount',
     ];
 
     protected $dates = [

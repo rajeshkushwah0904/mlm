@@ -5,16 +5,22 @@
          <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar"><span></span></button>
          <!--RD Navbar Brand-->
          <div class="rd-navbar-brand">
-             <!--Brand--><a class="brand" href="{{url('/')}}"><img class="brand-logo-dark" src="{{asset('logo.png')}}"
-                     alt="" width="155" height="35" /><img class="brand-logo-light" src="{{asset('logo.png')}}" alt=""
+             @if($site_logo)
+             <a class="brand" href="{{url('/')}}"><img class="brand-logo-dark" src="{{asset($site_logo->image)}}" alt=""
+                     width="155" height="35" /><img class="brand-logo-light" src="{{asset($site_logo->image)}}" alt=""
                      width="155" height="35" /></a>
+             @else
+             <a class="brand" href="{{url('/')}}"><img class="brand-logo-dark" src="{{asset('logo.png')}}" alt=""
+                     width="155" height="35" /><img class="brand-logo-light" src="{{asset('logo.png')}}" alt=""
+                     width="155" height="35" /></a>
+             @endif
          </div>
      </div>
      <div class="rd-navbar-nav-wrap"><a class="fa-shopping-cart" href="{{route('cart')}}">
              @if(\Auth::user())
              <?php
-$addtocarts = \App\Addtocart::where('distributor_id',\Auth::user()->distributor_id)->get();
-                  ?>
+$addtocarts = \App\Addtocart::where('distributor_id', \Auth::user()->distributor_id)->get();
+?>
              <sup style="border-radius:50%; border:solid black 1px;padding:2px">
                  {{count($addtocarts)}}
              </sup>

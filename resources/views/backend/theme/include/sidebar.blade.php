@@ -1,7 +1,11 @@
  <aside class="main-sidebar sidebar-dark-primary elevation-4">
      <!-- Brand Logo -->
      <a href="{{route('home')}}" class="brand-link">
+         @if($site_logo)
+         <img src="{{asset($site_logo->image)}}" alt="AdminLTE Logo" class="brand-image" style="opacity: .8">
+         @else
          <img src="{{asset('logo.png')}}" alt="AdminLTE Logo" class="brand-image" style="opacity: .8">
+         @endif
          <br>
          <span class="brand-text font-weight-light"></span>
      </a>
@@ -62,6 +66,10 @@ $distributor = \App\Distributor::where('distributor_tracking_id', \Auth::user()-
 
                      </ul>
                  </li>
+
+
+
+
                  <li class="nav-item">
                      <a href="{{route('backend.profile')}}#" class="nav-link">
                          <i class="nav-icon far fa-image"></i>
@@ -110,6 +118,7 @@ $distributor = \App\Distributor::where('distributor_tracking_id', \Auth::user()-
                          </li>
                      </ul>
                  </li>
+
                  <li class="nav-item has-treeview">
                      <a href="#" class="nav-link">
                          <i class="nav-icon fas fa-chart-pie"></i>
@@ -119,6 +128,12 @@ $distributor = \App\Distributor::where('distributor_tracking_id', \Auth::user()-
                          </p>
                      </a>
                      <ul class="nav nav-treeview">
+                         <li class="nav-item">
+                             <a href="{{route('backend.webcontents.add_logo')}}" class="nav-link">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>Logo</p>
+                             </a>
+                         </li>
                          <li class="nav-item">
                              <a href="{{route('backend.categories.index')}}" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
@@ -137,7 +152,22 @@ $distributor = \App\Distributor::where('distributor_tracking_id', \Auth::user()-
                                  <p>Product</p>
                              </a>
                          </li>
+                         <li class="nav-item">
+                             <a href="{{route('backend.banks.index')}}" class="nav-link">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>Website Bank Detail </p>
+                             </a>
+                         </li>
                      </ul>
+                 </li>
+
+                 <li class="nav-item">
+                     <a href="{{route('backend.orders.index')}}#" class="nav-link">
+                         <i class="nav-icon far fa-image"></i>
+                         <p>
+                             Orders
+                         </p>
+                     </a>
                  </li>
                  @endif
                  @if(\Auth::user()->role==3)
@@ -174,6 +204,14 @@ $distributor = \App\Distributor::where('distributor_tracking_id', \Auth::user()-
                          </p>
                      </a>
                  </li>
+                 <li class="nav-item">
+                     <a href="{{route('backend.orders.index')}}#" class="nav-link">
+                         <i class="nav-icon far fa-image"></i>
+                         <p>
+                             Orders
+                         </p>
+                     </a>
+                 </li>
                  @endif
 
                  <li class="nav-item">
@@ -193,12 +231,34 @@ $distributor = \App\Distributor::where('distributor_tracking_id', \Auth::user()-
                          </p>
                      </a>
                      <ul class="nav nav-treeview">
+                         @if(\Auth::user()->role==1)
+                         <li class="nav-item">
+                             <a href="{{route('backend.incomes.all_direct_income')}}" class="nav-link">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>All Distributor Level Income</p>
+                             </a>
+                         </li>
+
+                         <li class="nav-item">
+                             <a href="{{route('backend.incomes.all_repurchase_income')}}" class="nav-link">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>All Repurchase Income</p>
+                             </a>
+                         </li>
+                         <li class="nav-item">
+                             <a href="{{route('backend.rewards.index')}}" class="nav-link">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>All Reward</p>
+                             </a>
+                         </li>
+                         @endif
                          <li class="nav-item">
                              <a href="{{route('backend.incomes.direct_income')}}" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
-                                 <p>Direct Income</p>
+                                 <p>Level Income</p>
                              </a>
                          </li>
+
                          <li class="nav-item">
                              <a href="{{route('backend.incomes.repurchase_income')}}" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
@@ -274,6 +334,9 @@ $categories = \App\Category::all();
                          @endforeach
                      </ul>
                  </li>
+
+
+
                  <li class="nav-item">
                      <a href="{{route('logout')}}" class="nav-link">
                          <i class="nav-icon far fa-image"></i>

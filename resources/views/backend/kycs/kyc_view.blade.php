@@ -133,7 +133,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Aadhaar Card Image</label>
+                                        <label for="exampleInputEmail1">Frontend Aadhaar Card Image</label>
                                         <img src="{{asset($kyc->aadhaar_card_file)}}" style="width: 100%"
                                             data-toggle="modal" data-target="#aadhaar_card_file">
                                         <div class="modal fade" id="aadhaar_card_file">
@@ -152,6 +152,31 @@
                                             </div>
                                         </div>
                                     </div>
+
+
+
+                                    @if($kyc->backend_aadhaar_card_file)
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Backend Aadhaar Card Image</label>
+                                        <img src="{{asset($kyc->backend_aadhaar_card_file)}}" style="width: 100%"
+                                            data-toggle="modal" data-target="#backend_aadhaar_card_file">
+                                        <div class="modal fade" id="backend_aadhaar_card_file">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Aadhaar Card Image</h4>
+                                                        <button type="button" class="close"
+                                                            data-dismiss="modal">&times;</button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <img src="{{asset($kyc->backend_aadhaar_card_file)}}"
+                                                            style="width: 100%">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">

@@ -215,6 +215,14 @@ $distributor = \App\Distributor::where('distributor_tracking_id', \Auth::user()-
                  @endif
 
                  <li class="nav-item">
+                     <a href="{{route('backend.distributors.downline_list')}}" class="nav-link">
+                         <i class="nav-icon far fa-image"></i>
+                         <p>
+                             Distributor Downline List
+                         </p>
+                     </a>
+                 </li>
+                 <li class="nav-item">
                      <a href="{{route('backend.genealogy_tree')}}" class="nav-link">
                          <i class="nav-icon far fa-image"></i>
                          <p>
@@ -335,8 +343,40 @@ $categories = \App\Category::all();
                      </ul>
                  </li>
 
-
-
+                 @if(\Auth::user()->role==1)
+                 <li class="nav-item has-treeview">
+                     <a href="#" class="nav-link">
+                         <i class="nav-icon fas fa-chart-pie"></i>
+                         <p>
+                             Support
+                             <i class="right fas fa-angle-left"></i>
+                         </p>
+                     </a>
+                     <ul class="nav nav-treeview">
+                         <li class="nav-item">
+                             <a href="{{route('backend.supports.index')}}" class="nav-link">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>Support List</p>
+                             </a>
+                         </li>
+                         <li class="nav-item">
+                             <a href="{{route('backend.supports.add')}}" class="nav-link">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>add Support</p>
+                             </a>
+                         </li>
+                     </ul>
+                 </li>
+                 @else
+                 <li class="nav-item">
+                     <a href="{{route('backend.supports.add')}}#" class="nav-link">
+                         <i class="nav-icon far fa-image"></i>
+                         <p>
+                             Support
+                         </p>
+                     </a>
+                 </li>
+                 @endif
                  <li class="nav-item">
                      <a href="{{route('logout')}}" class="nav-link">
                          <i class="nav-icon far fa-image"></i>

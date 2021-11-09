@@ -70,7 +70,10 @@ Route::group(['prefix' => 'packages', 'middleware' => ['auth']], function () {
 
 Route::group(['prefix' => 'distributors', 'middleware' => ['auth']], function () {
     Route::get('/list', ['as' => 'backend.distributors.list', 'uses' => 'DistributorController@list']);
+    Route::get('/downline_list', ['as' => 'backend.distributors.downline_list', 'uses' => 'DistributorController@downline_list']);
     Route::post('/distributor_filter_data', ['as' => 'backend.distributors.distributor_filter_data', 'uses' => 'DistributorController@distributor_filter_data']);
+    Route::post('/distributor_downline_filter_data', ['as' => 'backend.distributors.distributor_downline_filter_data', 'uses' => 'DistributorController@distributor_downline_filter_data']);
+
     Route::get('/{id}/approve', ['as' => 'backend.distributors.approve', 'uses' => 'DistributorController@approve']);
     Route::get('/{id}/delete', ['as' => 'backend.distributors.delete', 'uses' => 'DistributorController@destroy']);
 });
@@ -193,6 +196,18 @@ Route::group(['prefix' => 'orders', 'middleware' => ['auth']], function () {
     Route::get('/{id}/approve', ['as' => 'backend.orders.approve', 'uses' => 'OrderController@approve']);
     Route::get('/{id}/delete', ['as' => 'backend.orders.delete', 'uses' => 'OrderController@destroy']);
     Route::get('/{id}/product_list', ['as' => 'backend.orders.product_list', 'uses' => 'OrderController@product_list']);
+});
+
+Route::group(['prefix' => 'supports', 'middleware' => ['auth']], function () {
+    Route::get('/', ['as' => 'backend.supports.index', 'uses' => 'SupportController@index']);
+    Route::get('/add', ['as' => 'backend.supports.add', 'uses' => 'SupportController@add']);
+    Route::post('/add', ['as' => 'backend.supports.add', 'uses' => 'SupportController@add_store']);
+    Route::get('/{id}/edit', ['as' => 'backend.supports.edit', 'uses' => 'SupportController@edit']);
+    Route::post('/{id}/edit', ['as' => 'backend.supports.edit', 'uses' => 'SupportController@update']);
+    Route::get('/{id}/open', ['as' => 'backend.supports.open', 'uses' => 'SupportController@open']);
+    Route::get('/{id}/closed', ['as' => 'backend.supports.closed', 'uses' => 'SupportController@closed']);
+    Route::get('/{id}/delete', ['as' => 'backend.supports.delete', 'uses' => 'SupportController@destroy']);
+    Route::get('/{id}/single_view', ['as' => 'backend.supports.single_view', 'uses' => 'SupportController@single_view']);
 });
 
 Route::group(['prefix' => 'users', 'middleware' => ['auth']], function () {

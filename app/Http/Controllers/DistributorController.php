@@ -16,7 +16,6 @@ class DistributorController extends Controller
 
     public function register(Request $request)
     {
-
         $sponsor_tracking_id = $request->sponsor_tracking_id;
         return view('distributors.register', compact('sponsor_tracking_id'));
     }
@@ -188,6 +187,59 @@ class DistributorController extends Controller
         }
     }
 
+    public function distributor_downline_filter_data(Request $request)
+    {
+        $distributor_levels = \App\DistributorLevel::where('L1', \Auth::user()->distributor_id)->orWhere('L2', \Auth::user()->distributor_id)->orWhere('L3', \Auth::user()->distributor_id)->orWhere('L4', \Auth::user()->distributor_id)->get('L0');
+
+        if ($request->distributor_tracking_id) {
+            $distributors = \App\Distributor::where('distributor_tracking_id', $request->distributor_tracking_id)->whereIn('id', $distributor_levels->map(function ($value) {
+                return $value->L0;
+            })
+            )->get();
+
+        } else if ($request->distributor_name) {
+            $distributors = \App\Distributor::where('name', $request->distributor_name)->whereIn('id', $distributor_levels->map(function ($value) {
+                return $value->L0;
+            })
+            )->get();
+
+        } else if ($request->distributor_mobile) {
+            $distributors = \App\Distributor::where('mobile', $request->distributor_mobile)->whereIn('id', $distributor_levels->map(function ($value) {
+                return $value->L0;
+            })
+            )->get();
+
+        } else if ($request->sponsor_id) {
+            $distributors = \App\Distributor::where('sponsor_id', $request->sponsor_id)->whereIn('id', $distributor_levels->map(function ($value) {
+                return $value->L0;
+            })
+            )->get();
+
+        } else if ($request->package_id) {
+            if ($request->package_id == 'Null') {
+                $distributors = \App\Distributor::whereNull('package_id')->whereIn('id', $distributor_levels->map(function ($value) {
+                    return $value->L0;
+                })
+                )->get();
+
+            } else {
+                $distributors = \App\Distributor::where('package_id', $request->package_id)->whereIn('id', $distributor_levels->map(function ($value) {
+                    return $value->L0;
+                })
+                )->get();
+
+            }
+        } else {
+            $distributors = \App\Distributor::whereIn('id', $distributor_levels->map(function ($value) {
+                return $value->L0;
+            })
+            )->get();
+
+        }
+        return view('backend.distributors.distributor_downline_filter_data', compact('distributors'));
+
+    }
+
     public function distributor_filter_data(Request $request)
     {
 
@@ -227,6 +279,28 @@ class DistributorController extends Controller
         return view('backend.distributors.list', compact('distributors'));
     }
 
+    public function downline_list(Request $request)
+    {
+        $distributor_levels = \App\DistributorLevel::where('L1', \Auth::user()->distributor_id)->orWhere('L2', \Auth::user()->distributor_id)->orWhere('L3', \Auth::user()->distributor_id)->orWhere('L4', \Auth::user()->distributor_id)->get('L0');
+        $packages = \App\Package::all();
+        if (\Auth::user()->role == 1) {
+            $distributors = \App\Distributor::whereIn('id', $distributor_levels->map(function ($value) {
+                return $value->L0;
+            })
+            )->get();
+
+            return view('backend.distributors.downline_list', compact('distributors', 'packages'));
+
+        } else {
+
+            $distributors = \App\Distributor::whereIn('id', $distributor_levels->map(function ($value) {
+                return $value->L0;
+            })
+            )->get();
+        }
+        return view('backend.distributors.downline_list', compact('distributors', 'packages'));
+    }
+
     public function login(Request $request)
     {
         return view('distributors.login');
@@ -244,6 +318,9 @@ class DistributorController extends Controller
                 session()->flash('error', 'Data does not match please try Again');
                 return redirect()->back();
             }
+        } else {
+            session()->flash('error', 'Data does not match please try Again');
+            return redirect()->back();
         }
 
     }

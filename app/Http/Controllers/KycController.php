@@ -58,7 +58,6 @@ class KycController extends Controller
             'bank_branch' => 'required',
             'pancard_file' => 'required',
             'aadhaar_card_file' => 'required',
-            'backend_aadhaar_card_file' => 'required',
             'bank_document' => 'required',
         ]);
 
@@ -109,7 +108,8 @@ class KycController extends Controller
         }
         $kyc->save();
         session()->flash('success', 'New Package is create Successfully');
-        return redirect()->route('backend.kycs.index');
+     return redirect()->back();
+
     }
 
     /**
@@ -193,7 +193,6 @@ class KycController extends Controller
             'bank_branch' => 'required',
             'pancard_file' => 'required',
             'aadhaar_card_file' => 'required',
-            'backend_aadhaar_card_file' => 'required',
             'bank_document' => 'required',
         ]);
 
@@ -209,7 +208,8 @@ class KycController extends Controller
         $kyc->pancard_file = $request->input('pancard_file');
         $kyc->aadhaar_card_file = $request->input('aadhaar_card_file');
         $kyc->bank_document = $request->input('bank_document');
-        $kyc->status = 1;
+        $kyc->status = 3;
+
         if ($request->file('pancard_file')) {
             $file = $request->file('pancard_file');
             $filename = $file->getClientOriginalName();
@@ -217,6 +217,7 @@ class KycController extends Controller
             $file->move("upload", $fullname);
             $kyc->pancard_file = 'upload/' . $fullname;
         }
+
         if ($request->file('aadhaar_card_file')) {
             $file = $request->file('aadhaar_card_file');
             $filename = $file->getClientOriginalName();
@@ -243,8 +244,7 @@ class KycController extends Controller
 
         $kyc->save();
         session()->flash('success', 'KYC Are Update Succussfully');
-        return redirect()->route('backend.kycs.index');
-
+        return redirect()->back();
     }
 
     public function update(Request $request)

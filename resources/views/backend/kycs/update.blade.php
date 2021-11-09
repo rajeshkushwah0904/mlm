@@ -133,7 +133,7 @@
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Backend Aadhaar Card Image</label>
                                         <input type="file" name="backend_aadhaar_card_file" class="form-control"
-                                            id="exampleInputEmail1" Required>
+                                            id="exampleInputEmail1">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -144,8 +144,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
                 </div>

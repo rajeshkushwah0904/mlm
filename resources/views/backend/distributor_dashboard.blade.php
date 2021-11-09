@@ -29,12 +29,17 @@
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center">
+                                @if($distributor->profile_image)
+                                <img class="profile-user-img img-fluid img-circle"
+                                    src="{{asset($distributor->profile_image)}}" alt="User profile picture">
+                                @else
                                 @if($distributor->gender=='Female')
                                 <img class="profile-user-img img-fluid img-circle"
                                     src="{{asset('backendtheme/female_user.png')}}" alt="User profile picture">
                                 @else
                                 <img class="profile-user-img img-fluid img-circle"
                                     src="{{asset('backendtheme/distributor_icon.png')}}" alt="User profile picture">
+                                @endif
                                 @endif
                             </div>
 

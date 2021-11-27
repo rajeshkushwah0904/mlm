@@ -33,6 +33,7 @@
                                 <thead>
                                     <tr>
                                         <th>S. No. </th>
+                                        <th>Distributor ID</th>
                                         <th>Invoice No.</th>
                                         <th>Total Amount</th>
                                         <th>Action</th>
@@ -42,6 +43,11 @@
                                     @foreach($orders as $key=>$order)
                                     <tr>
                                         <td>{{$key+1}}</td>
+                                        <td>
+                                            @if($order->distributor)
+                                            {{$order->distributor->name}}({{$order->distributor->distributor_tracking_id}})
+                                            @endif
+                                        </td>
                                         <td>{{$order->invoice_no}}</td>
                                         <td>{{$order->grand_total}}</td>
                                         <td>

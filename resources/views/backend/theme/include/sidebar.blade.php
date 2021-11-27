@@ -86,14 +86,31 @@ $distributor = \App\Distributor::where('distributor_tracking_id', \Auth::user()-
                          </p>
                      </a>
                  </li>
-                 <li class="nav-item">
-                     <a href="{{route('backend.packages.index')}}" class="nav-link">
-                         <i class="nav-icon far fa-image"></i>
+                  <li class="nav-item has-treeview">
+                     <a href="#" class="nav-link">
+                         <i class="nav-icon fas fa-chart-pie"></i>
                          <p>
                              Package
+                             <i class="right fas fa-angle-left"></i>
                          </p>
                      </a>
+                     <ul class="nav nav-treeview">
+                         <li class="nav-item">
+                             <a href="{{route('backend.packages.index')}}" class="nav-link">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>Package List</p>
+                             </a>
+                         </li>
+                         <li class="nav-item">
+                             <a href="{{route('backend.packages.purchase_for_other')}}" class="nav-link">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>Purchase Package For Other Distributor</p>
+                             </a>
+                         </li>
+
+                     </ul>
                  </li>
+                
 
                  <li class="nav-item has-treeview">
                      <a href="#" class="nav-link">

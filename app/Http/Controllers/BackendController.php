@@ -41,9 +41,14 @@ class BackendController extends Controller
     public function dashboard(Request $request)
     {
         $packages = \App\Package::all();
-        $distributors = \App\Distributor::all();
+        $total_distributors = \App\Distributor::orderBy('id', 'ASC')->count();
+        $total_active_distributors = \App\Distributor::whereNotNull('package_id')->count();
+
+        $today_distributors = \App\Distributor::whereDate('activate_date', date('Y-m-d'))->count();
+        $today_active_distributors = \App\Distributor::whereDate('activate_date', date('Y-m-d'))->whereNotNull('package_id')->count();
+
         $products = \App\Product::all();
-        return view('backend.dashboard', compact('packages', 'distributors', 'products'));
+        return view('backend.dashboard', compact('packages', 'total_distributors', 'total_active_distributors', 'today_distributors', 'today_active_distributors', 'products'));
 
     }
 
@@ -59,13 +64,21 @@ class BackendController extends Controller
             ->count();
         $wallet_incomes = \App\Income::where('sponsor_id', \Auth::user()->distributor_id)->sum('sponsor_amount');
         $total_incomes = \App\Income::where('sponsor_id', \Auth::user()->distributor_id)->sum('sponsor_amount');
-        return view('backend.distributor_dashboard', compact('my_direct', 'total_downline', 'site_route', 'total_incomes', 'wallet_incomes', 'distributor'));
+        $self_business = \App\Income::where('sponsor_id', \Auth::user()->distributor_id)->sum('sponsor_amount');
+        $total_busness = \App\Income::where('sponsor_id', \Auth::user()->distributor_id)->sum('sponsor_amount');
+        return view('backend.distributor_dashboard', compact('my_direct', 'total_downline', 'site_route', 'total_incomes', 'wallet_incomes', 'distributor', 'total_busness', 'self_business'));
     }
 
     public function genealogy_tree(Request $request)
     {
         $site_route = $request->getSchemeAndHttpHost();
-        $distributor = \App\Distributor::where('distributor_tracking_id', \Auth::user()->distributor_tracking_id)->first();
+        if ($request->distributor_id) {
+            $distributor = \App\Distributor::find($request->distributor_id);
+        } else {
+            $distributor = \App\Distributor::where('distributor_tracking_id', \Auth::user()->distributor_tracking_id)->first();
+
+        }
+
         return view('backend.genealogy_tree', compact('distributor'));
 
     }

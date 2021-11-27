@@ -52,6 +52,32 @@
 
         <section class="section section-sm text-center text-lg-start section-border">
             <div class="container">
+                 <div class="container ot-1">
+          <div class="row justify-content-center">
+            <div class="col-xl-10 col-xl-offset-1">
+              <!--Tabs-->
+              <div class="tabs-custom tabs-horizontal tabs-corporate" id="tabs-1">
+<?php
+$categories = \App\Category::all();
+?>
+                <ul class="nav nav-tabs text-center myTabs" role="tablist">
+                  @foreach($categories as $category)
+                  <li class="round-xl nav-item"" role="presentation"><a  class="round-xl nav-link" href="#tab{{$category->id}}" data-bs-toggle="tab" aria-controls="tab{{$category->id}}" role="tab">{{$category->name}}</a></li>
+                  @endforeach
+                </ul>
+                <div class="tab-content text-center" style="margin-top: -60px">
+                    @foreach($categories as $xkey=>$category1)
+                     <div class="tab-pane fade" role="tabpanel" id="tab{{$category1->id}}">
+                      @foreach($category1->subcategories as $subcategory)
+                      <a class="button button-default button-xs round-xl button-shadow" href="{{route('layout.subcategory',$subcategory->id)}}">{{$subcategory->name}}</a>
+                      @endforeach
+                    </div>
+                  @endforeach
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
                 <div class="row justify-content-between flex-lg-row-reverse row-50">
                     <div class="col-lg-10">
 
@@ -95,22 +121,20 @@
                         </div>
                     </div>
                     <div class="col-lg-2">
-                        <?php
-$categories = \App\Category::all();
-?>
-                        < <h5>Categories</h5>
-                            @foreach($categories as $category)
+ 
+                         <h5>Categories</h5>
+                            
                             <div class="w3-dropdown-hover">
                                 <a class="w3-button w3-black"
-                                    href="{{route('layout.category',$category->id)}}">{{$category->name}}</a>
+                                    href="">{{$category->name}}</a>
                                 <div class="w3-dropdown-content w3-bar-block w3-border">
                                     @foreach($category->subcategories as $subcategory)
-                                    <a href="{{route('layout.subcategory',$subcategory->id)}}"
+                                    <a href=""
                                         class="w3-bar-item w3-button">{{$subcategory->name}}</a>
                                     @endforeach
                                 </div>
                             </div>
-                            @endforeach
+                            
 
                     </div>
                 </div>

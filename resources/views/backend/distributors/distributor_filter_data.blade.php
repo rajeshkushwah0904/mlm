@@ -11,7 +11,9 @@
                      <a class="dropdown-item" href="http://distributor.mlmproject.testing/distributors/as_login
 ?distributor_tracking_id={{$distributor->distributor_tracking_id}}" target="_blank">Login as a Distributor</a>
                  </li>
-
+<li>
+                     <a class="dropdown-item" href="{{route('backend.distributors.block',$distributor->id)}}">Block</a>
+                 </li>
              </ul>
          </div>
      </td>

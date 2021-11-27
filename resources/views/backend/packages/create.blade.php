@@ -38,26 +38,34 @@
                     {!!Form::open(['files'=>true,'class'=>'form-horizontal'])!!}
                     {{csrf_field()}}
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Package Name</label>
                                 <input type="text" name="package_name" value="{{old('package_name')}}"
                                     class="form-control" id="exampleInputEmail1" placeholder="Package Name" Required>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Amount</label>
                                 <input type="number" name="amount" class="form-control" value="{{old('amount')}}"
                                     id="exampleInputEmail1" placeholder="Enter Amount" Required>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Sponsor Income</label>
                                 <input type="text" name="sponsor_income" class="form-control"
                                     value="{{old('sponsor_income')}}" id="exampleInputEmail1"
                                     placeholder="Enter Sponsor Income" Required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Bussiness Income</label>
+                                <input type="text" name="business_amount" class="form-control"
+                                    value="{{old('business_amount')}}" id="exampleInputEmail1"
+                                    placeholder="Enter Bussiness Income" Required>
                             </div>
                         </div>
                     </div>

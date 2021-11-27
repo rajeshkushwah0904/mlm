@@ -130,7 +130,7 @@ class SubcategoryController extends Controller
      * @return Response
      */
      public function destroy($id) {
-        $subcategory = $this->group->find($id);
+       $subcategory = \App\Subcategory::find($id);
         if ($subcategory->count()) {
             $subcategory->delete();
             session()->flash('success', 'Selected Group deleted successfully.');

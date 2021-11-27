@@ -38,21 +38,21 @@
                     {!!Form::open(['files'=>true,'class'=>'form-horizontal'])!!}
                     {{csrf_field()}}
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Package Name</label>
                                 <input type="text" name="package_name" value="{{$package->package_name}}"
                                     class="form-control" id="exampleInputEmail1" placeholder="Package Name" Required>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Amount</label>
                                 <input type="number" name="amount" class="form-control" value="{{$package->amount}}"
                                     id="exampleInputEmail1" placeholder="Enter Amount" Required>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Sponsor Income</label>
                                 <input type="text" name="sponsor_income" class="form-control"
@@ -60,46 +60,42 @@
                                     placeholder="Enter Sponsor Income" Required>
                             </div>
                         </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Bussiness Income</label>
+                                <input type="text" name="business_volume" class="form-control"
+                                    value="{{old('business_volume')}}" id="exampleInputEmail1"
+                                    placeholder="Enter Bussiness Income" Required>
+                            </div>
+                        </div>
                     </div>
                     @foreach($package->package_products as $package_product)
+                    <input type="hidden" name="package_product[]" class="form-control" value="{{$package_product->id}}"
+                        Required>
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Product/Service</label>
-                                <input type="text" name="service_name[]" class="form-control"
-                                    value="{{$package_product->service_name}}" id="exampleInputEmail1"
-                                    placeholder="Enter Product/Service Name" Required>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Price</label>
-                                <input type="number" name="price[]" class="form-control"
-                                    value="{{$package_product->price}}" id="exampleInputEmail1"
-                                    placeholder="Enter Price" Required>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">HSN/ SAC Code</label>
-                                <input type="number" name="hsn_sac[]" class="form-control"
-                                    value="{{$package_product->hsn_sac}}" id="exampleInputEmail1"
-                                    placeholder="Enter HSN/ SAC Code" Required>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">GST Slab</label>
-                                <select class="custom-select" name="gst_rate[]" Required>
-                                    <option value="">Select GST Slab Rate</option>
-                                    <option value="0" {{$package_product->gst_rate ==0?'selected':''}}>0 %</option>
-                                    <option value="5" {{$package_product->gst_rate ==5?'selected':''}}>5 %</option>
-                                    <option value="12" {{$package_product->gst_rate ==12?'selected':''}}>12 %</option>
-                                    <option value="18" {{$package_product->gst_rate ==18?'selected':''}}>18 %</option>
-                                    <option value="28" {{$package_product->gst_rate ==28?'selected':''}}>28 %</option>
+                                <select class="custom-select" name="product_id[]" Required>
+                                    <option value="">Select Product</option>
+                                    @foreach($products as $product)
+                                    @if($product->id == $package_product->product_id)
+                                    <option value="{{$product->id}}" selected="selected">{{$product->name}}</option>
+                                    @else
+                                    <option value="{{$product->id}}">{{$product->name}}</option>
+                                    @endif
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Quantity</label>
+                                <input type="number" name="qty[]" class="form-control" value="{{$package_product->qty}}"
+                                    id="exampleInputEmail1" placeholder="Enter Qty Rate" Required>
+                            </div>
+                        </div>
+
                     </div>
                     @endforeach
                     <!-- <div class="appnd-result"></div>

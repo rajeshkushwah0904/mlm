@@ -16,6 +16,8 @@ $user_login = ((int) request()->segment(2) > 0 ? 'u/' . request()->segment(2) : 
 
 Auth::routes();
 Route::get('/', 'HomeController@home')->name('home');
+Route::get('/qr_code', 'HomeController@qr_code')->name('qr_code');
+
 Route::get('/home', 'HomeController@home')->name('home');
 Route::get('category/{id}', 'HomeController@category')->name('layout.category');
 Route::get('/subcategory/{id}', 'HomeController@category')->name('layout.subcategory');
@@ -66,16 +68,20 @@ Route::group(['prefix' => 'packages', 'middleware' => ['auth']], function () {
     Route::get('/{id}/delete', ['as' => 'backend.packages.delete', 'uses' => 'PackageController@destroy']);
     Route::get('/purchase_package', ['as' => 'backend.packages.purchase_package', 'uses' => 'PackageController@purchase_package']);
     Route::post('/purchase_package', ['as' => 'backend.packages.purchase_package', 'uses' => 'PackageController@purchase_package_store']);
+    Route::get('/purchase_for_other', ['as' => 'backend.packages.purchase_for_other', 'uses' => 'PackageController@purchase_for_other']);
+    Route::post('/purchase_for_other', ['as' => 'backend.packages.purchase_for_other', 'uses' => 'PackageController@purchase_for_other_store']);
 });
 
 Route::group(['prefix' => 'distributors', 'middleware' => ['auth']], function () {
+    
     Route::get('/list', ['as' => 'backend.distributors.list', 'uses' => 'DistributorController@list']);
     Route::get('/downline_list', ['as' => 'backend.distributors.downline_list', 'uses' => 'DistributorController@downline_list']);
     Route::post('/distributor_filter_data', ['as' => 'backend.distributors.distributor_filter_data', 'uses' => 'DistributorController@distributor_filter_data']);
     Route::post('/distributor_downline_filter_data', ['as' => 'backend.distributors.distributor_downline_filter_data', 'uses' => 'DistributorController@distributor_downline_filter_data']);
-
-    Route::get('/{id}/approve', ['as' => 'backend.distributors.approve', 'uses' => 'DistributorController@approve']);
+    Route::get('/{id}/block', ['as' => 'backend.distributors.block', 'uses' => 'DistributorController@block']);
+    Route::get('/{id}/activate', ['as' => 'backend.distributors.activate', 'uses' => 'DistributorController@activate']);
     Route::get('/{id}/delete', ['as' => 'backend.distributors.delete', 'uses' => 'DistributorController@destroy']);
+    
 });
 
 Route::group(['prefix' => 'distributors'], function () {

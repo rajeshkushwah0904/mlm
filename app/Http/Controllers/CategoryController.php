@@ -120,7 +120,7 @@ class CategoryController extends Controller
      * @return Response
      */
      public function destroy($id) {
-        $category = $this->category->find($id);
+        $category = \App\Category::find($id);
         if ($category->count()) {
             $category->delete();
             session()->flash('success', 'Selected Group deleted successfully.');

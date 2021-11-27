@@ -65,6 +65,8 @@ $addtocarts = \App\Addtocart::where('distributor_id', \Auth::user()->distributor
                      </li>
                      <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="{{route('banking')}}">Banking</a>
                      </li>
+                      <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="{{route('qr_code')}}">QR Code</a>
+                     </li>
                      <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="{{route('faq')}}">FAQ</a>
                      </li>
                      <li class="rd-dropdown-item"><a class="rd-dropdown-link"

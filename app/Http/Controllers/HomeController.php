@@ -100,6 +100,16 @@ class HomeController extends Controller
         return view('layouts.banking', compact('title', 'page_content', 'banks'));
     }
 
+
+        public function qr_code()
+    {
+        $title = "QRCode";
+        $page_content = "Scan Code For Payment";
+        return view('layouts.qr_code', compact('title', 'page_content'));
+    }
+
+    
+
     public function allproducts()
     {
 
@@ -132,7 +142,8 @@ class HomeController extends Controller
         $product = \App\Product::find($id);
         $title = "Product Detail";
         $page_content = "Manage your financial details.";
-        return view('layouts.product_detail', compact('title', 'page_content', 'product'));
+        $products = \App\Product::whereNotIn('id',[$product->id])->paginate(10);
+        return view('layouts.product_detail', compact('title','page_content','product','products'));
     }
 
     public function cart()

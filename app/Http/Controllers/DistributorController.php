@@ -102,7 +102,7 @@ class DistributorController extends Controller
                     'email' => $request->input('email'),
                     'address' => $request->input('address'),
                     'mobile' => $request->input('mobile'),
-                    'status' => 0,
+                    'status' => 1,
                     'distributor_is_paid' => 0,
                     'sponsor_id' => $sponsor_distributor->id,
                     'nominee' => $request->input('nominee'),
@@ -277,6 +277,37 @@ class DistributorController extends Controller
             $distributors = \App\Distributor::where('sponsor_tracking_id', '=', \Auth::user()->distributor_tracking_id)->get();
         }
         return view('backend.distributors.list', compact('distributors'));
+    }
+
+
+
+
+
+        public function activate($id)
+    {
+        $distributor = \App\Distributor::find($id);
+
+        if ($distributor) {
+            $distributor->status = 1;
+            $distributor->save();
+
+            return redirect()->route('backend.distributors.list');
+
+        }
+        return redirect()->route('backend.distributors.list');
+    }
+
+    public function block($id)
+    {
+        $distributor = \App\Distributor::find($id);
+
+        if ($distributor) {
+            $distributor->status = 2;
+            $distributor->save();
+            return redirect()->route('backend.distributors.list');
+
+        }
+        return redirect()->route('backend.distributors.list');
     }
 
     public function downline_list(Request $request)

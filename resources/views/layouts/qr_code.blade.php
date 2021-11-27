@@ -54,34 +54,17 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-xl-6 bg-default text-center">
-                        <h1 class="fw-bold">Banking Details</h1>
+                        <h1 class="fw-bold">QR Code</h1>
                         <p class="lead">We worked out an amazing combination of vast functionality and user's comfort.
                             It will totally impress you with its power!</p>
                     </div>
                 </div>
                 <div class="row margin-1 row-11">
-                    @foreach($banks as $bank)
+                   
+                    
                     <div class="col-md-6">
-                        
-                        <div class="box-sm box-skin-1 bg-lighter box-skin-left-offset-negative">
-                            <div class="box__left box-md-inset-1"><span
-                                    class="icon icon-md icon-primary line-height-1 fa-code"></span></div>
-                            <div class="box__body box__middle">
-                                <h5><a href="#">{{$bank->bank_name}}</a></h5>
-                                <p>
-                                    <li>Account Holder Name: {{$bank->account_holder_name}}</li>
-                                    <li>Branch Name: {{$bank->account_holder_name}}</li>
-                                    <li>Account Type: {{$bank->account_type}}</li>
-                                    <li>Account Number: {{$bank->account_number}}</li>
-                                    <li>IFSC code: {{$bank->ifsc_code}}</li>
-                                </p>
-
-                            </div>
-                        </div>
-                       
-                    </div>
-                     @endforeach
-          
+                        <img src="{{asset('mlm_phonepay.jpeg')}}"style="width: 100%">
+</div>
                   
 
 

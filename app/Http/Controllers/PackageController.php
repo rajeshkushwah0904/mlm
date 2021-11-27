@@ -58,11 +58,13 @@ class PackageController extends Controller
             'package_name' => 'required',
             'amount' => 'required',
             'sponsor_income' => 'required',
+            'business_volume'=> 'required',
         ]);
 
         $package = \App\Package::create([
             'package_name' => $request->input('package_name'),
             'amount' => $request->input('amount'),
+             'business_volume' => $request->input('business_volume'),
             'sponsor_income' => $request->input('sponsor_income'),
         ]);
         $input = $request->all();
@@ -97,7 +99,7 @@ class PackageController extends Controller
         }
     }
 
-    public function purchase_package_store(Request $request)
+  public function purchase_package_store(Request $request)
     {
         $input = $request->all();
         $api = new Api(env('RAZOR_KEY'), env('RAZOR_SECRET'));
@@ -181,6 +183,94 @@ class PackageController extends Controller
         }
     }
 
+
+
+    public function purchase_for_other(Request $request)
+    {
+        $distributors = \App\Distributor::whereNull('package_id')->get();
+        $packages = \App\Package::all();
+            return view('backend.packages.purchase_for_other', compact('packages', 'distributors'));
+
+    }
+
+
+    public function purchase_for_other_store(Request $request)
+    {
+        $input = $request->all();
+
+                $package_id = $input['package_id'];
+                $package = \App\Package::find($package_id);
+                $distributor = \App\Distributor::find($input['distributor_id']);
+                $distributor->package_id = $package->id;
+                $distributor->activate_date = date('Y-m-d H:i:s');
+                $distributor->save();
+                $distributor_level = \App\DistributorLevel::where('L0', $input['distributor_id'])->first();
+                if ($distributor_level->L1) {
+                    $level1_income = $package->amount * $package->sponsor_income / 100;
+                    $income = \App\Income::create([
+                        'distributor_id' => $input['distributor_id'],
+                        'amount' => $package->amount,
+                        'package_id' => $package->id,
+                        'income_type' => 1,
+                        'status' => 1,
+                        'level' => 'L1',
+                        'level_percentage' => $package->sponsor_income,
+                        'sponsor_id' => $distributor_level->L1,
+                        'sponsor_amount' => $level1_income,
+                    ]);
+                }
+                if ($distributor_level->L2) {
+                    $level2_income = $package->amount * 5 / 100;
+                    $income = \App\Income::create([
+                        'distributor_id' => $input['distributor_id'],
+                        'amount' => $package->amount,
+                        'package_id' => $package->id,
+                        'income_type' => 1,
+                        'status' => 1,
+                        'level' => 'L2',
+                        'level_percentage' => 5,
+                        'sponsor_id' => $distributor_level->L2,
+                        'sponsor_amount' => $level2_income,
+                    ]);
+                }
+                if ($distributor_level->L3) {
+                    $level3_income = $package->amount * 3 / 100;
+                    $income = \App\Income::create([
+                        'distributor_id' => $input['distributor_id'],
+                        'amount' => $package->amount,
+                        'package_id' => $package->id,
+                        'income_type' => 1,
+                        'status' => 1,
+                        'level' => 'L3',
+                        'level_percentage' => 3,
+                        'sponsor_id' => $distributor_level->L3,
+                        'sponsor_amount' => $level3_income,
+                    ]);
+                }
+                if ($distributor_level->L4) {
+                    $level4_income = $package->amount * 2 / 100;
+                    $income = \App\Income::create([
+                        'distributor_id' => $input['distributor_id'],
+                        'amount' => $package->amount,
+                        'package_id' => $package->id,
+                        'income_type' => 1,
+                        'status' => 1,
+                        'level' => 'L4',
+                        'level_percentage' => 2,
+                        'sponsor_id' => $distributor_level->L4,
+                        'sponsor_amount' => $level4_income,
+                    ]);
+                }
+
+                return redirect()->route('backend.distributors.list');
+    }
+
+
+
+
+
+   
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -189,11 +279,10 @@ class PackageController extends Controller
      */
     public function edit($id)
     {
-
+        $products = \App\Product::all();
         $package = \App\Package::with('package_products')->find($id);
-
         if ($package) {
-            return view('backend.packages.edit', compact('package'));
+            return view('backend.packages.edit', compact('package','products'));
         }
         return redirect()->route('backend.packages.index');
     }
@@ -206,25 +295,29 @@ class PackageController extends Controller
      */
     public function update(Request $request, $id)
     {
+      
         $this->validate($request, [
-            'package_name' => 'required',
-            'amount' => 'required',
-            'sponsor_income' => 'required',
-        ]);
+    'package_name' => 'required',
+    'amount' => 'required',
+    'sponsor_income' => 'required',
+    'business_volume' => 'required',
+]);
+
         $input = $request->all();
         $package = \App\Package::with('package_products')->find($id);
         $package->package_name = $input['package_name'];
         $package->amount = $input['amount'];
+        $package->business_volume = $input['business_volume'];
         $package->sponsor_income = $input['sponsor_income'];
-        foreach ($package->package_products as $i => $package_product) {
-            $package_product = \App\PackageProduct::find($package_product->id);
-            $package_product->service_name = $input['service_name'][$i];
-            $package_product->price = $input['price'][$i];
-            $package_product->hsn_sac = $input['hsn_sac'][$i];
-            $package_product->gst_rate = $input['gst_rate'][$i];
-            $package_product->save();
-        }
+        $input = $request->all();
 
+for ($i = 0; $i < count($input['package_product']); $i++) {
+    $package_product = \App\PackageProduct::find($input['package_product'][$i]);
+    $package_product->package_id = $package->id;
+    $package_product->product_id = $input['product_id'][$i];
+    $package_product->qty = $input['qty'][$i];
+    $package_product->save();
+}
         $package->save();
         return redirect()->route('backend.packages.index');
     }

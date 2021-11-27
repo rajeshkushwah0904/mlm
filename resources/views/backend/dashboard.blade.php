@@ -22,6 +22,123 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-6">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Total Distributor</span>
+                                    <span class="info-box-number">
+                                        {{$total_distributors}}
+                                    </span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-12 col-sm-6 col-md-6">
+                            <div class="info-box mb-3">
+                                <span class="info-box-icon bg-danger elevation-1"><i
+                                        class="fas fa-thumbs-up"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Today Activities</span>
+                                    <span class="info-box-number">{{$today_active_distributors}}</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-12 col-sm-6 col-md-6">
+                            <div class="info-box mb-3">
+                                <span class="info-box-icon bg-success elevation-1"><i
+                                        class="fas fa-shopping-cart"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Total Activation</span>
+                                    <span class="info-box-number">{{$total_active_distributors}}</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-12 col-sm-6 col-md-6">
+                            <div class="info-box mb-3">
+                                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Today's Registration</span>
+                                    <span class="info-box-number">{{$today_distributors}}</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row">
+
+
+                        <!-- Info Boxes Style 2 -->
+                        <div class="col-12 col-sm-6 col-md-6">
+                            <div class="info-box mb-3 bg-warning">
+                                <span class="info-box-icon"><i class="fas fa-tag"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Pending KYCs</span>
+                                    <span class="info-box-number">5,200</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                        </div>
+                        <!-- /.info-box -->
+                        <div class="col-12 col-sm-6 col-md-6">
+                            <div class="info-box mb-3 bg-success">
+                                <span class="info-box-icon"><i class="far fa-heart"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Totl Business</span>
+                                    <span class="info-box-number">92,050</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                        </div>
+                        <!-- /.info-box -->
+                        <div class="col-12 col-sm-6 col-md-6">
+                            <div class="info-box mb-3 bg-danger">
+                                <span class="info-box-icon"><i class="fas fa-cloud-download-alt"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Total Repurchase</span>
+                                    <span class="info-box-number">114,381</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                        </div>
+                        <!-- /.info-box -->
+                        <div class="col-12 col-sm-6 col-md-6">
+                            <div class="info-box mb-3 bg-info">
+                                <span class="info-box-icon"><i class="far fa-comment"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Total Activaties Business</span>
+                                    <span class="info-box-number">163,921</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- Small boxes (Stat box) -->
             <div class="row">
                 <div class="col-lg-3 col-6">
@@ -59,15 +176,15 @@
                     <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>{{count($distributors)}}</h3>
+                            <h3>{{$total_distributors}}</h3>
 
                             <p> Distributors</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
                         </div>
-                        <a href="{{route('backend.distributors.list')}}" class="small-box-footer">More info <i
-                                class="fas fa-arrow-circle-right"></i></a>
+                        <a href="{{route('backend.distributors.list')}}" class="small-box-footer">More info
+                            <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -153,7 +270,8 @@
                                 <div class="direct-chat-msg">
                                     <div class="direct-chat-infos clearfix">
                                         <span class="direct-chat-name float-left">Alexander Pierce</span>
-                                        <span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
+                                        <span class="direct-chat-timestamp float-right">23 Jan 2:00
+                                            pm</span>
                                     </div>
                                     <!-- /.direct-chat-infos -->
                                     <img class="direct-chat-img"
@@ -189,7 +307,8 @@
                                 <div class="direct-chat-msg">
                                     <div class="direct-chat-infos clearfix">
                                         <span class="direct-chat-name float-left">Alexander Pierce</span>
-                                        <span class="direct-chat-timestamp float-right">23 Jan 5:37 pm</span>
+                                        <span class="direct-chat-timestamp float-right">23 Jan 5:37
+                                            pm</span>
                                     </div>
                                     <!-- /.direct-chat-infos -->
                                     <img class="direct-chat-img"
@@ -237,7 +356,8 @@
                                                     Count Dracula
                                                     <small class="contacts-list-date float-right">2/28/2015</small>
                                                 </span>
-                                                <span class="contacts-list-msg">How have you been? I was...</span>
+                                                <span class="contacts-list-msg">How have you been? I
+                                                    was...</span>
                                             </div>
                                             <!-- /.contacts-list-info -->
                                         </a>
@@ -253,7 +373,8 @@
                                                     Sarah Doe
                                                     <small class="contacts-list-date float-right">2/23/2015</small>
                                                 </span>
-                                                <span class="contacts-list-msg">I will be waiting for...</span>
+                                                <span class="contacts-list-msg">I will be waiting
+                                                    for...</span>
                                             </div>
                                             <!-- /.contacts-list-info -->
                                         </a>
@@ -269,7 +390,8 @@
                                                     Nadia Jolie
                                                     <small class="contacts-list-date float-right">2/20/2015</small>
                                                 </span>
-                                                <span class="contacts-list-msg">I'll call you back at...</span>
+                                                <span class="contacts-list-msg">I'll call you back
+                                                    at...</span>
                                             </div>
                                             <!-- /.contacts-list-info -->
                                         </a>
@@ -301,7 +423,8 @@
                                                     John K.
                                                     <small class="contacts-list-date float-right">1/27/2015</small>
                                                 </span>
-                                                <span class="contacts-list-msg">Can I take a look at...</span>
+                                                <span class="contacts-list-msg">Can I take a look
+                                                    at...</span>
                                             </div>
                                             <!-- /.contacts-list-info -->
                                         </a>
@@ -379,7 +502,8 @@
                                     <!-- todo text -->
                                     <span class="text">Design a nice theme</span>
                                     <!-- Emphasis label -->
-                                    <small class="badge badge-danger"><i class="far fa-clock"></i> 2 mins</small>
+                                    <small class="badge badge-danger"><i class="far fa-clock"></i> 2
+                                        mins</small>
                                     <!-- General tools such as edit or delete-->
                                     <div class="tools">
                                         <i class="fas fa-edit"></i>
@@ -396,7 +520,8 @@
                                         <label for="todoCheck2"></label>
                                     </div>
                                     <span class="text">Make the theme responsive</span>
-                                    <small class="badge badge-info"><i class="far fa-clock"></i> 4 hours</small>
+                                    <small class="badge badge-info"><i class="far fa-clock"></i> 4
+                                        hours</small>
                                     <div class="tools">
                                         <i class="fas fa-edit"></i>
                                         <i class="fas fa-trash-o"></i>
@@ -412,7 +537,8 @@
                                         <label for="todoCheck3"></label>
                                     </div>
                                     <span class="text">Let theme shine like a star</span>
-                                    <small class="badge badge-warning"><i class="far fa-clock"></i> 1 day</small>
+                                    <small class="badge badge-warning"><i class="far fa-clock"></i> 1
+                                        day</small>
                                     <div class="tools">
                                         <i class="fas fa-edit"></i>
                                         <i class="fas fa-trash-o"></i>
@@ -428,7 +554,8 @@
                                         <label for="todoCheck4"></label>
                                     </div>
                                     <span class="text">Let theme shine like a star</span>
-                                    <small class="badge badge-success"><i class="far fa-clock"></i> 3 days</small>
+                                    <small class="badge badge-success"><i class="far fa-clock"></i> 3
+                                        days</small>
                                     <div class="tools">
                                         <i class="fas fa-edit"></i>
                                         <i class="fas fa-trash-o"></i>
@@ -444,7 +571,8 @@
                                         <label for="todoCheck5"></label>
                                     </div>
                                     <span class="text">Check your messages and notifications</span>
-                                    <small class="badge badge-primary"><i class="far fa-clock"></i> 1 week</small>
+                                    <small class="badge badge-primary"><i class="far fa-clock"></i> 1
+                                        week</small>
                                     <div class="tools">
                                         <i class="fas fa-edit"></i>
                                         <i class="fas fa-trash-o"></i>
@@ -460,7 +588,8 @@
                                         <label for="todoCheck6"></label>
                                     </div>
                                     <span class="text">Let theme shine like a star</span>
-                                    <small class="badge badge-secondary"><i class="far fa-clock"></i> 1 month</small>
+                                    <small class="badge badge-secondary"><i class="far fa-clock"></i> 1
+                                        month</small>
                                     <div class="tools">
                                         <i class="fas fa-edit"></i>
                                         <i class="fas fa-trash-o"></i>
@@ -470,7 +599,8 @@
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer clearfix">
-                            <button type="button" class="btn btn-info float-right"><i class="fas fa-plus"></i> Add
+                            <button type="button" class="btn btn-info float-right"><i class="fas fa-plus"></i>
+                                Add
                                 item</button>
                         </div>
                     </div>

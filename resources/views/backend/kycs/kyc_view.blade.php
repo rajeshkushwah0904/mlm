@@ -235,7 +235,14 @@
                                             @endif
                                         </center>
                                     </div>
+                                    <p>
+                                       <strong> Note:</strong> If you want to make any updates in your KYC then
+please contact us on our WhatsApp number 7880006260
+or info@rightwayfuture.com
+
+                                    </p>
                                 </div>
+
                             </div>
                         </div>
                     </div>

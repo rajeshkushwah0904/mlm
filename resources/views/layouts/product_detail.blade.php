@@ -290,42 +290,25 @@
             <div class="container">
                 <h4 class="text-dark-variant-4">Related Products</h4>
                 <div class="row row-30 margin-5">
+                    @foreach($products as $product)
                     <div class="col-6 col-lg-3">
-                        <div class="product tumbnail thumbnail-3"><a href="single-product.html"><img
-                                    src="images/shop-1.jpg" alt="" /></a>
+                        <div class="product tumbnail thumbnail-3"><a href="{{route('product_detail',$product->id)}}"><img
+                                    src="{{asset($product->image)}}" alt="" /></a>
                             <div class="caption">
-                                <h6><a href="single-product.html">Short Sleeve T-Shirt</a></h6><span class="price">
-                                    <del>$24.99</del></span><span class="price sale">$12.49</span>
+                                <h6><a href="{{route('product_detail',$product->id)}}">{{$product->name}}</a></h6><span class="price">
+                                    <del>
+                                        @if($product->product_price)
+                                        {{$product->product_price->mrp}}
+                                        @endif
+                                    </del></span><span class="price sale">
+                                     @if($product->product_price)
+                                    {{$product->product_price->distributor_price}}
+                                     @endif
+                                </span>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 col-lg-3">
-                        <div class="product tumbnail thumbnail-3"><a href="single-product.html"><img
-                                    src="images/shop-2.jpg" alt="" /></a>
-                            <div class="caption">
-                                <h6><a href="single-product.html">Short Sleeve T-Shirt</a></h6><span class="price">
-                                    <del>$24.99</del></span><span class="price sale">$12.49</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-lg-3">
-                        <div class="product tumbnail thumbnail-3"><a href="single-product.html"><img
-                                    src="images/shop-3.jpg" alt="" /></a>
-                            <div class="caption">
-                                <h6><a href="single-product.html">Short Sleeve T-Shirt</a></h6><span
-                                    class="price">$12.49</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-lg-3">
-                        <div class="product tumbnail thumbnail-3"><a href="single-product.html"><img
-                                    src="images/shop-4.jpg" alt="" /></a>
-                            <div class="caption">
-                                <h6><a href="single-product.html">Short Sleeve T-Shirt</a></h6><span class="price">
-                                    <del>$24.99</del></span><span class="price sale">$12.49</span>
-                            </div>
-                        </div>
-                    </div>
+                   @endforeach
                 </div>
             </div>
         </section>

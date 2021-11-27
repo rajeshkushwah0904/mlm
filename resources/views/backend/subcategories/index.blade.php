@@ -43,7 +43,10 @@
                                     @foreach($subcategories as $key=>$subcategory)
                                     <tr>
                                         <td>{{$key+1}}</td>
-                                        <td>{{$subcategory->category->name}}</td>
+                                        <td>@if($subcategory->category)
+                                            {{$subcategory->category->name}}
+                                            @endif
+                                        </td>
                                         <td>{{$subcategory->name}}</td>
                                         <td>
                                             <a href="{{route('backend.subcategories.edit',$subcategory->id)}}"

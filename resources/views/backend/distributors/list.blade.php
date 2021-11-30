@@ -18,6 +18,19 @@
             </div>
         </div><!-- /.container-fluid -->
     </section>
+    @include('flash')
+    <div id="change_password_modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <div class="change_password_modal-result"></div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
     <section class="content">
         <div class="container-fluid">
             <div class="row">
@@ -83,12 +96,10 @@
                 </div>
                 <div class="col-2">
                     <div class="form-group">
-
                         <button type="button" onclick="search_function()" class="btn btn-primary btn-sm"
                             style="margin-top: 35px">
                             Search
                         </button>
-
                     </div>
                 </div>
             </div>
@@ -153,11 +164,27 @@
 ?distributor_tracking_id={{$distributor->distributor_tracking_id}}" target="_blank">Login as a Distributor</a>
                                                     </li>
                                                     <li>
-<a class="dropdown-item" href="{{route('backend.distributors.block',$distributor->id)}}">Block</a>
-</li>
-<li>
-<a class="dropdown-item" href="{{route('backend.genealogy_tree')}}?distributor_id={{$distributor->id}}">Tree</a>
-</li>
+                                                        <a class="dropdown-item"
+                                                            onclick="change_password_function({{$distributor->id}});"
+                                                            href="javascript:void(0);">Change
+                                                            Password</a>
+                                                    </li>
+                                                    @if($distributor->status==2)
+                                                    <li>
+                                                        <a class="dropdown-item"
+                                                            href="{{route('backend.distributors.activate',$distributor->id)}}">Block</a>
+                                                    </li>
+                                                    @else
+                                                    <li>
+                                                        <a class="dropdown-item"
+                                                            href="{{route('backend.distributors.block',$distributor->id)}}">Block</a>
+                                                    </li>
+                                                    @endif
+
+                                                    <li>
+                                                        <a class="dropdown-item"
+                                                            href="{{route('backend.genealogy_tree')}}?distributor_id={{$distributor->id}}">Tree</a>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </td>
@@ -185,10 +212,14 @@
                                             @endif
                                         </td>
                                         <td>
+                                            @if($distributor->status==2)
+                                            Block
+                                            @else
                                             @if($distributor->package)
                                             Activate
                                             @else
                                             Free
+                                            @endif
                                             @endif
                                         </td>
                                         <td>
@@ -237,6 +268,25 @@ function search_function() {
         type: "POST",
         success: function(data) {
             $('.appnd-result').html(data);
+        }
+    });
+}
+</script>
+
+<script>
+function change_password_function(distributor_id) {
+
+
+    $.ajax({
+        url: "{{route('backend.distributors.change_password_popup')}}",
+        data: {
+            "_token": "{{ csrf_token() }}",
+            distributor_id: distributor_id,
+        },
+        type: "POST",
+        success: function(data) {
+            $('#change_password_modal').modal('show');
+            $('.change_password_modal-result').html(data);
         }
     });
 }

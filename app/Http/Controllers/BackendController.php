@@ -43,12 +43,14 @@ class BackendController extends Controller
         $packages = \App\Package::all();
         $total_distributors = \App\Distributor::orderBy('id', 'ASC')->count();
         $total_active_distributors = \App\Distributor::whereNotNull('package_id')->count();
-
         $today_distributors = \App\Distributor::whereDate('activate_date', date('Y-m-d'))->count();
         $today_active_distributors = \App\Distributor::whereDate('activate_date', date('Y-m-d'))->whereNotNull('package_id')->count();
+        $pening_kycs = \App\Kyc::all();
+        $total_distributors = \App\Distributor::orderBy('id', 'ASC')->count();
+        $total_business = \App\Income::orderBy('id', 'ASC')->count();
 
         $products = \App\Product::all();
-        return view('backend.dashboard', compact('packages', 'total_distributors', 'total_active_distributors', 'today_distributors', 'today_active_distributors', 'products'));
+        return view('backend.dashboard', compact('packages', 'total_distributors', 'total_active_distributors', 'today_distributors', 'today_active_distributors', 'products', 'pening_kycs'));
 
     }
 

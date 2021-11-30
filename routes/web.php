@@ -73,7 +73,7 @@ Route::group(['prefix' => 'packages', 'middleware' => ['auth']], function () {
 });
 
 Route::group(['prefix' => 'distributors', 'middleware' => ['auth']], function () {
-    
+
     Route::get('/list', ['as' => 'backend.distributors.list', 'uses' => 'DistributorController@list']);
     Route::get('/downline_list', ['as' => 'backend.distributors.downline_list', 'uses' => 'DistributorController@downline_list']);
     Route::post('/distributor_filter_data', ['as' => 'backend.distributors.distributor_filter_data', 'uses' => 'DistributorController@distributor_filter_data']);
@@ -81,7 +81,9 @@ Route::group(['prefix' => 'distributors', 'middleware' => ['auth']], function ()
     Route::get('/{id}/block', ['as' => 'backend.distributors.block', 'uses' => 'DistributorController@block']);
     Route::get('/{id}/activate', ['as' => 'backend.distributors.activate', 'uses' => 'DistributorController@activate']);
     Route::get('/{id}/delete', ['as' => 'backend.distributors.delete', 'uses' => 'DistributorController@destroy']);
-    
+
+    Route::post('/change_password_popup', ['as' => 'backend.distributors.change_password_popup', 'uses' => 'DistributorController@change_password_popup']);
+
 });
 
 Route::group(['prefix' => 'distributors'], function () {

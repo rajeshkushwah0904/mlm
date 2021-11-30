@@ -22,10 +22,12 @@
                 <div class="col-md-3">
                     {!!Form::open(['route'=>['myaccount.changepassword'],'files'=>true,'class'=>'form-horizontal'])!!}
                     {{csrf_field()}}
+
                     <div class="card card-default">
                         <div class="card-header">
                             <h3 class="card-title">Change Password</h3>
                         </div>
+                        <input type="hidden" name="distributor_id" value="{{\Auth::user()->distributor_id}}">
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Old Password</label>

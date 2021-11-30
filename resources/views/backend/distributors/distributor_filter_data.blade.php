@@ -11,8 +11,25 @@
                      <a class="dropdown-item" href="http://distributor.mlmproject.testing/distributors/as_login
 ?distributor_tracking_id={{$distributor->distributor_tracking_id}}" target="_blank">Login as a Distributor</a>
                  </li>
-<li>
+                 <li>
+                     <a class="dropdown-item" onclick="change_password_function({{$distributor->id}});"
+                         href="javascript:void(0);">Change
+                         Password</a>
+                 </li>
+                 @if($distributor->status==2)
+                 <li>
+                     <a class="dropdown-item"
+                         href="{{route('backend.distributors.activate',$distributor->id)}}">Block</a>
+                 </li>
+                 @else
+                 <li>
                      <a class="dropdown-item" href="{{route('backend.distributors.block',$distributor->id)}}">Block</a>
+                 </li>
+                 @endif
+
+                 <li>
+                     <a class="dropdown-item"
+                         href="{{route('backend.genealogy_tree')}}?distributor_id={{$distributor->id}}">Tree</a>
                  </li>
              </ul>
          </div>
@@ -41,10 +58,14 @@
          @endif
      </td>
      <td>
+         @if($distributor->status==2)
+         Block
+         @else
          @if($distributor->package)
          Activate
          @else
          Free
+         @endif
          @endif
      </td>
      <td>

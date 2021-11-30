@@ -268,31 +268,21 @@ class DistributorController extends Controller
     function list(Request $request) {
         if (\Auth::user()->role == 1) {
             $packages = \App\Package::all();
-
             $distributors = \App\Distributor::all();
             return view('backend.distributors.list', compact('distributors', 'packages'));
-
         } else {
-
             $distributors = \App\Distributor::where('sponsor_tracking_id', '=', \Auth::user()->distributor_tracking_id)->get();
         }
         return view('backend.distributors.list', compact('distributors'));
     }
 
-
-
-
-
-        public function activate($id)
+    public function activate($id)
     {
         $distributor = \App\Distributor::find($id);
-
         if ($distributor) {
             $distributor->status = 1;
             $distributor->save();
-
             return redirect()->route('backend.distributors.list');
-
         }
         return redirect()->route('backend.distributors.list');
     }
@@ -300,12 +290,10 @@ class DistributorController extends Controller
     public function block($id)
     {
         $distributor = \App\Distributor::find($id);
-
         if ($distributor) {
             $distributor->status = 2;
             $distributor->save();
             return redirect()->route('backend.distributors.list');
-
         }
         return redirect()->route('backend.distributors.list');
     }
@@ -335,6 +323,12 @@ class DistributorController extends Controller
     public function login(Request $request)
     {
         return view('distributors.login');
+    }
+
+    public function change_password_popup(Request $request)
+    {
+        $distributor = \App\Distributor::find($request->distributor_id);
+        return view('backend.distributors.change_password_popup', compact('distributor'));
     }
 
     public function login_store(Request $request)

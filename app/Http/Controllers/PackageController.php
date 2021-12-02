@@ -58,13 +58,13 @@ class PackageController extends Controller
             'package_name' => 'required',
             'amount' => 'required',
             'sponsor_income' => 'required',
-            'business_volume'=> 'required',
+            'business_volume' => 'required',
         ]);
 
         $package = \App\Package::create([
             'package_name' => $request->input('package_name'),
             'amount' => $request->input('amount'),
-             'business_volume' => $request->input('business_volume'),
+            'business_volume' => $request->input('business_volume'),
             'sponsor_income' => $request->input('sponsor_income'),
         ]);
         $input = $request->all();
@@ -99,7 +99,7 @@ class PackageController extends Controller
         }
     }
 
-  public function purchase_package_store(Request $request)
+    public function purchase_package_store(Request $request)
     {
         $input = $request->all();
         $api = new Api(env('RAZOR_KEY'), env('RAZOR_SECRET'));
@@ -118,10 +118,10 @@ class PackageController extends Controller
                 $distributor->save();
                 $distributor_level = \App\DistributorLevel::where('L0', \Auth::user()->distributor_id)->first();
                 if ($distributor_level->L1) {
-                    $level1_income = $package->amount * $package->sponsor_income / 100;
+                    $level1_income = $package->business_volume * $package->sponsor_income / 100;
                     $income = \App\Income::create([
                         'distributor_id' => \Auth::user()->distributor_id,
-                        'amount' => $package->amount,
+                        'amount' => $package->business_volume,
                         'package_id' => $package->id,
                         'income_type' => 1,
                         'status' => 1,
@@ -132,10 +132,10 @@ class PackageController extends Controller
                     ]);
                 }
                 if ($distributor_level->L2) {
-                    $level2_income = $package->amount * 5 / 100;
+                    $level2_income = $package->business_volume * 5 / 100;
                     $income = \App\Income::create([
                         'distributor_id' => \Auth::user()->distributor_id,
-                        'amount' => $package->amount,
+                        'amount' => $package->business_volume,
                         'package_id' => $package->id,
                         'income_type' => 1,
                         'status' => 1,
@@ -146,10 +146,10 @@ class PackageController extends Controller
                     ]);
                 }
                 if ($distributor_level->L3) {
-                    $level3_income = $package->amount * 3 / 100;
+                    $level3_income = $package->business_volume * 3 / 100;
                     $income = \App\Income::create([
                         'distributor_id' => \Auth::user()->distributor_id,
-                        'amount' => $package->amount,
+                        'amount' => $package->business_volume,
                         'package_id' => $package->id,
                         'income_type' => 1,
                         'status' => 1,
@@ -160,10 +160,10 @@ class PackageController extends Controller
                     ]);
                 }
                 if ($distributor_level->L4) {
-                    $level4_income = $package->amount * 2 / 100;
+                    $level4_income = $package->business_volume * 2 / 100;
                     $income = \App\Income::create([
                         'distributor_id' => \Auth::user()->distributor_id,
-                        'amount' => $package->amount,
+                        'amount' => $package->business_volume,
                         'package_id' => $package->id,
                         'income_type' => 1,
                         'status' => 1,
@@ -173,6 +173,56 @@ class PackageController extends Controller
                         'sponsor_amount' => $level4_income,
                     ]);
                 }
+
+                $order = \App\Order::create([
+                    'distributor_id' => \Auth::user()->distributor_id,
+                    'distributor_name' => \Auth::user()->distributor_tracking_id,
+                    'distributor_name' => $distributor->name,
+                    'email' => $distributor->email,
+                    'mobile' => $distributor->mobile,
+                    'gender' => $distributor->gender,
+                    'address' => $distributor->address,
+                    'pincode' => $distributor->pincode,
+                ]);
+                $total_taxable_amount = 0;
+                $total_gst_amount = 0;
+                $delivery_amount = 50;
+                $total_discount = 0;
+                $total_amount = 0;
+                foreach ($package->package_products as $key => $package_product) {
+                    $product_price = \App\ProductPrice::where('product_id', $package_product->product->id)->first();
+                    $order_product = \App\OrderProduct::create([
+                        'order_id' => $order->id,
+                        'product_name' => $add_to_cart->product->name,
+                        'product_taxable_amount' => $product_price->actual_price,
+                        'total_product_taxable_amount' => $product_price->actual_price * $add_to_cart->qty,
+                        'product_gst_amount' => $product_price->actual_price * $product_price->gst / 100,
+                        'product_amount' => $product_price->bussiness_volume * $add_to_cart->qty,
+                        'qty' => $add_to_cart->qty,
+                    ]);
+                    $total_taxable_amount = $total_taxable_amount + $product_price->actual_price * $add_to_cart->qty;
+                    $total_gst_amount = $total_gst_amount + $product_price->actual_price * $add_to_cart->qty * $product_price->gst / 100;
+                    $total_amount = $total_amount + $product_price->bussiness_volume * $add_to_cart->qty;
+                }
+
+                $payment = \App\Payment::create([
+                    'amount' => $response['amount'] / 100,
+                    'entity' => $response['entity'],
+                    'currency' => $response['currency'],
+                    'amount_refunded' => $response['amount_refunded'],
+                    'distributor_id' => \Auth::user()->distributor_id,
+                    'order_id' => $order->id,
+                    'order_date' => date('Y-m-d'),
+                ]);
+                $order->invoice_no = date('Y/m') . "/FR/" . $order->id;
+                $order->total_taxable_amount = $total_taxable_amount;
+                $order->total_gst_amount = $total_gst_amount;
+                $order->delivery_amount = $delivery_amount;
+                $order->total_discount = $total_discount;
+                $order->total_amount = $total_amount;
+                $order->grand_total = $total_amount + $order->delivery_amount - $order->total_discount;
+                $order->save();
+
                 return redirect()->back();
 
             } catch (\Exception $e) {
@@ -183,93 +233,132 @@ class PackageController extends Controller
         }
     }
 
-
-
     public function purchase_for_other(Request $request)
     {
         $distributors = \App\Distributor::whereNull('package_id')->get();
         $packages = \App\Package::all();
-            return view('backend.packages.purchase_for_other', compact('packages', 'distributors'));
+        return view('backend.packages.purchase_for_other', compact('packages', 'distributors'));
 
     }
-
 
     public function purchase_for_other_store(Request $request)
     {
         $input = $request->all();
 
-                $package_id = $input['package_id'];
-                $package = \App\Package::find($package_id);
-                $distributor = \App\Distributor::find($input['distributor_id']);
-                $distributor->package_id = $package->id;
-                $distributor->activate_date = date('Y-m-d H:i:s');
-                $distributor->save();
-                $distributor_level = \App\DistributorLevel::where('L0', $input['distributor_id'])->first();
-                if ($distributor_level->L1) {
-                    $level1_income = $package->amount * $package->sponsor_income / 100;
-                    $income = \App\Income::create([
-                        'distributor_id' => $input['distributor_id'],
-                        'amount' => $package->amount,
-                        'package_id' => $package->id,
-                        'income_type' => 1,
-                        'status' => 1,
-                        'level' => 'L1',
-                        'level_percentage' => $package->sponsor_income,
-                        'sponsor_id' => $distributor_level->L1,
-                        'sponsor_amount' => $level1_income,
-                    ]);
-                }
-                if ($distributor_level->L2) {
-                    $level2_income = $package->amount * 5 / 100;
-                    $income = \App\Income::create([
-                        'distributor_id' => $input['distributor_id'],
-                        'amount' => $package->amount,
-                        'package_id' => $package->id,
-                        'income_type' => 1,
-                        'status' => 1,
-                        'level' => 'L2',
-                        'level_percentage' => 5,
-                        'sponsor_id' => $distributor_level->L2,
-                        'sponsor_amount' => $level2_income,
-                    ]);
-                }
-                if ($distributor_level->L3) {
-                    $level3_income = $package->amount * 3 / 100;
-                    $income = \App\Income::create([
-                        'distributor_id' => $input['distributor_id'],
-                        'amount' => $package->amount,
-                        'package_id' => $package->id,
-                        'income_type' => 1,
-                        'status' => 1,
-                        'level' => 'L3',
-                        'level_percentage' => 3,
-                        'sponsor_id' => $distributor_level->L3,
-                        'sponsor_amount' => $level3_income,
-                    ]);
-                }
-                if ($distributor_level->L4) {
-                    $level4_income = $package->amount * 2 / 100;
-                    $income = \App\Income::create([
-                        'distributor_id' => $input['distributor_id'],
-                        'amount' => $package->amount,
-                        'package_id' => $package->id,
-                        'income_type' => 1,
-                        'status' => 1,
-                        'level' => 'L4',
-                        'level_percentage' => 2,
-                        'sponsor_id' => $distributor_level->L4,
-                        'sponsor_amount' => $level4_income,
-                    ]);
-                }
+        $package_id = $input['package_id'];
+        $package = \App\Package::find($package_id);
+        $distributor = \App\Distributor::find($input['distributor_id']);
+        $distributor->package_id = $package->id;
+        $distributor->activate_date = date('Y-m-d H:i:s');
+        $distributor->save();
+        $distributor_level = \App\DistributorLevel::where('L0', $input['distributor_id'])->first();
+        if ($distributor_level->L1) {
+            $level1_income = $package->business_volume * $package->sponsor_income / 100;
+            $income = \App\Income::create([
+                'distributor_id' => $input['distributor_id'],
+                'amount' => $package->business_volume,
+                'package_id' => $package->id,
+                'income_type' => 1,
+                'status' => 1,
+                'level' => 'L1',
+                'level_percentage' => $package->sponsor_income,
+                'sponsor_id' => $distributor_level->L1,
+                'sponsor_amount' => $level1_income,
+            ]);
+        }
+        if ($distributor_level->L2) {
+            $level2_income = $package->business_volume * 5 / 100;
+            $income = \App\Income::create([
+                'distributor_id' => $input['distributor_id'],
+                'amount' => $package->business_volume,
+                'package_id' => $package->id,
+                'income_type' => 1,
+                'status' => 1,
+                'level' => 'L2',
+                'level_percentage' => 5,
+                'sponsor_id' => $distributor_level->L2,
+                'sponsor_amount' => $level2_income,
+            ]);
+        }
+        if ($distributor_level->L3) {
+            $level3_income = $package->business_volume * 3 / 100;
+            $income = \App\Income::create([
+                'distributor_id' => $input['distributor_id'],
+                'amount' => $package->business_volume,
+                'package_id' => $package->id,
+                'income_type' => 1,
+                'status' => 1,
+                'level' => 'L3',
+                'level_percentage' => 3,
+                'sponsor_id' => $distributor_level->L3,
+                'sponsor_amount' => $level3_income,
+            ]);
+        }
+        if ($distributor_level->L4) {
+            $level4_income = $package->business_volume * 2 / 100;
+            $income = \App\Income::create([
+                'distributor_id' => $input['distributor_id'],
+                'amount' => $package->business_volume,
+                'package_id' => $package->id,
+                'income_type' => 1,
+                'status' => 1,
+                'level' => 'L4',
+                'level_percentage' => 2,
+                'sponsor_id' => $distributor_level->L4,
+                'sponsor_amount' => $level4_income,
+            ]);
+        }
+        $order = \App\Order::create([
+            'distributor_id' => $distributor->id,
+            'distributor_name' => $distributor->distributor_tracking_id,
+            'distributor_name' => $distributor->name,
+            'email' => $distributor->email,
+            'mobile' => $distributor->mobile,
+            'gender' => $distributor->gender,
+            'address' => $distributor->address,
+            'pincode' => $distributor->pincode,
+        ]);
+        $total_taxable_amount = 0;
+        $total_gst_amount = 0;
+        $delivery_amount = 50;
+        $total_discount = 0;
+        $total_amount = 0;
+        foreach ($package->package_products as $key => $package_product) {
+            $product_price = \App\ProductPrice::where('product_id', $package_product->product->id)->first();
+            $order_product = \App\OrderProduct::create([
+                'order_id' => $order->id,
+                'product_name' => $add_to_cart->product->name,
+                'product_taxable_amount' => $product_price->actual_price,
+                'total_product_taxable_amount' => $product_price->actual_price * $add_to_cart->qty,
+                'product_gst_amount' => $product_price->actual_price * $product_price->gst / 100,
+                'product_amount' => $product_price->bussiness_volume * $add_to_cart->qty,
+                'qty' => $add_to_cart->qty,
+            ]);
+            $total_taxable_amount = $total_taxable_amount + $product_price->actual_price * $add_to_cart->qty;
+            $total_gst_amount = $total_gst_amount + $product_price->actual_price * $add_to_cart->qty * $product_price->gst / 100;
+            $total_amount = $total_amount + $product_price->bussiness_volume * $add_to_cart->qty;
+        }
 
-                return redirect()->route('backend.distributors.list');
+        $payment = \App\Payment::create([
+            'amount' => $response['amount'] / 100,
+            'entity' => $response['entity'],
+            'currency' => $response['currency'],
+            'amount_refunded' => $response['amount_refunded'],
+            'distributor_id' => $distributor->id,
+            'order_id' => $order->id,
+            'order_date' => date('Y-m-d'),
+        ]);
+        $order->invoice_no = date('Y/m') . "/FR/" . $order->id;
+        $order->total_taxable_amount = $total_taxable_amount;
+        $order->total_gst_amount = $total_gst_amount;
+        $order->delivery_amount = $delivery_amount;
+        $order->total_discount = $total_discount;
+        $order->total_amount = $total_amount;
+        $order->grand_total = $total_amount + $order->delivery_amount - $order->total_discount;
+        $order->save();
+
+        return redirect()->route('backend.distributors.list');
     }
-
-
-
-
-
-   
 
     /**
      * Show the form for editing the specified resource.
@@ -282,7 +371,7 @@ class PackageController extends Controller
         $products = \App\Product::all();
         $package = \App\Package::with('package_products')->find($id);
         if ($package) {
-            return view('backend.packages.edit', compact('package','products'));
+            return view('backend.packages.edit', compact('package', 'products'));
         }
         return redirect()->route('backend.packages.index');
     }
@@ -295,13 +384,13 @@ class PackageController extends Controller
      */
     public function update(Request $request, $id)
     {
-      
+
         $this->validate($request, [
-    'package_name' => 'required',
-    'amount' => 'required',
-    'sponsor_income' => 'required',
-    'business_volume' => 'required',
-]);
+            'package_name' => 'required',
+            'amount' => 'required',
+            'sponsor_income' => 'required',
+            'business_volume' => 'required',
+        ]);
 
         $input = $request->all();
         $package = \App\Package::with('package_products')->find($id);
@@ -311,13 +400,13 @@ class PackageController extends Controller
         $package->sponsor_income = $input['sponsor_income'];
         $input = $request->all();
 
-for ($i = 0; $i < count($input['package_product']); $i++) {
-    $package_product = \App\PackageProduct::find($input['package_product'][$i]);
-    $package_product->package_id = $package->id;
-    $package_product->product_id = $input['product_id'][$i];
-    $package_product->qty = $input['qty'][$i];
-    $package_product->save();
-}
+        for ($i = 0; $i < count($input['package_product']); $i++) {
+            $package_product = \App\PackageProduct::find($input['package_product'][$i]);
+            $package_product->package_id = $package->id;
+            $package_product->product_id = $input['product_id'][$i];
+            $package_product->qty = $input['qty'][$i];
+            $package_product->save();
+        }
         $package->save();
         return redirect()->route('backend.packages.index');
     }

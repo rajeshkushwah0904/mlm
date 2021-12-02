@@ -82,6 +82,50 @@
                             </div>
                             {!!Form::close()!!}
                             {!!Form::open(['files'=>true,'class'=>'form-horizontal'])!!}
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>S. No. </th>
+                                        <th>Product Name</th>
+                                        <th>HSN Code</th>
+                                        <th>MRP</th>
+                                        <th>Business volume</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($select_package->package_products as $key=>$package_product)
+                                    <tr>
+                                        <td>{{$key+1}}</td>
+                                        <td>
+                                            @if($package_product->product)
+                                            {{$package_product->product->name}}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($package_product->product)
+                                            {{$package_product->product->hsn_code}}
+                                            @endif
+                                        </td>
+                                        <td>
+
+                                            @if($package_product->product)
+                                            @if($package_product->product->product_price)
+                                            {{$package_product->product->product_price->distributor_price}}
+                                            @endif
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($package_product->product)
+                                            @if($package_product->product->product_price)
+                                            {{$package_product->product->product_price->bussiness_volume}}
+                                            @endif
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                             @csrf
                             @if($select_package)
                             <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="{{ env('RAZOR_KEY') }}"

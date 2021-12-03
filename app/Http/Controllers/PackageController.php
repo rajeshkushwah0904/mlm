@@ -183,6 +183,7 @@ class PackageController extends Controller
                     'gender' => $distributor->gender,
                     'address' => $distributor->address,
                     'pincode' => $distributor->pincode,
+                    'invoice_type' => 1,
                 ]);
                 $total_taxable_amount = 0;
                 $total_gst_amount = 0;
@@ -193,27 +194,28 @@ class PackageController extends Controller
                     $product_price = \App\ProductPrice::where('product_id', $package_product->product->id)->first();
                     $order_product = \App\OrderProduct::create([
                         'order_id' => $order->id,
-                        'product_name' => $add_to_cart->product->name,
+                        'product_name' => $package_product->product->name,
                         'product_taxable_amount' => $product_price->actual_price,
-                        'total_product_taxable_amount' => $product_price->actual_price * $add_to_cart->qty,
+                        'total_product_taxable_amount' => $product_price->actual_price * $package_product->qty,
                         'product_gst_amount' => $product_price->actual_price * $product_price->gst / 100,
-                        'product_amount' => $product_price->bussiness_volume * $add_to_cart->qty,
-                        'qty' => $add_to_cart->qty,
+                        'product_amount' => $product_price->bussiness_volume * $package_product->qty,
+                        'qty' => $package_product->qty,
                     ]);
-                    $total_taxable_amount = $total_taxable_amount + $product_price->actual_price * $add_to_cart->qty;
-                    $total_gst_amount = $total_gst_amount + $product_price->actual_price * $add_to_cart->qty * $product_price->gst / 100;
-                    $total_amount = $total_amount + $product_price->bussiness_volume * $add_to_cart->qty;
+                    $total_taxable_amount = $total_taxable_amount + $product_price->actual_price * $package_product->qty;
+                    $total_gst_amount = $total_gst_amount + $product_price->actual_price * $package_product->qty * $product_price->gst / 100;
+                    $total_amount = $total_amount + $product_price->bussiness_volume * $package_product->qty;
                 }
 
                 $payment = \App\Payment::create([
-                    'amount' => $response['amount'] / 100,
-                    'entity' => $response['entity'],
-                    'currency' => $response['currency'],
-                    'amount_refunded' => $response['amount_refunded'],
-                    'distributor_id' => \Auth::user()->distributor_id,
-                    'order_id' => $order->id,
-                    'order_date' => date('Y-m-d'),
-                ]);
+    'amount' => $total_amount,
+    'entity' => 'ABC',
+    'currency' => 'INR',
+    'amount_refunded' => 0.00,
+    'distributor_id' => $distributor->id,
+    'order_id' => $order->id,
+    'order_date' => date('Y-m-d'),
+]);
+
                 $order->invoice_no = date('Y/m') . "/FR/" . $order->id;
                 $order->total_taxable_amount = $total_taxable_amount;
                 $order->total_gst_amount = $total_gst_amount;
@@ -317,6 +319,7 @@ class PackageController extends Controller
             'gender' => $distributor->gender,
             'address' => $distributor->address,
             'pincode' => $distributor->pincode,
+            'invoice_type' => 1,
         ]);
         $total_taxable_amount = 0;
         $total_gst_amount = 0;
@@ -327,23 +330,23 @@ class PackageController extends Controller
             $product_price = \App\ProductPrice::where('product_id', $package_product->product->id)->first();
             $order_product = \App\OrderProduct::create([
                 'order_id' => $order->id,
-                'product_name' => $add_to_cart->product->name,
+                'product_name' => $package_product->product->name,
                 'product_taxable_amount' => $product_price->actual_price,
-                'total_product_taxable_amount' => $product_price->actual_price * $add_to_cart->qty,
+                'total_product_taxable_amount' => $product_price->actual_price * $package_product->qty,
                 'product_gst_amount' => $product_price->actual_price * $product_price->gst / 100,
-                'product_amount' => $product_price->bussiness_volume * $add_to_cart->qty,
-                'qty' => $add_to_cart->qty,
+                'product_amount' => $product_price->bussiness_volume * $package_product->qty,
+                'qty' => $package_product->qty,
             ]);
-            $total_taxable_amount = $total_taxable_amount + $product_price->actual_price * $add_to_cart->qty;
-            $total_gst_amount = $total_gst_amount + $product_price->actual_price * $add_to_cart->qty * $product_price->gst / 100;
-            $total_amount = $total_amount + $product_price->bussiness_volume * $add_to_cart->qty;
+            $total_taxable_amount = $total_taxable_amount + $product_price->actual_price * $package_product->qty;
+            $total_gst_amount = $total_gst_amount + $product_price->actual_price * $package_product->qty * $product_price->gst / 100;
+            $total_amount = $total_amount + $product_price->bussiness_volume * $package_product->qty;
         }
 
         $payment = \App\Payment::create([
-            'amount' => $response['amount'] / 100,
-            'entity' => $response['entity'],
-            'currency' => $response['currency'],
-            'amount_refunded' => $response['amount_refunded'],
+            'amount' => $total_amount,
+            'entity' => 'ABC',
+            'currency' => 'INR',
+            'amount_refunded' => 0.00,
             'distributor_id' => $distributor->id,
             'order_id' => $order->id,
             'order_date' => date('Y-m-d'),

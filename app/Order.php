@@ -22,6 +22,7 @@ class Order extends Model
         'total_amount',
         'invoice_no',
         'grand_total',
+        'invoice_type',
     ];
 
     public function distributor()

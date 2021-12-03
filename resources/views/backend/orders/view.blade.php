@@ -78,6 +78,13 @@
                                 <br>
                                 <b>Order ID:</b> {{$order->id}}<br>
                                 <b>Invoice Date:</b> {{$order->created_at}}<br>
+                                <b>Invoice Type:</b>
+                                @if($order->invoice_type=='1')
+                                Package invoice
+                                @else
+                                Product Repurchase Invoice
+                                @endif
+                                <br>
                             </div>
                             <!-- /.col -->
                         </div>

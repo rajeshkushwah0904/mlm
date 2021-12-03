@@ -64,43 +64,143 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Bussiness Income</label>
                                 <input type="text" name="business_volume" class="form-control"
-                                    value="{{old('business_volume')}}" id="exampleInputEmail1"
+                                    value="{{$package->business_volume}}" id="exampleInputEmail1"
                                     placeholder="Enter Bussiness Income" Required>
                             </div>
                         </div>
                     </div>
-                    @foreach($package->package_products as $package_product)
-                    <input type="hidden" name="package_product[]" class="form-control" value="{{$package_product->id}}"
-                        Required>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Product/Service</label>
-                                <select class="custom-select" name="product_id[]" Required>
-                                    <option value="">Select Product</option>
-                                    @foreach($products as $product)
-                                    @if($product->id == $package_product->product_id)
-                                    <option value="{{$product->id}}" selected="selected">{{$product->name}}</option>
-                                    @else
-                                    <option value="{{$product->id}}">{{$product->name}}</option>
-                                    @endif
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Quantity</label>
-                                <input type="number" name="qty[]" class="form-control" value="{{$package_product->qty}}"
-                                    id="exampleInputEmail1" placeholder="Enter Qty Rate" Required>
-                            </div>
-                        </div>
+                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#add_product">Add
+                        Product
+                        Modal</button>
 
-                    </div>
-                    @endforeach
-                    <!-- <div class="appnd-result"></div>
+                </div>
+                <div class="card-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>S. No. </th>
+                                <th>Product Name</th>
+                                <th>Qty</th>
+                                <th>Distributor Price</th>
+                                <th>Business Volume</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+$total_distributor_price = 0;
+$total_business_volume = 0;
+?>
+                            @foreach($package->package_products as $key=>$package_product)
+                            <tr>
+                                <input type="hidden" name="package_product[]" class="form-control"
+                                    value="{{$package_product->id}}" Required>
+                                <td>{{$key+1}}</td>
+                                <td> <select class="custom-select" name="product_id[]" Required>
+                                        <option value="">Select Product</option>
+                                        @foreach($products as $product)
+                                        @if($product->id == $package_product->product_id)
+                                        <option value="{{$product->id}}" selected="selected">{{$product->name}}
+                                        </option>
+                                        @else
+                                        <option value="{{$product->id}}">{{$product->name}}</option>
+                                        @endif
+                                        @endforeach
+                                    </select></td>
+                                <td>
+                                    <input type="number" name="qty[]" class="form-control"
+                                        value="{{$package_product->qty}}" id="exampleInputEmail1"
+                                        placeholder="Enter Qty Rate" Required>
+                                </td>
+                                <td><input class="form-control"
+                                        value="{{$package_product->product->product_price->distributor_price}}"
+                                        readonly></td>
+                                <td>
+                                    <input class="form-control"
+                                        value="{{$package_product->product->product_price->bussiness_volume}}" readonly>
+                                </td>
+                                <?php
+
+$total_distributor_price = $total_distributor_price + $package_product->product->product_price->distributor_price;
+$total_business_volume = $total_business_volume + $package_product->product->product_price->bussiness_volume;
+
+?>
+                                <td>
+
+                                    <a href="{{route('backend.package_products.delete',$package_product->id)}}"
+                                        class="btn btn-sm btn-danger">Delete</a>
+                                </td>
+                            </tr>
+                            @endforeach
+                            <tr>
+                                <td colspan="3">
+                                    Total
+                                </td>
+                                <td>
+                                    {{$total_distributor_price}}
+                                </td>
+                                <td>
+                                    {{$total_business_volume}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <!-- <div class="appnd-result"></div>
                     <a href="javascript:void(0);" class="btn btn-sm btn-info" onclick="add_product()">+ Add
                         product</a> -->
+                <div class="form-group">
+                    <div class="col-md-8 col-md-offset-4">
+                        <button type="submit" class="btn btn-primary">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+                {!!Form::close()!!}
+            </div>
+
+            <!-- /.col -->
+
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+
+        <!-- /.row -->
+</div>
+
+</div>
+<div class="modal fade" id="add_product" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Header
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </h4>
+
+
+            </div>
+            <div class="modal-body">
+                {!!Form::open(['route'=>['backend.package_products.create',$package->id],'files'=>true,'class'=>'form-horizontal'])!!}
+                {{csrf_field()}}
+                <div class="row">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Product</label>
+                        <select class="custom-select" name="product_id" Required>
+                            <option value="">Select Product</option>
+                            @foreach($products as $product)
+                            <option value="{{$product->id}}">{{$product->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Quantity</label>
+                        <input type="number" name="qty" class="form-control" value="{{old('qty')}}"
+                            id="exampleInputEmail1" placeholder="Enter Qty Rate" Required>
+                    </div>
                     <div class="form-group">
                         <div class="col-md-8 col-md-offset-4">
                             <button type="submit" class="btn btn-primary">
@@ -108,20 +208,13 @@
                             </button>
                         </div>
                     </div>
-                    {!!Form::close()!!}
                 </div>
-
-                <!-- /.col -->
-
-                <!-- /.col -->
+                {!!Form::close()!!}
             </div>
-            <!-- /.row -->
-
-            <!-- /.row -->
         </div>
+    </div>
 
 </div>
-
 </div><!-- /.container-fluid -->
 </section>
 <!-- /.content -->

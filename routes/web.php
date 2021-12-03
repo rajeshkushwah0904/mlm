@@ -38,6 +38,7 @@ Route::post('/checkout', 'HomeController@checkout_store')->name('checkout')->mid
 Route::get('/invoice/{id}', 'HomeController@invoice')->name('layouts.invoice')->middleware('auth');
 Route::get('/privacy_policy', 'HomeController@privacy_policy')->name('privacy_policy');
 Route::get('/refund_policy', 'HomeController@refund_policy')->name('refund_policy');
+Route::get('/shipping_policy', 'HomeController@shipping_policy')->name('shipping_policy');
 
 Route::get('/send_otp', 'UserController@send_otp')->name('send_otp');
 Route::get('/loginpage', 'HomeController@loginpage')->name('loginpage');
@@ -70,6 +71,16 @@ Route::group(['prefix' => 'packages', 'middleware' => ['auth']], function () {
     Route::post('/purchase_package', ['as' => 'backend.packages.purchase_package', 'uses' => 'PackageController@purchase_package_store']);
     Route::get('/purchase_for_other', ['as' => 'backend.packages.purchase_for_other', 'uses' => 'PackageController@purchase_for_other']);
     Route::post('/purchase_for_other', ['as' => 'backend.packages.purchase_for_other', 'uses' => 'PackageController@purchase_for_other_store']);
+});
+
+Route::group(['prefix' => 'package_products', 'middleware' => ['auth']], function () {
+    Route::get('/', ['as' => 'backend.package_products.index', 'uses' => 'PackageProductController@index']);
+    Route::get('/create/{id}', ['as' => 'backend.package_products.create', 'uses' => 'PackageProductController@create']);
+    Route::post('/create/{id}', ['as' => 'backend.package_products.create', 'uses' => 'PackageProductController@store']);
+    Route::get('/{id}/edit', ['as' => 'backend.package_products.edit', 'uses' => 'PackageProductController@edit']);
+    Route::post('/{id}/edit', ['as' => 'backend.package_products.edit', 'uses' => 'PackageProductController@update']);
+    Route::get('/{id}/approve', ['as' => 'backend.package_products.approve', 'uses' => 'PackageProductController@approve']);
+    Route::get('/{id}/delete', ['as' => 'backend.package_products.delete', 'uses' => 'PackageProductController@destroy']);
 });
 
 Route::group(['prefix' => 'distributors', 'middleware' => ['auth']], function () {

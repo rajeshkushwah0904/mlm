@@ -3,7 +3,7 @@
 
 <head>
     <!--Site Title-->
-    <title>Tables</title>
+    <title>Rightway Future</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -70,17 +70,17 @@
                         <thead>
                             <tr>
                                 <th>Invoice No.</th>
-                                <td>RF/21-22/{{$order->id}}</td>
+                                <td>{{$order->invoice_no}}</td>
                                 <th>Invoice Date</th>
-                                <td>{{$order->created_at->format('d-M-Y')}}</td>
+                                <td colspan="2">{{$order->created_at->format('d-M-Y')}}</td>
                                 <th>Refrence ID</th>
                                 <td>{{$order->distributor->distributor_tracking_id}}</td>
                             </tr>
                             <tr>
                                 <th>Name</th>
-                                <td>{{$order->name}}</td>
+                                <td>{{$order->distributor_name}}</td>
                                 <th>Address</th>
-                                <td>{{$order->address}}</td>
+                                <td colspan="2">{{$order->address}}</td>
                                 <th>Pincode</th>
                                 <td>{{$order->pincode}}</td>
 
@@ -89,7 +89,7 @@
                                 <th>Gender</th>
                                 <td>{{$order->gender}}</td>
                                 <th>Mobile</th>
-                                <td>{{$order->mobile}}</td>
+                                <td colspan="2">{{$order->mobile}}</td>
                                 <th>Email</th>
                                 <td>{{$order->email}}</td>
                             </tr>
@@ -99,14 +99,13 @@
                                 <th style="background: yellow">S. No.</th>
                                 <th style="background: yellow">Product Description</td>
                                 <th style="background: yellow">Unit Price</th>
+                                <th style="background: yellow">Taxable Amount</th>
                                 <th style="background: yellow">Qty</th>
                                 <th style="background: yellow">GST</th>
                                 <th style="background: yellow">Amount</th>
                             </tr>
                             <?php
 $product_taxable_amount = 0;
-$product_gst_amount = 0;
-$product_amount = 0;
 ?>
                             @foreach($order->order_products as $key=>$order_product)
                             <tr>
@@ -114,37 +113,33 @@ $product_amount = 0;
                                 <td>{{$order_product->product_name}}</td>
                                 <td>{{$order_product->product_taxable_amount}}</td>
                                 <td>{{$order_product->qty}}</td>
+                                <td>{{$order_product->total_product_taxable_amount}}</td>>
                                 <td>{{$order_product->product_gst_amount}}</td>
                                 <td>{{$order_product->product_amount}}</td>
                             </tr>
-                            <?php
-$product_taxable_amount = $product_taxable_amount + $order_product->product_taxable_amount * $order_product->qty;
-$product_gst_amount = $product_gst_amount + $order_product->product_gst_amount * $order_product->qty;
-$product_amount = $product_amount + $order_product->product_amount + 50;
-?>
                             @endforeach
 
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="4"></td>
+                                <td colspan="5"></td>
                                 <td>Subtotal</td>
-                                <td>{{$product_taxable_amount}}</td>
+                                <td>{{$order->total_taxable_amount}}</td>
                             </tr>
                             <tr>
-                                <td colspan="4"></td>
+                                <td colspan="5"></td>
                                 <td>GST Amount</td>
-                                <td>{{$product_gst_amount}}</td>
+                                <td>{{$order->total_gst_amount}}</td>
                             </tr>
                             <tr>
-                                <td colspan="4"></td>
+                                <td colspan="5"></td>
                                 <td>Delivery Amount</td>
-                                <td>50.00</td>
+                                <td>{{$order->delivery_amount}}</td>
                             </tr>
                             <tr>
-                                <td colspan="4"></td>
+                                <td colspan="5"></td>
                                 <td>Your Total</td>
-                                <td>{{$product_amount}}</td>
+                                <td>{{$order->grand_total}}</td>
                             </tr>
                         </tfoot>
                     </table>

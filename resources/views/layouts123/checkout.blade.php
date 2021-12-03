@@ -3,7 +3,7 @@
 
 <head>
     <!--Site Title-->
-    <title>Checkout</title>
+    <title>Rightway Future</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -257,7 +257,7 @@
                 <div class="container">
                     <h4>Your order</h4>
                     <div class="row margin-5">
-                        <div class="col-md-12 col-lg-12">
+                        <div class="col-md-12 col-lg-6">
                             <table class="table">
                                 <thead>
                                     <tr class="bg-lighter text-uppercase text-darker-clr font-secondary section-border">
@@ -304,19 +304,63 @@ $total = $total + $add_to_cart->price;
                             </table>
                         </div>
 
+                        <div class="col-md-12 col-lg-6 text-end">
+                            <div class="payment text-start round-small">
+                                @if($distributor->remaining_wallet_amount>$total)
+                                <div class="payment-var1 bg-lighter-2 section-border">
+                                    <div class="form-wrap">
+                                        <label class="radio-inline">
+                                            <input class="onclick_wallet_pay" name="passion" value="value-1"
+                                                type="radio"><span class="text-dark-variant-2 font-secondary">Wallet
+                                                Payment</span>
+                                        </label>
+                                    </div>
+                                    <p class="text-dark-variant-2">Payment Will be done by Your wallet Amount. and
+                                        Amount Willl be deduct from wallet Amount</p>
+                                </div>
+                                @endif
+                                <div class="payment-var2 bg-lighter-2">
+                                    <div class="form-wrap">
+                                        <label class="radio-inline block-inline-left">
+                                            <input class="onclick_rozar_pay" name="passion" value="value-2"
+                                                type="radio"><span class="text-dark-variant-2 font-secondary">Rozar Pay
+                                            </span>
+                                        </label><a class="text-primary" href="#">(By Payment Gateway)</a>
+                                    </div>
+                                    <div class="image-wrapper"><a href="#"><img src="images/shop-pay-1.png"
+                                                alt="" /></a><a href="#"><img src="images/shop-pay-2.png"
+                                                alt="" /></a><a href="#"><img src="images/shop-pay-3.png"
+                                                alt="" /></a><a href="#"><img src="images/shop-pay-4.png" alt="" /></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wallet_pay" style="display:none">
+                            {!!Form::open(['route'=>['checkout_wallet'],'files'=>true,'class'=>'form-horizontal'])!!}
+                            @csrf
+                            <input type="hidden" name="amount" value="{{number_format($total, 2, '.', '')}}">
+                            <input type="hidden" name="currency" value="INR">
+                            <input type="hidden" name="entity" value="Wallet Amount">
+                            <input type="hidden" name="amount_refunded" value="0.00">
+                            <button type="submit" class="margin-5 button button-primary button-xs round-small">Click
+                                Here To Pay
+                                {{number_format($total, 2, '.', '')}} INR</button>
+                            {!!Form::close()!!}
+                        </div>
+                        <div class="rozar_pay" style="display:none">
+                            {!!Form::open(['files'=>true,'class'=>'form-horizontal'])!!}
+                            @csrf
+                            <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="{{ env('RAZOR_KEY') }}"
+                                data-amount="{{number_format($total*100, 2, '.', '')}}"
+                                data-buttontext="Click Here  To Pay {{number_format($total, 2, '.', '')}} INR"
+                                data-name="{{$distributor->name}}"
+                                data-description="{{$distributor->distributor_tracking_id}}"
+                                data-image="{{asset('logo.png')}}" data-prefill.name="{{$distributor->name}}"
+                                data-prefill.email="{{$distributor->email}}" data-theme.color="#ff7529">
+                            </script>
+                            {!!Form::close()!!}
+                        </div>
 
-                        {!!Form::open(['files'=>true,'class'=>'form-horizontal'])!!}
-                        @csrf
-                        <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="{{ env('RAZOR_KEY') }}"
-                            data-amount="{{number_format($total*100, 2, '.', '')}}"
-                            data-buttontext="Click Here  To Pay {{number_format($total, 2, '.', '')}} INR"
-                            data-name="{{$distributor->name}}"
-                            data-description="{{$distributor->distributor_tracking_id}}"
-                            data-image="{{asset('logo.png')}}" data-prefill.name="{{$distributor->name}}"
-                            data-prefill.email="{{$distributor->email}}" data-theme.color="#ff7529">
-                        </script>
-
-                        {!!Form::close()!!}
                     </div>
                 </div>
     </div>
@@ -330,6 +374,19 @@ $total = $total + $add_to_cart->price;
     <!--Scripts-->
     <script src="js/core.min.js"></script>
     <script src="js/script.js"></script>
+    <script>
+    $(".onclick_wallet_pay").click(function() {
+
+        $(".wallet_pay").show();
+        $(".rozar_pay").hide();
+    });
+    $(".onclick_rozar_pay").click(function() {
+
+        $(".rozar_pay").show();
+        $(".wallet_pay").hide();
+    })
+    </script>
+
 </body>
 
 </html>

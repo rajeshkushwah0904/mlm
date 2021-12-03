@@ -30,55 +30,54 @@
         display: block;
     }
     </style>
-     <style>
-    ul, #myUL {
-  list-style-type: none;
-}
-
-#myUL {
-  margin: 0;
-  padding: 0;
-}
-
-.caret {
-  cursor: pointer;
-  -webkit-user-select: none; /* Safari 3.1+ */
-  -moz-user-select: none; /* Firefox 2+ */
-  -ms-user-select: none; /* IE 10+ */
-  user-select: none;
-}
-
-.caret::before {
-  content: "\25B6";
-  color: black;
-  display: inline-block;
-  margin-right: 6px;
-}
-
-.caret-down::before {
-  -ms-transform: rotate(90deg); /* IE 9 */
-  -webkit-transform: rotate(90deg); /* Safari */'
-  transform: rotate(90deg);  
-}
-
-.nested {
-  display: none;
-}
-
-.active {
-  display: block;
-}
-    </style>
 </head>
 
 <body>
- 
+    <div class="ie-panel"><a href="http://windows.microsoft.com/en-US/internet-explorer/"><img
+                src="images/ie8-panel/warning_bar_0000_us.jpg" height="42" width="820"
+                alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."></a>
+    </div>
+    <div class="preloader">
+        <div class="preloader-body">
+            <div class="cssload-container">
+                <div class="cssload-speeding-wheel"></div>
+            </div>
+            <p>Loading...</p>
+        </div>
+    </div>
+    <!--The Main Wrapper-->
     <div class="page">
         @include('admin.internal_header')
 
 
         <section class="section section-sm text-center text-lg-start section-border">
             <div class="container">
+                 <div class="container ot-1">
+          <div class="row justify-content-center">
+            <div class="col-xl-10 col-xl-offset-1">
+              <!--Tabs-->
+              <div class="tabs-custom tabs-horizontal tabs-corporate" id="tabs-1">
+<?php
+$categories = \App\Category::all();
+?>
+                <ul class="nav nav-tabs text-center myTabs" role="tablist">
+                  @foreach($categories as $category)
+                  <li class="round-xl nav-item"" role="presentation"><a  class="round-xl nav-link" href="#tab{{$category->id}}" data-bs-toggle="tab" aria-controls="tab{{$category->id}}" role="tab">{{$category->name}}</a></li>
+                  @endforeach
+                </ul>
+                <div class="tab-content text-center" style="margin-top: -60px">
+                    @foreach($categories as $xkey=>$category1)
+                     <div class="tab-pane fade" role="tabpanel" id="tab{{$category1->id}}">
+                      @foreach($category1->subcategories as $subcategory)
+                      <a class="button button-default button-xs round-xl button-shadow" href="{{route('layout.subcategory',$subcategory->id)}}">{{$subcategory->name}}</a>
+                      @endforeach
+                    </div>
+                  @endforeach
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
                 <div class="row justify-content-between flex-lg-row-reverse row-50">
                     <div class="col-lg-10">
 
@@ -92,7 +91,7 @@
                                     <div class="col-6 col-lg-3">
                                         <div class="product tumbnail thumbnail-3"><a
                                                 href="{{route('product_detail',$product->id)}}"><img
-                                                    src="{{asset($product->image)}}"  style="height: 306px; max-width:270px" alt="" /></a>
+                                                    src="{{asset($product->image)}}" alt="" /></a>
                                             <div class="caption">
                                                 <h6><a
                                                         href="{{route('product_detail',$product->id)}}">{{$product->name}}</a>
@@ -121,28 +120,23 @@
 
                         </div>
                     </div>
-                   
+                    <div class="col-lg-2">
+ 
+                         <h5>Categories</h5>
+                            
+                            <div class="w3-dropdown-hover">
+                                <a class="w3-button w3-black"
+                                    href="">{{$category->name}}</a>
+                                <div class="w3-dropdown-content w3-bar-block w3-border">
+                                    @foreach($category->subcategories as $subcategory)
+                                    <a href=""
+                                        class="w3-bar-item w3-button">{{$subcategory->name}}</a>
+                                    @endforeach
+                                </div>
+                            </div>
+                            
 
- <div class="col-lg-2 sidebar">
-               <?php
-                    $categories = \App\Category::all();
-                     ?>
-              <h5>Categories</h5>
-                <ul id="myUL">
-                     @foreach($categories as $category)
-  <li><span class="caret"><a href="{{route('layout.category',$category->id)}}">  {{$category->name}}</a></span>
-    <ul class="nested">
-         @foreach($category->subcategories as $subcategory)
-      <li>{{$subcategory->name}}</li>
-        @endforeach
-     
-      </ul>
-      </li> 
-        @endforeach 
-    </ul>
-  </li>
-</ul>
-     </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -153,17 +147,6 @@
     <!-- Global Mailform Output-->
     <div class="snackbars" id="form-output-global"></div>
     <!--Scripts-->
-    <script>
-var toggler = document.getElementsByClassName("caret");
-var i;
-
-for (i = 0; i < toggler.length; i++) {
-  toggler[i].addEventListener("click", function() {
-    this.parentElement.querySelector(".nested").classList.toggle("active");
-    this.classList.toggle("caret-down");
-  });
-}
-</script>
     <script src="{{asset('js/core.min.js')}}"></script>
     <script src="{{asset('js/script.js')}}"></script>
 </body>

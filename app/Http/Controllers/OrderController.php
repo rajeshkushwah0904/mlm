@@ -19,7 +19,7 @@ class OrderController extends Controller
         if (\Auth::user()->role == 1) {
             $order = \App\Order::where('invoice_no', $request->invoice_no)->first();
         } else {
-            $order = \App\Order::where('distributor_id', \Auth::user()->distributor_id)->where('invoice_no', $request->distributor_id)->first();
+            $order = \App\Order::where('distributor_id', \Auth::user()->distributor_id)->where('invoice_no', $request->invoice_no)->first();
         }
         if ($order) {
             return view('backend.orders.view', compact('order'));

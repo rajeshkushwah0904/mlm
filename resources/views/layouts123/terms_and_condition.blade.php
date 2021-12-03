@@ -3,7 +3,7 @@
 
 <head>
     <!--Site Title-->
-    <title>Package</title>
+    <title>Rightway Future</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -50,40 +50,34 @@
         @include('admin.internal_header')
 
 
-        <section class="section section-sm text-center section-border">
+        <section class="section section-sm text-center text-lg-start">
             <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-xl-6 bg-default">
-                        <h1 class="fw-bold">Choose Your Plan</h1>
-                        <p class="lead">
-                            We worked out an amazing combination of vast functionality
-                            and user's comfort. It will totally impress you with its power!
-                        </p>
-                    </div>
-                </div>
-                <div class="row margin-1 row-30 pricing-border-left">
-                    @foreach($packages as $key=>$package)
-                    <div class="col-md-6 col-xl-4 pricing-box pricing-box-hover bg-default">
-                        <div class="thumbnail thumbnail-3">
-                            <h6 class="text-uppercase text-light-clr letter-spacing-1">{{$package->package_name}}</h6>
-                            <span class="icon icon-xl icon-light fa-hand-pointer-o"></span>
-                            <div class="caption">
-                                <h4 class="fw-bold letter-spacing-1">Rs. {{$package->amount}}</h4><br>
-                                <hr>
-                                <h4>Sponsor Income</h4>
-                                <p> {{$package->sponsor_income}} %</p>
-                                <a class="button button-variant-1 button-default button-sm round-xl" href="#">Buy
-                                    Now</a>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
+                <div class="col-lg-12">
+                    <h4 class="fw-bold">Product Disclaimer</h4>
+                    <hr class="short bg-accent">
+                    <p>
+                        Rightway Future Shall Be accountable for the quality of products only if such products are
+                        purchased from approved distributors.
 
+                        The buyer shall be entirely responsible for all outcomes for the purchase and use of products
+                        bought from unapproved sources including unapproved websites, an E-commerce marketplace, or an
+                        unapproved party.</p><br>
+                    <h4 class="fw-bold">Website Disclaimer</h4>
+                    <hr class="short bg-accent">
+
+                    <p>The contents of this site are only for knowledge purposes. Users are prescribed to rely on
+                        information posted herein for any purpose only after confirmation and verification of the same
+                        from trustworthy and authoritative sources. Neither Rightway Future Pvt. Ltd. nor the site
+                        developer is accountable for any consequences that may occur out of using such information
+                        without verification/confirmation. There may be a time gap in internet/online posting/
+                        transmission of knowledge and availability of such information at browsers’ end. The accurate
+                        status may be verified from the source.
+                        <br>
+                        For any queries, suggestions regarding this website please contact -
+                    </p>
                 </div>
             </div>
         </section>
-
-
 
 
         <!--Footer-->

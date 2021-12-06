@@ -54,8 +54,6 @@
                                         <td>
                                             <a href="{{route('backend.packages.edit',$package->id)}}"
                                                 class="btn btn-sm btn-success">Edit</a>
-                                            <a href="{{route('backend.packages.delete',$package->id)}}"
-                                                class="btn btn-sm btn-danger">Delete</a>
                                         </td>
                                     </tr>
                                     @endforeach

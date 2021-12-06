@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\DistributorsExport;
 use App\Http\Controllers\Controller;
 use App\User;
 use Cookie;
@@ -9,10 +10,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
+use Maatwebsite\Excel\Facades\Excel;
 use Session;
 
 class DistributorController extends Controller
 {
+
+    public function export()
+    {
+        return Excel::download(new DistributorsExport, 'distributor_list.xlsx');
+    }
 
     public function register(Request $request)
     {

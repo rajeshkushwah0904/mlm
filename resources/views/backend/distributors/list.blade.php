@@ -113,7 +113,10 @@
                 <div class="col-12">
                     <div class="card" style="overflow-x:scroll;">
                         <div class="card-header">
-                            <h3 class="card-title">Distributor List</h3>
+                            <h3 class="card-title">Distributor List
+                                <a class="btn btn-sm btn-info float-right"
+                                    href="{{route('backend.distributors.export')}}">Export</a>
+                            </h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -123,6 +126,7 @@
                                     <tr>
                                         <th>S. No. </th>
                                         <th>Action</th>
+                                        <th>DISTRIBUTOR STATUS </th>
                                         <th>JOINING DATE</th>
                                         <th>ACTIVATION DATE </th>
                                         <th>DISTRIBUTOR ID
@@ -144,7 +148,6 @@
                                         <th>PACKAGE
 
                                         </th>
-                                        <th>DISTRIBUTOR STATUS </th>
                                         <th>DISTRIBUTOR PAID</th>
                                     </tr>
                                 </thead>
@@ -172,7 +175,7 @@
                                                     @if($distributor->status==2)
                                                     <li>
                                                         <a class="dropdown-item"
-                                                            href="{{route('backend.distributors.activate',$distributor->id)}}">Block</a>
+                                                            href="{{route('backend.distributors.activate',$distributor->id)}}">Unblock</a>
                                                     </li>
                                                     @else
                                                     <li>
@@ -187,6 +190,17 @@
                                                     </li>
                                                 </ul>
                                             </div>
+                                        </td>
+                                        <td>
+                                            @if($distributor->status==2)
+                                            Block
+                                            @else
+                                            @if($distributor->package)
+                                            Activate
+                                            @else
+                                            Free
+                                            @endif
+                                            @endif
                                         </td>
                                         <td>{{$distributor->joining_date}}</td>
                                         <td>{{$distributor->activate_date}}</td>
@@ -211,17 +225,7 @@
                                             Free
                                             @endif
                                         </td>
-                                        <td>
-                                            @if($distributor->status==2)
-                                            Block
-                                            @else
-                                            @if($distributor->package)
-                                            Activate
-                                            @else
-                                            Free
-                                            @endif
-                                            @endif
-                                        </td>
+
                                         <td>
                                             @if($distributor->package)
                                             {{$distributor->package->amount}}

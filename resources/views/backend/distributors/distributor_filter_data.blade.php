@@ -19,7 +19,7 @@
                  @if($distributor->status==2)
                  <li>
                      <a class="dropdown-item"
-                         href="{{route('backend.distributors.activate',$distributor->id)}}">Block</a>
+                         href="{{route('backend.distributors.activate',$distributor->id)}}">Unblock</a>
                  </li>
                  @else
                  <li>
@@ -33,6 +33,17 @@
                  </li>
              </ul>
          </div>
+     </td>
+     <td>
+         @if($distributor->status==2)
+         Block
+         @else
+         @if($distributor->package)
+         Activate
+         @else
+         Free
+         @endif
+         @endif
      </td>
      <td>{{$distributor->joining_date}}</td>
      <td>{{$distributor->activate_date}}</td>
@@ -55,17 +66,6 @@
          {{$distributor->package->package_name}}
          @else
          Free
-         @endif
-     </td>
-     <td>
-         @if($distributor->status==2)
-         Block
-         @else
-         @if($distributor->package)
-         Activate
-         @else
-         Free
-         @endif
          @endif
      </td>
      <td>

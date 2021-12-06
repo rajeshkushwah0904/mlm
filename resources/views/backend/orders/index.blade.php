@@ -35,6 +35,7 @@
                                         <th>S. No. </th>
                                         <th>Distributor ID</th>
                                         <th>Invoice No.</th>
+                                        <th>Invoice Type</th>
                                         <th>Total Amount</th>
                                         <th>Action</th>
                                     </tr>
@@ -49,10 +50,18 @@
                                             @endif
                                         </td>
                                         <td>{{$order->invoice_no}}</td>
+                                        <td>@if($order->invoice_type==1)
+                                            Package invoice
+                                            @else
+                                            Product Repurchase invoice
+                                            @endif</td>
                                         <td>{{$order->grand_total}}</td>
                                         <td>
                                             <a href="{{route('backend.orders.view')}}?invoice_no={{$order->invoice_no}}"
                                                 class="btn btn-sm btn-success">Show</a>
+                                            <a href="{{route('backend.orders.download_pdf',$order->id)}}"
+                                                class="btn btn-sm btn-info">Download</a>
+
                                         </td>
                                     </tr>
                                     @endforeach

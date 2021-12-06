@@ -41,6 +41,7 @@
                                 <th>Package Name</th>
                                 <th>Amount</th>
                                 <th>Sponsor Income</th>
+                                <th>Download</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -50,6 +51,15 @@
                                 <td>{{$distributor->package->package_name}}</td>
                                 <td>{{$distributor->package->amount}}</td>
                                 <td>{{$distributor->package->sponsor_income}}%</td>
+                                <?php
+$order = \App\Order::where('distributor_id', $distributor->id)->where('invoice_type', 1)->first();
+?>
+                                <td>
+                                    @if($order)
+                                    <a href="{{route('backend.orders.view')}}?invoice_no={{$order->invoice_no}}"
+                                        class="btn btn-info"><i class="fas fa-print"></i> View & Download</a>
+                                    @endif
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -81,6 +91,7 @@
                                 </div>
                             </div>
                             {!!Form::close()!!}
+                            @if($select_package)
                             {!!Form::open(['files'=>true,'class'=>'form-horizontal'])!!}
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
@@ -94,6 +105,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+
                                     @foreach($select_package->package_products as $key=>$package_product)
                                     <tr>
                                         <td>{{$key+1}}</td>
@@ -127,7 +139,7 @@
                                 </tbody>
                             </table>
                             @csrf
-                            @if($select_package)
+
                             <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="{{ env('RAZOR_KEY') }}"
                                 data-amount="{{$select_package->amount*100}}"
                                 data-buttontext="Pay {{$select_package->amount}} INR" data-name="{{$distributor->name}}"

@@ -84,7 +84,7 @@ Route::group(['prefix' => 'package_products', 'middleware' => ['auth']], functio
 });
 
 Route::group(['prefix' => 'distributors', 'middleware' => ['auth']], function () {
-
+    Route::get('/export', ['as' => 'backend.distributors.export', 'uses' => 'DistributorController@export']);
     Route::get('/list', ['as' => 'backend.distributors.list', 'uses' => 'DistributorController@list']);
     Route::get('/downline_list', ['as' => 'backend.distributors.downline_list', 'uses' => 'DistributorController@downline_list']);
     Route::post('/distributor_filter_data', ['as' => 'backend.distributors.distributor_filter_data', 'uses' => 'DistributorController@distributor_filter_data']);
@@ -208,7 +208,7 @@ Route::group(['prefix' => 'orders', 'middleware' => ['auth']], function () {
     Route::get('/', ['as' => 'backend.orders.index', 'uses' => 'OrderController@index']);
     Route::get('/view', ['as' => 'backend.orders.view', 'uses' => 'OrderController@view']);
     Route::get('/print', ['as' => 'backend.orders.print', 'uses' => 'OrderController@print']);
-
+    Route::get('/download_pdf/{id}', ['as' => 'backend.orders.download_pdf', 'uses' => 'OrderController@download_pdf']);
     Route::post('/create', ['as' => 'backend.orders.create', 'uses' => 'OrderController@store']);
     Route::get('/{id}/edit', ['as' => 'backend.orders.edit', 'uses' => 'OrderController@edit']);
     Route::post('/{id}/edit', ['as' => 'backend.orders.edit', 'uses' => 'OrderController@update']);

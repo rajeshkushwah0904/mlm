@@ -18,6 +18,35 @@
             </div>
         </div><!-- /.container-fluid -->
     </section>
+     <section class="content">
+        <div class="container-fluid">
+              {!!Form::open(['route'=>['backend.orders.export'],'method'=>'GET','files'=>true,'class'=>'form-horizontal'])!!}
+            {{csrf_field()}}
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <label>Start Date</label>
+                        <input class="form-control" type="date" name="start_date" value="{{date('Y-m-d')}}">
+                    </div>
+                </div>
+                 <div class="col-3">
+                    <div class="form-group">
+                        <label>Start Date</label>
+                        <input class="form-control" type="date" name="end_date" value="{{date('Y-m-d')}}">
+                    </div>
+                </div>
+               
+                <div class="col-3">
+                    <div class="form-group">
+                        <button type="submit"  class="btn btn-primary btn-sm" style="margin-top: 35px">
+                            Export
+                        </button>
+                    </div>
+                </div>
+            </div>
+             {!!Form::close()!!}
+        </div>
+    </section>
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">

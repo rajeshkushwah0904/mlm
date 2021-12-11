@@ -198,12 +198,12 @@ class PackageController extends Controller
                         'product_taxable_amount' => $product_price->actual_price,
                         'total_product_taxable_amount' => $product_price->actual_price * $package_product->qty,
                         'product_gst_amount' => $product_price->actual_price * $product_price->gst / 100,
-                        'product_amount' => $product_price->bussiness_volume * $package_product->qty,
+                        'product_amount' => $product_price->distributor_price * $package_product->qty,
                         'qty' => $package_product->qty,
                     ]);
                     $total_taxable_amount = $total_taxable_amount + $product_price->actual_price * $package_product->qty;
                     $total_gst_amount = $total_gst_amount + $product_price->actual_price * $package_product->qty * $product_price->gst / 100;
-                    $total_amount = $total_amount + $product_price->bussiness_volume * $package_product->qty;
+                    $total_amount = $total_amount + $product_price->distributor_price * $package_product->qty;
                 }
 
                 $payment = \App\Payment::create([
@@ -334,12 +334,12 @@ class PackageController extends Controller
                 'product_taxable_amount' => $product_price->actual_price,
                 'total_product_taxable_amount' => $product_price->actual_price * $package_product->qty,
                 'product_gst_amount' => $product_price->actual_price * $product_price->gst / 100,
-                'product_amount' => $product_price->bussiness_volume * $package_product->qty,
+                'product_amount' => $product_price->distributor_price * $package_product->qty,
                 'qty' => $package_product->qty,
             ]);
             $total_taxable_amount = $total_taxable_amount + $product_price->actual_price * $package_product->qty;
             $total_gst_amount = $total_gst_amount + $product_price->actual_price * $package_product->qty * $product_price->gst / 100;
-            $total_amount = $total_amount + $product_price->bussiness_volume * $package_product->qty;
+            $total_amount = $total_amount + $product_price->distributor_price * $package_product->qty;
         }
 
         $payment = \App\Payment::create([

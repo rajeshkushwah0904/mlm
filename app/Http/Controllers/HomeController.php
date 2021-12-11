@@ -327,7 +327,6 @@ class HomeController extends Controller
             'gender' => $distributor->gender,
             'address' => $distributor->address,
             'pincode' => $distributor->pincode,
-
         ]);
 
         $total_taxable_amount = 0;
@@ -461,5 +460,13 @@ class HomeController extends Controller
         $title = "Shipping Policy";
         $page_content = "Shipping services";
         return view('layouts.shipping_policy', compact('title', 'page_content'));
+    }
+
+        public function legal()
+    {
+        $title = "Company Legal detail";
+        $page_content = "Company Legal detail";
+        $legal_documents = \App\LegalDocument::all();
+        return view('layouts.legal', compact('title', 'page_content','legal_documents'));
     }
 }

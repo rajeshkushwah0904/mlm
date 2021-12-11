@@ -276,7 +276,8 @@ class DistributorController extends Controller
         if (\Auth::user()->role == 1) {
             $packages = \App\Package::all();
             $distributors = \App\Distributor::all();
-            return view('backend.distributors.list', compact('distributors', 'packages'));
+            $domain_name=request()->getHost();
+            return view('backend.distributors.list', compact('distributors', 'packages','domain_name'));
         } else {
             $distributors = \App\Distributor::where('sponsor_tracking_id', '=', \Auth::user()->distributor_tracking_id)->get();
         }

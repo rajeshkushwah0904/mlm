@@ -52,11 +52,12 @@ $addtocarts = \App\Addtocart::where('distributor_id', \Auth::user()->distributor
                      </li>
                  </ul>
              </li>
-
-             <li class="rd-nav-item"><a class="rd-nav-link" href="{{route('package')}}">Packages</a>
+             <li class="rd-nav-item">
+                 <a class="rd-nav-link" href="{{route('package')}}">Packages</a>
              </li>
 
-             <li class="rd-nav-item"><a class="rd-nav-link" href="{{route('allproducts')}}">Product</a>
+             <li class="rd-nav-item">
+                 <a class="rd-nav-link" href="{{route('allproducts')}}">Product</a>
              </li>
 
              <li class="rd-nav-item"><a class="rd-nav-link" href="#">Resources</a>
@@ -72,6 +73,9 @@ $addtocarts = \App\Addtocart::where('distributor_id', \Auth::user()->distributor
                      <li class="rd-dropdown-item"><a class="rd-dropdown-link"
                              href="{{route('terms_and_condition')}}">Terms &
                              conditions</a>
+                     </li>
+                     <li class="rd-dropdown-item"><a class="rd-dropdown-link"
+                             href="{{route('legal')}}">Legal</a>
                      </li>
                  </ul>
              </li>

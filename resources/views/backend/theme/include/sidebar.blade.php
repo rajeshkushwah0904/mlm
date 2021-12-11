@@ -175,6 +175,13 @@ $distributor = \App\Distributor::where('distributor_tracking_id', \Auth::user()-
                                  <p>Website Bank Detail </p>
                              </a>
                          </li>
+  <li class="nav-item">
+                             <a href="{{route('backend.legal_documents.index')}}" class="nav-link">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>Legal Document </p>
+                             </a>
+                         </li>
+                         
                      </ul>
                  </li>
 
@@ -258,6 +265,12 @@ $distributor = \App\Distributor::where('distributor_tracking_id', \Auth::user()-
                      <ul class="nav nav-treeview">
                          @if(\Auth::user()->role==1)
                          <li class="nav-item">
+                             <a href="{{route('backend.incomes.distibutor_total_all_income')}}" class="nav-link">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>All Distributor Total Income</p>
+                             </a>
+                         </li>
+                         <li class="nav-item">
                              <a href="{{route('backend.incomes.all_direct_income')}}" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
                                  <p>All Distributor Level Income</p>
@@ -277,6 +290,12 @@ $distributor = \App\Distributor::where('distributor_tracking_id', \Auth::user()-
                              </a>
                          </li>
                          @endif
+                          <li class="nav-item">
+                             <a href="{{route('backend.incomes.total_all_income')}}" class="nav-link">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>All Total Income</p>
+                             </a>
+                         </li>
                          <li class="nav-item">
                              <a href="{{route('backend.incomes.direct_income')}}" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>

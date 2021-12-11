@@ -6,9 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Order;
 use Illuminate\Http\Request;
 use PDF;
+use App\Exports\OrdersExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class OrderController extends Controller
 {
+
+    public function export()
+    {
+        return Excel::download(new OrdersExport, 'invoice_list.xlsx');
+    }
+
     public function index()
     {
         if (\Auth::user()->role == 1) {

@@ -61,7 +61,7 @@ class BankController extends Controller
             'bank_branch' => $request->input('bank_branch'),
             'added_by' => \Auth::user()->id,
             'updated_by' => \Auth::user()->id,
-            'status' => 4,
+            'status' => 1,
         ]);
         $bank->save();
         session()->flash('success', 'New Bank is create Successfully');
@@ -75,12 +75,12 @@ class BankController extends Controller
      * @return Response
      */
 
-    public function approved($id)
+    public function active($id)
     {
         $bank = \App\Bank::find($id);
 
         if ($bank) {
-            $bank->status = 4;
+            $bank->status = 1;
             $bank->save();
 
             return redirect()->route('backend.banks.index');
@@ -89,7 +89,7 @@ class BankController extends Controller
         return redirect()->route('backend.banks.index');
     }
 
-    public function rejected($id)
+    public function in_active($id)
     {
         $bank = \App\Bank::find($id);
 

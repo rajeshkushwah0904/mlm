@@ -19,6 +19,8 @@ Route::get('/', 'HomeController@home')->name('home');
 Route::get('/qr_code', 'HomeController@qr_code')->name('qr_code');
 
 Route::get('/home', 'HomeController@home')->name('home');
+Route::get('/legal', 'HomeController@legal')->name('legal');
+
 Route::get('category/{id}', 'HomeController@category')->name('layout.category');
 Route::get('/subcategory/{id}', 'HomeController@category')->name('layout.subcategory');
 Route::get('/about', 'HomeController@about')->name('about');
@@ -183,10 +185,24 @@ Route::group(['prefix' => 'banks', 'middleware' => ['auth']], function () {
     Route::post('/create', ['as' => 'backend.banks.create', 'uses' => 'BankController@store']);
     Route::get('/{id}/edit', ['as' => 'backend.banks.edit', 'uses' => 'BankController@edit']);
     Route::post('/{id}/edit', ['as' => 'backend.banks.edit', 'uses' => 'BankController@update']);
-    Route::get('/{id}/approved', ['as' => 'backend.banks.approved', 'uses' => 'BankController@approved']);
-    Route::get('/{id}/rejected', ['as' => 'backend.banks.rejected', 'uses' => 'BankController@rejected']);
+    Route::get('/{id}/active', ['as' => 'backend.banks.active', 'uses' => 'BankController@active']);
+    Route::get('/{id}/in_active', ['as' => 'backend.banks.in_active', 'uses' => 'BankController@in_active']);
     Route::get('/{id}/delete', ['as' => 'backend.banks.delete', 'uses' => 'BankController@destroy']);
 });
+
+
+
+Route::group(['prefix' => 'legal_documents', 'middleware' => ['auth']], function () {
+    Route::get('/', ['as' => 'backend.legal_documents.index', 'uses' => 'LegalDocumentController@index']);
+    Route::get('/create', ['as' => 'backend.legal_documents.create', 'uses' => 'LegalDocumentController@create']);
+    Route::post('/create', ['as' => 'backend.legal_documents.create', 'uses' => 'LegalDocumentController@store']);
+    Route::get('/{id}/edit', ['as' => 'backend.legal_documents.edit', 'uses' => 'LegalDocumentController@edit']);
+    Route::post('/{id}/edit', ['as' => 'backend.legal_documents.edit', 'uses' => 'LegalDocumentController@update']);
+    Route::get('/{id}/active', ['as' => 'backend.legal_documents.active', 'uses' => 'LegalDocumentController@active']);
+    Route::get('/{id}/in_active', ['as' => 'backend.legal_documents.in_active', 'uses' => 'LegalDocumentController@in_active']);
+    Route::get('/{id}/delete', ['as' => 'backend.legal_documents.delete', 'uses' => 'LegalDocumentController@destroy']);
+});
+
 
 Route::group(['prefix' => 'incomes', 'middleware' => ['auth']], function () {
 
@@ -195,6 +211,11 @@ Route::group(['prefix' => 'incomes', 'middleware' => ['auth']], function () {
     Route::get('/reward_income', ['as' => 'backend.incomes.reward_income', 'uses' => 'IncomeController@reward_income']);
     Route::get('/repurchase_income', ['as' => 'backend.incomes.repurchase_income', 'uses' => 'IncomeController@repurchase_income']);
     Route::get('/all_repurchase_income', ['as' => 'backend.incomes.all_repurchase_income', 'uses' => 'IncomeController@all_repurchase_income']);
+
+Route::get('/distibutor_total_all_income', ['as' => 'backend.incomes.distibutor_total_all_income', 'uses' => 'IncomeController@distibutor_total_all_income']);
+Route::get('/total_all_income', ['as' => 'backend.incomes.total_all_income', 'uses' => 'IncomeController@total_all_income']);
+
+
 
     Route::get('/create', ['as' => 'backend.incomes.create', 'uses' => 'IncomeController@create']);
     Route::post('/create', ['as' => 'backend.incomes.create', 'uses' => 'IncomeController@store']);
@@ -205,6 +226,7 @@ Route::group(['prefix' => 'incomes', 'middleware' => ['auth']], function () {
 });
 
 Route::group(['prefix' => 'orders', 'middleware' => ['auth']], function () {
+Route::get('/export', ['as' => 'backend.orders.export', 'uses' => 'OrderController@export']);
     Route::get('/', ['as' => 'backend.orders.index', 'uses' => 'OrderController@index']);
     Route::get('/view', ['as' => 'backend.orders.view', 'uses' => 'OrderController@view']);
     Route::get('/print', ['as' => 'backend.orders.print', 'uses' => 'OrderController@print']);

@@ -7,25 +7,25 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Bank List</h1>
+                    <h1>legal_document List</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Bank List</li>
+                        <li class="breadcrumb-item active">Legal Document List</li>
                     </ol>
                 </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
-    <a href="{{route('backend.banks.create')}}" class="btn btn-sm btn-info">Add Bank</a>
+    <a href="{{route('backend.legal_documents.create')}}" class="btn btn-sm btn-info">Add Legal Document</a>
     <section class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Bank List</h3>
+                            <h3 class="card-title">Legal Document List</h3>
 
                         </div>
                         <!-- /.card-header -->
@@ -36,17 +36,17 @@
                                         <th>S. No. </th>
                                         <th>Action</th>
                                         <th>Status</th>
-                                        <th>Account Holder Name</th>
-                                        <th>Account Number</th>
+                                        <th>Document Name</th>
+                                        <th>Image</th>
                                         <th>Account Type</th>
                                         <th>IFSC Code</th>
-                                        <th>Bank Name</th>
-                                        <th>Bank Branch</th>
+                                        <th>legal_document Name</th>
+                                        <th>legal_document Branch</th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($banks as $key=>$bank)
+                                    @foreach($legal_documents as $key=>$legal_document)
                                     <tr>
                                         <td>{{$key+1}}</td>
                                         <td>
@@ -56,35 +56,31 @@
                                                     <i class="fa fa-list"></i>
                                                 </button>
                                                 <ul class="dropdown-menu">
-                                                    @if($bank->status==1)
+                                                    @if($legal_document->status==1)
                                                     <li><a class="dropdown-item"
-                                                            href="{{route('backend.banks.in_active',$bank->id)}}">In Active</a>
+                                                            href="{{route('backend.legal_documents.in_active',$legal_document->id)}}">In Active</a>
                                                     </li>
                                                     @else
  <li>
-     <a class="dropdown-item" href="{{route('backend.banks.active',$bank->id)}}">active</a>
+     <a class="dropdown-item" href="{{route('backend.legal_documents.active',$legal_document->id)}}">active</a>
                                                     </li>
                                                     @endif
                                                      <li><a class="dropdown-item"
-                                                            href="{{route('backend.banks.delete',$bank->id)}}">Delete</a>
+                                                            href="{{route('backend.legal_documents.delete',$legal_document->id)}}">Delete</a>
                                                     </li>
                                                 </ul>
                                             </div>
                                         </td>
                                         <td>
-                                            @if($bank->status==1)
+                                            @if($legal_document->status==1)
                                             <button class="btn btn-sm btn-info">Active</button>
                                             @else
                                             <button class="btn btn-sm btn-danger">Inactive</button>
                                             @endif
 
                                         </td>
-                                        <td>{{$bank->account_holder_name}}</td>
-                                        <td>{{$bank->account_number}}</td>
-                                        <td>{{$bank->account_type}}</td>
-                                        <td>{{$bank->ifsc_code}}</td>
-                                        <td>{{$bank->bank_name}}</td>
-                                        <td>{{$bank->bank_branch}}</td>
+                                        <td>{{$legal_document->document_name}}</td>
+                                        <td><img src="{{asset($legal_document->image)}}"style="width: 100%"></td>
 
                                     </tr>
                                     @endforeach

@@ -13,14 +13,13 @@
     <!-- Bootstrap 4 -->
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{asset('backendtheme/plugins/fontawesome-free/css/all.min.css')}}">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" media="all">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{asset('backendtheme/dist/css/adminlte.min.css')}}">
+    <link type="text/css" rel="stylesheet" href="{{public_path('backendtheme/dist/css/adminlte.min.css')}}" media="all">
 
     <!-- Google Font: Source Sans Pro -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet" media="all">
 </head>
 
 <body>

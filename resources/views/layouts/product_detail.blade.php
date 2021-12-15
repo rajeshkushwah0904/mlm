@@ -132,8 +132,8 @@
                                 class="button button-success round-xl button-sm button-block margin-6" href="#">Add to
                                 cart</a>
                             <dl class="info-list margin-5">
-                                <dt>SKU</dt>
-                                <dd>036895</dd>
+                                <dt>HSNCODE</dt>
+                                <dd>{{$product->hsn_code}}</dd>
                                 <dt>Categories</dt>
                                 <dd>{{$product->category->name}}, {{$product->subcategory->name}}</dd>
                                
@@ -150,12 +150,7 @@
                             <div class="tab-content text-md-start">
                                 <div class="tab-pane active fade show" role="tabpanel" id="tab0">
                                     <p class="lead text-base">
-                                        Short sleeve t-shirts in black, crewneck collar. Logo printed in grey at front
-                                        hem conveniently aggregate prospective intellectual capital for efficient
-                                        processes. Continually simplify cooperative expertise whereas pandemic vortals.
-                                        Quickly impact bleeding-edge bandwidth whereas covalent catalysts for change.
-                                        Tonal stitching. 98% cotton, 2% elastane. Made in Italy.
-
+                                       {{$product->description}}
                                     </p>
                             </div>
                         </div>

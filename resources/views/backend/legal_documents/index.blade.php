@@ -38,10 +38,6 @@
                                         <th>Status</th>
                                         <th>Document Name</th>
                                         <th>Image</th>
-                                        <th>Account Type</th>
-                                        <th>IFSC Code</th>
-                                        <th>legal_document Name</th>
-                                        <th>legal_document Branch</th>
 
                                     </tr>
                                 </thead>

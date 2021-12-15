@@ -192,6 +192,7 @@ Route::group(['prefix' => 'banks', 'middleware' => ['auth']], function () {
 
 
 
+
 Route::group(['prefix' => 'legal_documents', 'middleware' => ['auth']], function () {
     Route::get('/', ['as' => 'backend.legal_documents.index', 'uses' => 'LegalDocumentController@index']);
     Route::get('/create', ['as' => 'backend.legal_documents.create', 'uses' => 'LegalDocumentController@create']);
@@ -201,6 +202,17 @@ Route::group(['prefix' => 'legal_documents', 'middleware' => ['auth']], function
     Route::get('/{id}/active', ['as' => 'backend.legal_documents.active', 'uses' => 'LegalDocumentController@active']);
     Route::get('/{id}/in_active', ['as' => 'backend.legal_documents.in_active', 'uses' => 'LegalDocumentController@in_active']);
     Route::get('/{id}/delete', ['as' => 'backend.legal_documents.delete', 'uses' => 'LegalDocumentController@destroy']);
+});
+
+Route::group(['prefix' => 'popup_banners', 'middleware' => ['auth']], function () {
+    Route::get('/', ['as' => 'backend.popup_banners.index', 'uses' => 'PopupBannerController@index']);
+    Route::get('/create', ['as' => 'backend.popup_banners.create', 'uses' => 'PopupBannerController@create']);
+    Route::post('/create', ['as' => 'backend.popup_banners.create', 'uses' => 'PopupBannerController@store']);
+    Route::get('/{id}/edit', ['as' => 'backend.popup_banners.edit', 'uses' => 'PopupBannerController@edit']);
+    Route::post('/{id}/edit', ['as' => 'backend.popup_banners.edit', 'uses' => 'PopupBannerController@update']);
+    Route::get('/{id}/active', ['as' => 'backend.popup_banners.active', 'uses' => 'PopupBannerController@active']);
+    Route::get('/{id}/in_active', ['as' => 'backend.popup_banners.in_active', 'uses' => 'PopupBannerController@in_active']);
+    Route::get('/{id}/delete', ['as' => 'backend.popup_banners.delete', 'uses' => 'PopupBannerController@destroy']);
 });
 
 

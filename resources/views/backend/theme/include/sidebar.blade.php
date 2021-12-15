@@ -181,7 +181,12 @@ $distributor = \App\Distributor::where('distributor_tracking_id', \Auth::user()-
                                  <p>Legal Document </p>
                              </a>
                          </li>
-                         
+                           <li class="nav-item">
+                             <a href="{{route('backend.popup_banners.index')}}" class="nav-link">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>Popup Detail </p>
+                             </a>
+                         </li>
                      </ul>
                  </li>
 

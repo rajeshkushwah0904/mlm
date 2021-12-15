@@ -187,7 +187,7 @@ class PackageController extends Controller
                 ]);
                 $total_taxable_amount = 0;
                 $total_gst_amount = 0;
-                $delivery_amount = 50;
+                $delivery_amount = 0;
                 $total_discount = 0;
                 $total_amount = 0;
                 foreach ($package->package_products as $key => $package_product) {
@@ -323,7 +323,7 @@ class PackageController extends Controller
         ]);
         $total_taxable_amount = 0;
         $total_gst_amount = 0;
-        $delivery_amount = 50;
+        $delivery_amount = 0;
         $total_discount = 0;
         $total_amount = 0;
         foreach ($package->package_products as $key => $package_product) {
@@ -339,7 +339,8 @@ class PackageController extends Controller
             ]);
             $total_taxable_amount = $total_taxable_amount + $product_price->actual_price * $package_product->qty;
             $total_gst_amount = $total_gst_amount + $product_price->actual_price * $package_product->qty * $product_price->gst / 100;
-            $total_amount = $total_amount + $product_price->distributor_price * $package_product->qty;
+            $total_amount = $total_amount + $product_price->actual_price * $package_product->qty + $product_price->actual_price * $package_product->qty * $product_price->gst / 100;
+
         }
 
         $payment = \App\Payment::create([

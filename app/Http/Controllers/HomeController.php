@@ -29,7 +29,8 @@ class HomeController extends Controller
      */
     public function home()
     {
-        return view('home');
+        $popup_banner = \App\PopupBanner::orderBy('id','DESC')->first();
+        return view('home',compact('popup_banner'));
     }
 
     public function loginpage()

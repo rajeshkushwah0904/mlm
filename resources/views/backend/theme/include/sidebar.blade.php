@@ -18,7 +18,8 @@
                  <?php
 $distributor = \App\Distributor::where('distributor_tracking_id', \Auth::user()->distributor_tracking_id)->first();
 ?>
-                 @if($distributor->profile_image)
+
+                 @if($distributor&&$distributor->profile_image)
                  <img src="{{asset($distributor->profile_image)}}" class="img-circle elevation-2" alt="User Image">
                  @else
                  <img src="{{asset('backendtheme/distributor_icon.png')}}" class="img-circle elevation-2"
@@ -57,18 +58,27 @@ $distributor = \App\Distributor::where('distributor_tracking_id', \Auth::user()-
                                  <p>Admin Dashboard</p>
                              </a>
                          </li>
+                         @if($distributor)
                          <li class="nav-item">
                              <a href="{{route('backend.distributor.dashboard')}}" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
                                  <p>Distributor Dashboard</p>
                              </a>
                          </li>
+                         @endif
 
                      </ul>
                  </li>
-
-
-
+                 @if(\Auth::user()->id==1)
+                 <li class="nav-item">
+                     <a href="{{route('backend.users.index')}}#" class="nav-link">
+                         <i class="nav-icon far fa-image"></i>
+                         <p>
+                             User List
+                         </p>
+                     </a>
+                 </li>
+                 @endif
 
                  <li class="nav-item">
                      <a href="{{route('backend.profile')}}#" class="nav-link">
@@ -86,7 +96,7 @@ $distributor = \App\Distributor::where('distributor_tracking_id', \Auth::user()-
                          </p>
                      </a>
                  </li>
-                  <li class="nav-item has-treeview">
+                 <li class="nav-item has-treeview">
                      <a href="#" class="nav-link">
                          <i class="nav-icon fas fa-chart-pie"></i>
                          <p>
@@ -110,7 +120,7 @@ $distributor = \App\Distributor::where('distributor_tracking_id', \Auth::user()-
 
                      </ul>
                  </li>
-                
+
 
                  <li class="nav-item has-treeview">
                      <a href="#" class="nav-link">
@@ -175,13 +185,13 @@ $distributor = \App\Distributor::where('distributor_tracking_id', \Auth::user()-
                                  <p>Website Bank Detail </p>
                              </a>
                          </li>
-  <li class="nav-item">
+                         <li class="nav-item">
                              <a href="{{route('backend.legal_documents.index')}}" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
                                  <p>Legal Document </p>
                              </a>
                          </li>
-                           <li class="nav-item">
+                         <li class="nav-item">
                              <a href="{{route('backend.popup_banners.index')}}" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
                                  <p>Popup Detail </p>
@@ -251,6 +261,7 @@ $distributor = \App\Distributor::where('distributor_tracking_id', \Auth::user()-
                          </p>
                      </a>
                  </li>
+                 @if($distributor)
                  <li class="nav-item">
                      <a href="{{route('backend.genealogy_tree')}}" class="nav-link">
                          <i class="nav-icon far fa-image"></i>
@@ -259,6 +270,7 @@ $distributor = \App\Distributor::where('distributor_tracking_id', \Auth::user()-
                          </p>
                      </a>
                  </li>
+                 @endif
                  <li class="nav-item has-treeview">
                      <a href="#" class="nav-link">
                          <i class="nav-icon fas fa-chart-pie"></i>
@@ -269,6 +281,13 @@ $distributor = \App\Distributor::where('distributor_tracking_id', \Auth::user()-
                      </a>
                      <ul class="nav nav-treeview">
                          @if(\Auth::user()->role==1)
+
+                         <li class="nav-item">
+                             <a href="{{route('backend.incomes.total_turnover')}}" class="nav-link">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>Total Turnover</p>
+                             </a>
+                         </li>
                          <li class="nav-item">
                              <a href="{{route('backend.incomes.distibutor_total_all_income')}}" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
@@ -295,7 +314,8 @@ $distributor = \App\Distributor::where('distributor_tracking_id', \Auth::user()-
                              </a>
                          </li>
                          @endif
-                          <li class="nav-item">
+                         @if($distributor)
+                         <li class="nav-item">
                              <a href="{{route('backend.incomes.total_all_income')}}" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
                                  <p>All Total Income</p>
@@ -320,6 +340,7 @@ $distributor = \App\Distributor::where('distributor_tracking_id', \Auth::user()-
                                  <p>Reward Income</p>
                              </a>
                          </li>
+                         @endif
                      </ul>
                  </li>
 

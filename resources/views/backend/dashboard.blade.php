@@ -95,7 +95,7 @@
 
                                 <div class="info-box-content">
                                     <span class="info-box-text">Pending KYCs</span>
-                                    <span class="info-box-number">5,200</span>
+                                    <span class="info-box-number">{{$pening_kycs}}</span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
@@ -107,7 +107,7 @@
 
                                 <div class="info-box-content">
                                     <span class="info-box-text">Totl Business</span>
-                                    <span class="info-box-number">92,050</span>
+                                    <span class="info-box-number">{{$total_business}}</span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
@@ -119,7 +119,7 @@
 
                                 <div class="info-box-content">
                                     <span class="info-box-text">Total Repurchase</span>
-                                    <span class="info-box-number">114,381</span>
+                                    <span class="info-box-number">{{$total_repurchase}}</span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
@@ -131,7 +131,7 @@
 
                                 <div class="info-box-content">
                                     <span class="info-box-text">Total Activaties Business</span>
-                                    <span class="info-box-number">163,921</span>
+                                    <span class="info-box-number">{{$total_activies_business}}</span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>

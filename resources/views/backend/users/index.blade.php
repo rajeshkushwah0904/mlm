@@ -7,25 +7,26 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>reward List</h1>
+                    <h1>User List</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Reward List</li>
+                        <li class="breadcrumb-item active">User List</li>
                     </ol>
                 </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
+    <a href="{{route('backend.users.create')}}" class="btn btn-sm btn-info">Add User</a>
+    <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Reward List</h3>
-
+                            <h3 class="card-title">User List</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -33,32 +34,45 @@
                                 <thead>
                                     <tr>
                                         <th>S. No. </th>
-                                        <th>Tag</th>
-                                        <th>Creteria</th>
-                                        <th>Reward</th>
-                                        <th>Status</th>
-                                        <th>Achievement</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Distributor ID</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($rewards as $key=>$reward)
+                                    @foreach($users as $key=>$user)
                                     <tr>
                                         <td>{{$key+1}}</td>
-                                        <td>{{$reward->tag}}</td>
-                                        <td>{{$reward->criteria}}</td>
-                                        <td>{{$reward->reward}}</td>
+                                        <td>{{$user->name}}</td>
+                                        <td>{{$user->email}}</td>
                                         <td>
-                                            @if($reward->status==2)
-                                            <button class="btn btn-sm btn-success"> Achievement</button>
+                                            @if($user->role==1)
+                                            @if($user->id==1)
+                                            Super Admin
                                             @else
-                                            <button class="btn btn-sm btn-info"> Pending</button>
+                                            Admin
+                                            @endif
+                                            @if($user->distributor_id)
+                                            +Distribustor
+                                            @endif
+                                            @elseif($user->role==3)
+                                            Distribustor
+                                            @else
+                                            User
                                             @endif
                                         </td>
+                                        <td>{{$user->distributor_tracking_id}}</td>
                                         <td>
+                                            <a href="{{route('backend.users.edit',$user->id)}}"
+                                                class="btn btn-sm btn-success">Edit</a>
+
                                         </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
+
                             </table>
                         </div>
                         <!-- /.card-body -->

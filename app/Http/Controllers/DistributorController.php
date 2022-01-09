@@ -128,6 +128,21 @@ class DistributorController extends Controller
                     'mobile' => $request->input('mobile'),
                     'password' => Hash::make($passwod),
                 ]);
+                $module_permissions = \App\ModulePermission::all();
+
+                foreach ($module_permissions as $module_permission) {
+                    $permission = \App\Permission::create([
+                        'user_id' => $user->id,
+                        'role_id' => $user->role,
+                        'module_id' => $module_permission->id,
+                        'module_name' => $module_permission->route_name,
+                        'p_index' => 1,
+                        'p_create' => 1,
+                        'p_view' => 1,
+                        'p_edit' => 1,
+                        'p_delete' => 1,
+                    ]);
+                }
 
                 $ditributor_level = \App\DistributorLevel::create([
                     'L0' => $distributor->id,
@@ -183,7 +198,7 @@ class DistributorController extends Controller
 // Welcome SMS Stop
 
                 session()->flash('success', 'New Distributor Register Successfully');
-                return redirect()->route('backend.dashboard');
+                return redirect()->route('backend.distributor_dashboard');
             } else {
                 session()->flash('error', 'OTP does not Match ! Please try Again');
                 return redirect()->back();
@@ -276,8 +291,8 @@ class DistributorController extends Controller
         if (\Auth::user()->role == 1) {
             $packages = \App\Package::all();
             $distributors = \App\Distributor::all();
-            $domain_name=request()->getHost();
-            return view('backend.distributors.list', compact('distributors', 'packages','domain_name'));
+            $domain_name = request()->getHost();
+            return view('backend.distributors.list', compact('distributors', 'packages', 'domain_name'));
         } else {
             $distributors = \App\Distributor::where('sponsor_tracking_id', '=', \Auth::user()->distributor_tracking_id)->get();
         }

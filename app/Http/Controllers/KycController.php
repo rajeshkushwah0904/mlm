@@ -108,7 +108,7 @@ class KycController extends Controller
         }
         $kyc->save();
         session()->flash('success', 'New Package is create Successfully');
-     return redirect()->back();
+        return redirect()->back();
 
     }
 
@@ -283,7 +283,6 @@ class KycController extends Controller
             'bank_branch' => 'required',
             'pancard_file' => 'required',
             'aadhaar_card_file' => 'required',
-            'backend_aadhaar_card_file' => 'required',
             'bank_document' => 'required',
         ]);
 

@@ -45,12 +45,16 @@ class BackendController extends Controller
         $total_active_distributors = \App\Distributor::whereNotNull('package_id')->count();
         $today_distributors = \App\Distributor::whereDate('activate_date', date('Y-m-d'))->count();
         $today_active_distributors = \App\Distributor::whereDate('activate_date', date('Y-m-d'))->whereNotNull('package_id')->count();
-        $pening_kycs = \App\Kyc::all();
-        $total_distributors = \App\Distributor::orderBy('id', 'ASC')->count();
-        $total_business = \App\Income::orderBy('id', 'ASC')->count();
+        $total_distributors = \App\Distributor::count();
+        $total_business = \App\Income::sum('sponsor_amount');
+        $total_repurchase = \App\Income::where('income_type', 2)->sum('sponsor_amount');
+        $total_activies_business = \App\Income::where('income_type', 1)->sum('sponsor_amount');
+
+        $kycs = \App\Kyc::count();
+        $pening_kycs = $total_distributors - $kycs;
 
         $products = \App\Product::all();
-        return view('backend.dashboard', compact('packages', 'total_distributors', 'total_active_distributors', 'today_distributors', 'today_active_distributors', 'products', 'pening_kycs'));
+        return view('backend.dashboard', compact('packages', 'total_distributors', 'total_active_distributors', 'today_distributors', 'today_active_distributors', 'products', 'pening_kycs', 'total_business', 'total_repurchase', 'total_activies_business'));
 
     }
 

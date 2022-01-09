@@ -62,13 +62,13 @@ Route::post('/distributors/register_send_otp', ['as' => 'distributors.register_s
 
 Route::group(['prefix' => 'packages', 'middleware' => ['auth']], function () {
     Route::get('/packages/add_product', ['as' => 'backend.packages.add_product', 'uses' => 'PackageController@add_product']);
-    Route::get('/', ['as' => 'backend.packages.index', 'uses' => 'PackageController@index']);
-    Route::get('/create', ['as' => 'backend.packages.create', 'uses' => 'PackageController@create']);
-    Route::post('/create', ['as' => 'backend.packages.create', 'uses' => 'PackageController@store']);
-    Route::get('/{id}/edit', ['as' => 'backend.packages.edit', 'uses' => 'PackageController@edit']);
-    Route::post('/{id}/edit', ['as' => 'backend.packages.edit', 'uses' => 'PackageController@update']);
+    Route::get('/', ['as' => 'backend.packages.index', 'uses' => 'PackageController@index'])->middleware('permission');
+    Route::get('/create', ['as' => 'backend.packages.create', 'uses' => 'PackageController@create'])->middleware('permission');
+    Route::post('/create', ['as' => 'backend.packages.create', 'uses' => 'PackageController@store'])->middleware('permission');
+    Route::get('/{id}/edit', ['as' => 'backend.packages.edit', 'uses' => 'PackageController@edit'])->middleware('permission');
+    Route::post('/{id}/edit', ['as' => 'backend.packages.edit', 'uses' => 'PackageController@update'])->middleware('permission');
     Route::get('/{id}/approve', ['as' => 'backend.packages.approve', 'uses' => 'PackageController@approve']);
-    Route::get('/{id}/delete', ['as' => 'backend.packages.delete', 'uses' => 'PackageController@destroy']);
+    Route::get('/{id}/delete', ['as' => 'backend.packages.delete', 'uses' => 'PackageController@destroy'])->middleware('permission');
     Route::get('/purchase_package', ['as' => 'backend.packages.purchase_package', 'uses' => 'PackageController@purchase_package']);
     Route::post('/purchase_package', ['as' => 'backend.packages.purchase_package', 'uses' => 'PackageController@purchase_package_store']);
     Route::get('/purchase_for_other', ['as' => 'backend.packages.purchase_for_other', 'uses' => 'PackageController@purchase_for_other']);
@@ -76,13 +76,13 @@ Route::group(['prefix' => 'packages', 'middleware' => ['auth']], function () {
 });
 
 Route::group(['prefix' => 'package_products', 'middleware' => ['auth']], function () {
-    Route::get('/', ['as' => 'backend.package_products.index', 'uses' => 'PackageProductController@index']);
-    Route::get('/create/{id}', ['as' => 'backend.package_products.create', 'uses' => 'PackageProductController@create']);
-    Route::post('/create/{id}', ['as' => 'backend.package_products.create', 'uses' => 'PackageProductController@store']);
-    Route::get('/{id}/edit', ['as' => 'backend.package_products.edit', 'uses' => 'PackageProductController@edit']);
-    Route::post('/{id}/edit', ['as' => 'backend.package_products.edit', 'uses' => 'PackageProductController@update']);
+    Route::get('/', ['as' => 'backend.package_products.index', 'uses' => 'PackageProductController@index'])->middleware('permission');
+    Route::get('/create/{id}', ['as' => 'backend.package_products.create', 'uses' => 'PackageProductController@create'])->middleware('permission');
+    Route::post('/create/{id}', ['as' => 'backend.package_products.create', 'uses' => 'PackageProductController@store'])->middleware('permission');
+    Route::get('/{id}/edit', ['as' => 'backend.package_products.edit', 'uses' => 'PackageProductController@edit'])->middleware('permission');
+    Route::post('/{id}/edit', ['as' => 'backend.package_products.edit', 'uses' => 'PackageProductController@update'])->middleware('permission');
     Route::get('/{id}/approve', ['as' => 'backend.package_products.approve', 'uses' => 'PackageProductController@approve']);
-    Route::get('/{id}/delete', ['as' => 'backend.package_products.delete', 'uses' => 'PackageProductController@destroy']);
+    Route::get('/{id}/delete', ['as' => 'backend.package_products.delete', 'uses' => 'PackageProductController@destroy'])->middleware('permission');
 });
 
 Route::group(['prefix' => 'distributors', 'middleware' => ['auth']], function () {
@@ -122,99 +122,95 @@ Route::group(['prefix' => 'kycs', 'middleware' => ['auth']], function () {
 });
 
 Route::group(['prefix' => 'categories', 'middleware' => ['auth']], function () {
-    Route::get('/', ['as' => 'backend.categories.index', 'uses' => 'CategoryController@index']);
-    Route::get('/create', ['as' => 'backend.categories.create', 'uses' => 'CategoryController@create']);
-    Route::post('/create', ['as' => 'backend.categories.create', 'uses' => 'CategoryController@store']);
-    Route::get('/{id}/edit', ['as' => 'backend.categories.edit', 'uses' => 'CategoryController@edit']);
-    Route::post('/{id}/edit', ['as' => 'backend.categories.edit', 'uses' => 'CategoryController@update']);
+    Route::get('/', ['as' => 'backend.categories.index', 'uses' => 'CategoryController@index'])->middleware('permission');
+    Route::get('/create', ['as' => 'backend.categories.create', 'uses' => 'CategoryController@create'])->middleware('permission');
+    Route::post('/create', ['as' => 'backend.categories.create', 'uses' => 'CategoryController@store'])->middleware('permission');
+    Route::get('/{id}/edit', ['as' => 'backend.categories.edit', 'uses' => 'CategoryController@edit'])->middleware('permission');
+    Route::post('/{id}/edit', ['as' => 'backend.categories.edit', 'uses' => 'CategoryController@update'])->middleware('permission');
     Route::get('/{id}/approve', ['as' => 'backend.categories.approve', 'uses' => 'CategoryController@approve']);
-    Route::get('/{id}/delete', ['as' => 'backend.categories.delete', 'uses' => 'CategoryController@destroy']);
+    Route::get('/{id}/delete', ['as' => 'backend.categories.delete', 'uses' => 'CategoryController@destroy'])->middleware('permission');
     Route::get('/{id}/product_list', ['as' => 'backend.categories.product_list', 'uses' => 'CategoryController@product_list']);
 });
 
 Route::group(['prefix' => 'subcategories', 'middleware' => ['auth']], function () {
-    Route::get('/', ['as' => 'backend.subcategories.index', 'uses' => 'SubcategoryController@index']);
-    Route::get('/create', ['as' => 'backend.subcategories.create', 'uses' => 'SubcategoryController@create']);
-    Route::post('/create', ['as' => 'backend.subcategories.create', 'uses' => 'SubcategoryController@store']);
-    Route::get('/{id}/edit', ['as' => 'backend.subcategories.edit', 'uses' => 'SubcategoryController@edit']);
-    Route::post('/{id}/edit', ['as' => 'backend.subcategories.edit', 'uses' => 'SubcategoryController@update']);
+    Route::get('/', ['as' => 'backend.subcategories.index', 'uses' => 'SubcategoryController@index'])->middleware('permission');
+    Route::get('/create', ['as' => 'backend.subcategories.create', 'uses' => 'SubcategoryController@create'])->middleware('permission');
+    Route::post('/create', ['as' => 'backend.subcategories.create', 'uses' => 'SubcategoryController@store'])->middleware('permission');
+    Route::get('/{id}/edit', ['as' => 'backend.subcategories.edit', 'uses' => 'SubcategoryController@edit'])->middleware('permission');
+    Route::post('/{id}/edit', ['as' => 'backend.subcategories.edit', 'uses' => 'SubcategoryController@update'])->middleware('permission');
     Route::get('/{id}/approve', ['as' => 'backend.subcategories.approve', 'uses' => 'SubcategoryController@approve']);
-    Route::get('/{id}/delete', ['as' => 'backend.subcategories.delete', 'uses' => 'SubcategoryController@destroy']);
+    Route::get('/{id}/delete', ['as' => 'backend.subcategories.delete', 'uses' => 'SubcategoryController@destroy'])->middleware('permission');
     Route::get('/{id}/product_list', ['as' => 'backend.subcategories.product_list', 'uses' => 'SubcategoryController@product_list']);
 });
 
 Route::group(['prefix' => 'products', 'middleware' => ['auth']], function () {
-    Route::get('/', ['as' => 'backend.products.index', 'uses' => 'ProductController@index']);
-    Route::get('/create', ['as' => 'backend.products.create', 'uses' => 'ProductController@create']);
-    Route::post('/create', ['as' => 'backend.products.create', 'uses' => 'ProductController@store']);
-    Route::get('/{id}/edit', ['as' => 'backend.products.edit', 'uses' => 'ProductController@edit']);
-    Route::post('/{id}/edit', ['as' => 'backend.products.edit', 'uses' => 'ProductController@update']);
+    Route::get('/', ['as' => 'backend.products.index', 'uses' => 'ProductController@index'])->middleware('permission');
+    Route::get('/create', ['as' => 'backend.products.create', 'uses' => 'ProductController@create'])->middleware('permission');
+    Route::post('/create', ['as' => 'backend.products.create', 'uses' => 'ProductController@store'])->middleware('permission');
+    Route::get('/{id}/edit', ['as' => 'backend.products.edit', 'uses' => 'ProductController@edit'])->middleware('permission');
+    Route::post('/{id}/edit', ['as' => 'backend.products.edit', 'uses' => 'ProductController@update'])->middleware('permission');
     Route::get('/{id}/active', ['as' => 'backend.products.active', 'uses' => 'ProductController@active']);
     Route::get('/{id}/deactive', ['as' => 'backend.products.deactive', 'uses' => 'ProductController@deactive']);
-    Route::get('/{id}/delete', ['as' => 'backend.products.delete', 'uses' => 'ProductController@destroy']);
+    Route::get('/{id}/delete', ['as' => 'backend.products.delete', 'uses' => 'ProductController@destroy'])->middleware('permission');
     Route::get('/{id}/single_view', ['as' => 'backend.products.single_view', 'uses' => 'ProductController@single_view']);
 });
 
 Route::group(['prefix' => 'rewards', 'middleware' => ['auth']], function () {
-    Route::get('/', ['as' => 'backend.rewards.index', 'uses' => 'RewardController@index']);
-    Route::get('/create', ['as' => 'backend.rewards.create', 'uses' => 'RewardController@create']);
-    Route::post('/create', ['as' => 'backend.rewards.create', 'uses' => 'RewardController@store']);
-    Route::get('/{id}/edit', ['as' => 'backend.rewards.edit', 'uses' => 'RewardController@edit']);
-    Route::post('/{id}/edit', ['as' => 'backend.rewards.edit', 'uses' => 'RewardController@update']);
+    Route::get('/', ['as' => 'backend.rewards.index', 'uses' => 'RewardController@index'])->middleware('permission');
+    Route::get('/create', ['as' => 'backend.rewards.create', 'uses' => 'RewardController@create'])->middleware('permission');
+    Route::post('/create', ['as' => 'backend.rewards.create', 'uses' => 'RewardController@store'])->middleware('permission');
+    Route::get('/{id}/edit', ['as' => 'backend.rewards.edit', 'uses' => 'RewardController@edit'])->middleware('permission');
+    Route::post('/{id}/edit', ['as' => 'backend.rewards.edit', 'uses' => 'RewardController@update'])->middleware('permission');
     Route::get('/{id}/active', ['as' => 'backend.rewards.active', 'uses' => 'RewardController@active']);
     Route::get('/{id}/deactive', ['as' => 'backend.rewards.deactive', 'uses' => 'RewardController@deactive']);
-    Route::get('/{id}/delete', ['as' => 'backend.rewards.delete', 'uses' => 'RewardController@destroy']);
+    Route::get('/{id}/delete', ['as' => 'backend.rewards.delete', 'uses' => 'RewardController@destroy'])->middleware('permission');
     Route::get('/{id}/single_view', ['as' => 'backend.rewards.single_view', 'uses' => 'RewardController@single_view']);
 });
 
 Route::group(['prefix' => 'webcontents', 'middleware' => ['auth']], function () {
-    Route::get('/', ['as' => 'backend.webcontents.index', 'uses' => 'WebcontentController@index']);
+    Route::get('/', ['as' => 'backend.webcontents.index', 'uses' => 'WebcontentController@index'])->middleware('permission');
     Route::get('/add_logo', ['as' => 'backend.webcontents.add_logo', 'uses' => 'WebcontentController@add_logo']);
-    Route::post('/create', ['as' => 'backend.webcontents.create', 'uses' => 'WebcontentController@store']);
-    Route::get('/{id}/edit', ['as' => 'backend.webcontents.edit', 'uses' => 'WebcontentController@edit']);
-    Route::post('/{id}/edit', ['as' => 'backend.webcontents.edit', 'uses' => 'WebcontentController@update']);
+    Route::post('/create', ['as' => 'backend.webcontents.create', 'uses' => 'WebcontentController@store'])->middleware('permission');
+    Route::get('/{id}/edit', ['as' => 'backend.webcontents.edit', 'uses' => 'WebcontentController@edit'])->middleware('permission');
+    Route::post('/{id}/edit', ['as' => 'backend.webcontents.edit', 'uses' => 'WebcontentController@update'])->middleware('permission');
     Route::get('/{id}/active', ['as' => 'backend.webcontents.active', 'uses' => 'WebcontentController@active']);
     Route::get('/{id}/deactive', ['as' => 'backend.webcontents.deactive', 'uses' => 'WebcontentController@deactive']);
-    Route::get('/{id}/delete', ['as' => 'backend.webcontents.delete', 'uses' => 'WebcontentController@destroy']);
+    Route::get('/{id}/delete', ['as' => 'backend.webcontents.delete', 'uses' => 'WebcontentController@destroy'])->middleware('permission');
     Route::get('/{id}/single_view', ['as' => 'backend.webcontents.single_view', 'uses' => 'WebcontentController@single_view']);
 });
 
 Route::group(['prefix' => 'banks', 'middleware' => ['auth']], function () {
-    Route::get('/', ['as' => 'backend.banks.index', 'uses' => 'BankController@index']);
-    Route::get('/create', ['as' => 'backend.banks.create', 'uses' => 'BankController@create']);
-    Route::post('/create', ['as' => 'backend.banks.create', 'uses' => 'BankController@store']);
-    Route::get('/{id}/edit', ['as' => 'backend.banks.edit', 'uses' => 'BankController@edit']);
-    Route::post('/{id}/edit', ['as' => 'backend.banks.edit', 'uses' => 'BankController@update']);
+    Route::get('/', ['as' => 'backend.banks.index', 'uses' => 'BankController@index'])->middleware('permission');
+    Route::get('/create', ['as' => 'backend.banks.create', 'uses' => 'BankController@create'])->middleware('permission');
+    Route::post('/create', ['as' => 'backend.banks.create', 'uses' => 'BankController@store'])->middleware('permission');
+    Route::get('/{id}/edit', ['as' => 'backend.banks.edit', 'uses' => 'BankController@edit'])->middleware('permission');
+    Route::post('/{id}/edit', ['as' => 'backend.banks.edit', 'uses' => 'BankController@update'])->middleware('permission');
     Route::get('/{id}/active', ['as' => 'backend.banks.active', 'uses' => 'BankController@active']);
     Route::get('/{id}/in_active', ['as' => 'backend.banks.in_active', 'uses' => 'BankController@in_active']);
-    Route::get('/{id}/delete', ['as' => 'backend.banks.delete', 'uses' => 'BankController@destroy']);
+    Route::get('/{id}/delete', ['as' => 'backend.banks.delete', 'uses' => 'BankController@destroy'])->middleware('permission');
 });
 
-
-
-
 Route::group(['prefix' => 'legal_documents', 'middleware' => ['auth']], function () {
-    Route::get('/', ['as' => 'backend.legal_documents.index', 'uses' => 'LegalDocumentController@index']);
-    Route::get('/create', ['as' => 'backend.legal_documents.create', 'uses' => 'LegalDocumentController@create']);
-    Route::post('/create', ['as' => 'backend.legal_documents.create', 'uses' => 'LegalDocumentController@store']);
-    Route::get('/{id}/edit', ['as' => 'backend.legal_documents.edit', 'uses' => 'LegalDocumentController@edit']);
-    Route::post('/{id}/edit', ['as' => 'backend.legal_documents.edit', 'uses' => 'LegalDocumentController@update']);
+    Route::get('/', ['as' => 'backend.legal_documents.index', 'uses' => 'LegalDocumentController@index'])->middleware('permission');
+    Route::get('/create', ['as' => 'backend.legal_documents.create', 'uses' => 'LegalDocumentController@create'])->middleware('permission');
+    Route::post('/create', ['as' => 'backend.legal_documents.create', 'uses' => 'LegalDocumentController@store'])->middleware('permission');
+    Route::get('/{id}/edit', ['as' => 'backend.legal_documents.edit', 'uses' => 'LegalDocumentController@edit'])->middleware('permission');
+    Route::post('/{id}/edit', ['as' => 'backend.legal_documents.edit', 'uses' => 'LegalDocumentController@update'])->middleware('permission');
     Route::get('/{id}/active', ['as' => 'backend.legal_documents.active', 'uses' => 'LegalDocumentController@active']);
     Route::get('/{id}/in_active', ['as' => 'backend.legal_documents.in_active', 'uses' => 'LegalDocumentController@in_active']);
-    Route::get('/{id}/delete', ['as' => 'backend.legal_documents.delete', 'uses' => 'LegalDocumentController@destroy']);
+    Route::get('/{id}/delete', ['as' => 'backend.legal_documents.delete', 'uses' => 'LegalDocumentController@destroy'])->middleware('permission');
 });
 
 Route::group(['prefix' => 'popup_banners', 'middleware' => ['auth']], function () {
-    Route::get('/', ['as' => 'backend.popup_banners.index', 'uses' => 'PopupBannerController@index']);
-    Route::get('/create', ['as' => 'backend.popup_banners.create', 'uses' => 'PopupBannerController@create']);
-    Route::post('/create', ['as' => 'backend.popup_banners.create', 'uses' => 'PopupBannerController@store']);
-    Route::get('/{id}/edit', ['as' => 'backend.popup_banners.edit', 'uses' => 'PopupBannerController@edit']);
-    Route::post('/{id}/edit', ['as' => 'backend.popup_banners.edit', 'uses' => 'PopupBannerController@update']);
+    Route::get('/', ['as' => 'backend.popup_banners.index', 'uses' => 'PopupBannerController@index'])->middleware('permission');
+    Route::get('/create', ['as' => 'backend.popup_banners.create', 'uses' => 'PopupBannerController@create'])->middleware('permission');
+    Route::post('/create', ['as' => 'backend.popup_banners.create', 'uses' => 'PopupBannerController@store'])->middleware('permission');
+    Route::get('/{id}/edit', ['as' => 'backend.popup_banners.edit', 'uses' => 'PopupBannerController@edit'])->middleware('permission');
+    Route::post('/{id}/edit', ['as' => 'backend.popup_banners.edit', 'uses' => 'PopupBannerController@update'])->middleware('permission');
     Route::get('/{id}/active', ['as' => 'backend.popup_banners.active', 'uses' => 'PopupBannerController@active']);
     Route::get('/{id}/in_active', ['as' => 'backend.popup_banners.in_active', 'uses' => 'PopupBannerController@in_active']);
-    Route::get('/{id}/delete', ['as' => 'backend.popup_banners.delete', 'uses' => 'PopupBannerController@destroy']);
+    Route::get('/{id}/delete', ['as' => 'backend.popup_banners.delete', 'uses' => 'PopupBannerController@destroy'])->middleware('permission');
 });
-
 
 Route::group(['prefix' => 'incomes', 'middleware' => ['auth']], function () {
 
@@ -224,39 +220,38 @@ Route::group(['prefix' => 'incomes', 'middleware' => ['auth']], function () {
     Route::get('/repurchase_income', ['as' => 'backend.incomes.repurchase_income', 'uses' => 'IncomeController@repurchase_income']);
     Route::get('/all_repurchase_income', ['as' => 'backend.incomes.all_repurchase_income', 'uses' => 'IncomeController@all_repurchase_income']);
 
-Route::get('/distibutor_total_all_income', ['as' => 'backend.incomes.distibutor_total_all_income', 'uses' => 'IncomeController@distibutor_total_all_income']);
-Route::get('/total_all_income', ['as' => 'backend.incomes.total_all_income', 'uses' => 'IncomeController@total_all_income']);
+    Route::get('/distibutor_total_all_income', ['as' => 'backend.incomes.distibutor_total_all_income', 'uses' => 'IncomeController@distibutor_total_all_income']);
+    Route::get('/total_all_income', ['as' => 'backend.incomes.total_all_income', 'uses' => 'IncomeController@total_all_income']);
+    Route::get('/total_turnover', ['as' => 'backend.incomes.total_turnover', 'uses' => 'IncomeController@total_turnover']);
 
-
-
-    Route::get('/create', ['as' => 'backend.incomes.create', 'uses' => 'IncomeController@create']);
-    Route::post('/create', ['as' => 'backend.incomes.create', 'uses' => 'IncomeController@store']);
-    Route::get('/{id}/edit', ['as' => 'backend.incomes.edit', 'uses' => 'IncomeController@edit']);
-    Route::post('/{id}/edit', ['as' => 'backend.incomes.edit', 'uses' => 'IncomeController@update']);
+    Route::get('/create', ['as' => 'backend.incomes.create', 'uses' => 'IncomeController@create'])->middleware('permission');
+    Route::post('/create', ['as' => 'backend.incomes.create', 'uses' => 'IncomeController@store'])->middleware('permission');
+    Route::get('/{id}/edit', ['as' => 'backend.incomes.edit', 'uses' => 'IncomeController@edit'])->middleware('permission');
+    Route::post('/{id}/edit', ['as' => 'backend.incomes.edit', 'uses' => 'IncomeController@update'])->middleware('permission');
     Route::get('/{id}/approve', ['as' => 'backend.incomes.approve', 'uses' => 'IncomeController@approve']);
-    Route::get('/{id}/delete', ['as' => 'backend.incomes.delete', 'uses' => 'IncomeController@destroy']);
+    Route::get('/{id}/delete', ['as' => 'backend.incomes.delete', 'uses' => 'IncomeController@destroy'])->middleware('permission');
 });
 
 Route::group(['prefix' => 'orders', 'middleware' => ['auth']], function () {
-Route::get('/export', ['as' => 'backend.orders.export', 'uses' => 'OrderController@export']);
-    Route::get('/', ['as' => 'backend.orders.index', 'uses' => 'OrderController@index']);
+    Route::get('/export', ['as' => 'backend.orders.export', 'uses' => 'OrderController@export']);
+    Route::get('/', ['as' => 'backend.orders.index', 'uses' => 'OrderController@index'])->middleware('permission');
     Route::get('/view', ['as' => 'backend.orders.view', 'uses' => 'OrderController@view']);
     Route::get('/print', ['as' => 'backend.orders.print', 'uses' => 'OrderController@print']);
     Route::get('/download_pdf/{id}', ['as' => 'backend.orders.download_pdf', 'uses' => 'OrderController@download_pdf']);
-    Route::post('/create', ['as' => 'backend.orders.create', 'uses' => 'OrderController@store']);
-    Route::get('/{id}/edit', ['as' => 'backend.orders.edit', 'uses' => 'OrderController@edit']);
-    Route::post('/{id}/edit', ['as' => 'backend.orders.edit', 'uses' => 'OrderController@update']);
+    Route::post('/create', ['as' => 'backend.orders.create', 'uses' => 'OrderController@store'])->middleware('permission');
+    Route::get('/{id}/edit', ['as' => 'backend.orders.edit', 'uses' => 'OrderController@edit'])->middleware('permission');
+    Route::post('/{id}/edit', ['as' => 'backend.orders.edit', 'uses' => 'OrderController@update'])->middleware('permission');
     Route::get('/{id}/approve', ['as' => 'backend.orders.approve', 'uses' => 'OrderController@approve']);
-    Route::get('/{id}/delete', ['as' => 'backend.orders.delete', 'uses' => 'OrderController@destroy']);
+    Route::get('/{id}/delete', ['as' => 'backend.orders.delete', 'uses' => 'OrderController@destroy'])->middleware('permission');
     Route::get('/{id}/product_list', ['as' => 'backend.orders.product_list', 'uses' => 'OrderController@product_list']);
 });
 
 Route::group(['prefix' => 'supports', 'middleware' => ['auth']], function () {
-    Route::get('/', ['as' => 'backend.supports.index', 'uses' => 'SupportController@index']);
+    Route::get('/', ['as' => 'backend.supports.index', 'uses' => 'SupportController@index'])->middleware('permission');
     Route::get('/add', ['as' => 'backend.supports.add', 'uses' => 'SupportController@add']);
     Route::post('/add', ['as' => 'backend.supports.add', 'uses' => 'SupportController@add_store']);
-    Route::get('/{id}/edit', ['as' => 'backend.supports.edit', 'uses' => 'SupportController@edit']);
-    Route::post('/{id}/edit', ['as' => 'backend.supports.edit', 'uses' => 'SupportController@update']);
+    Route::get('/{id}/edit', ['as' => 'backend.supports.edit', 'uses' => 'SupportController@edit'])->middleware('permission');
+    Route::post('/{id}/edit', ['as' => 'backend.supports.edit', 'uses' => 'SupportController@update'])->middleware('permission');
     Route::get('/{id}/open', ['as' => 'backend.supports.open', 'uses' => 'SupportController@open']);
     Route::get('/{id}/closed', ['as' => 'backend.supports.closed', 'uses' => 'SupportController@closed']);
     Route::get('/{id}/delete', ['as' => 'backend.supports.delete', 'uses' => 'SupportController@destroy']);
@@ -264,6 +259,14 @@ Route::group(['prefix' => 'supports', 'middleware' => ['auth']], function () {
 });
 
 Route::group(['prefix' => 'users', 'middleware' => ['auth']], function () {
+    Route::get('/', ['as' => 'backend.users.index', 'uses' => 'UserController@index']);
+    Route::get('/create', ['as' => 'backend.users.create', 'uses' => 'UserController@create']);
+    Route::post('/create', ['as' => 'backend.users.create', 'uses' => 'UserController@store']);
+    Route::get('/{id}/edit', ['as' => 'backend.users.edit', 'uses' => 'UserController@edit']);
+    Route::post('/{id}/edit', ['as' => 'backend.users.edit', 'uses' => 'UserController@update']);
+    Route::get('/{id}/approve', ['as' => 'backend.users.approve', 'uses' => 'UserController@approve']);
+    Route::get('/{id}/delete', ['as' => 'backend.users.delete', 'uses' => 'UserController@destroy']);
+    Route::get('/{id}/product_list', ['as' => 'backend.users.product_list', 'uses' => 'UserController@product_list']);
     Route::get('/changepassword', ['as' => 'myaccount.changepassword', 'uses' => 'UserController@changepassword']);
     Route::post('/changepassword', ['as' => 'myaccount.changepassword', 'uses' => 'UserController@changepasswordpost']);
 });

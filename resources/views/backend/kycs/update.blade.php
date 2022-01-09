@@ -120,7 +120,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Pancard Image</label>
-                                        <input type="file" name="pancard_file"" class=" form-control"
+                                        <input type="file" name="pancard_file" class="form-control"
                                             id="exampleInputEmail1" Required>
                                     </div>
                                 </div>
@@ -131,9 +131,8 @@
                                             id="exampleInputEmail1" Required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Backend Aadhaar Card Image</label>
-                                        <input type="file" name="backend_aadhaar_card_file" class="form-control"
-                                            id="exampleInputEmail1">
+                                        <label>Backend Aadhaar Card Image</label>
+                                        <input type="file" name="backend_aadhaar_card_file" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-4">

@@ -8,23 +8,23 @@ class IncomeController extends Controller
 {
     public function distibutor_total_all_income(Request $request)
     {
-       $distributors = \App\Distributor::all();
+        $distributors = \App\Distributor::all();
 
-$sponsor_id = $request->sponsor_id;
-$level = $request->level;
-if ($sponsor_id && $level) {
+        $sponsor_id = $request->sponsor_id;
+        $level = $request->level;
+        if ($sponsor_id && $level) {
 
-    $incomes = \App\Income::where('level', $request->level)->where('sponsor_id', $sponsor_id)->orderBy('id', 'DESC')->get();
+            $incomes = \App\Income::where('level', $request->level)->where('sponsor_id', $sponsor_id)->orderBy('id', 'DESC')->get();
 
-} else if ($level) {
-    $incomes = \App\Income::where('level', $request->level)->orderBy('id', 'DESC')->get();
+        } else if ($level) {
+            $incomes = \App\Income::where('level', $request->level)->orderBy('id', 'DESC')->get();
 
-} else if ($sponsor_id) {
-    $incomes = \App\Income::where('sponsor_id', $sponsor_id)->orderBy('id', 'DESC')->get();
+        } else if ($sponsor_id) {
+            $incomes = \App\Income::where('sponsor_id', $sponsor_id)->orderBy('id', 'DESC')->get();
 
-} else {
-    $incomes = \App\Income::orderBy('id', 'DESC')->get();
-}
+        } else {
+            $incomes = \App\Income::orderBy('id', 'DESC')->get();
+        }
 
         return view('backend.incomes.distibutor_total_all_income', compact('incomes', 'level', 'sponsor_id', 'distributors'));
     }
@@ -40,9 +40,6 @@ if ($sponsor_id && $level) {
         }
         return view('backend.incomes.total_all_income', compact('incomes', 'level'));
     }
-
-
-
 
     public function direct_income(Request $request)
     {
@@ -118,4 +115,11 @@ if ($sponsor_id && $level) {
         $rewards = \App\Reward::all();
         return view('backend.incomes.reward_income', compact('rewards'));
     }
+
+    public function total_turnover(Request $request)
+    {
+        $rewards = \App\Reward::all();
+        return view('backend.incomes.total_turnover', compact('rewards'));
+    }
+
 }

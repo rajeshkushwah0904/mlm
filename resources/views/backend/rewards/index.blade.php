@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>reward List</h1>
+                    <h1>Reward List</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -55,13 +55,16 @@
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     <li><a class="dropdown-item"
-                                                            href="{{route('backend.rewards.edit',$reward->id)}}">View</a>
+                                                            href="{{route('backend.rewards.edit',$reward->id)}}">Edit</a>
                                                     </li>
                                                     <li><a class="dropdown-item"
                                                             href="{{route('backend.rewards.active',$reward->id)}}">Active</a>
                                                     </li>
                                                     <li><a class="dropdown-item"
                                                             href="{{route('backend.rewards.deactive',$reward->id)}}">Deactive</a>
+                                                    </li>
+                                                    <li><a class="dropdown-item"
+                                                            href="{{route('backend.rewards.delete',$reward->id)}}">Delete</a>
                                                     </li>
                                                 </ul>
                                             </div>

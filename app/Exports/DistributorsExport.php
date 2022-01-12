@@ -31,7 +31,7 @@ class DistributorsExport implements FromCollection, WithHeadings, ShouldAutoSize
                 }
             }
 
-            $output[$distributor->id][] = $distributor->id;
+            $output[$distributor->id][] = $key + 1;
             $output[$distributor->id][] = $distributor_status;
             $output[$distributor->id][] = $distributor->joining_date;
             $output[$distributor->id][] = $distributor->activate_date;
@@ -96,6 +96,17 @@ class DistributorsExport implements FromCollection, WithHeadings, ShouldAutoSize
             'A' => 10,
             'B' => 30,
             'C' => 30,
+            'D' => 30,
+            'E' => 30,
+            'F' => 30,
+            'G' => 30,
+            'H' => 30,
+            'I' => 30,
+            'J' => 30,
+            'K' => 30,
+            'L' => 30,
+            'M' => 30,
+            'N' => 30,
         ];
     }
 
@@ -104,18 +115,18 @@ class DistributorsExport implements FromCollection, WithHeadings, ShouldAutoSize
         $style = array(
             'font' => array(
                 'bold' => true,
-                'color' => array('rgb' => 'ffffff'),
-                'size' => 9,
+                'color' => array('rgb' => '000000'),
+                'size' => 10,
                 'name' => 'Arial',
             ), 'borders' => [
                 'allBorders' => [
                     'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                    'color' => ['argb' => 'ffffff'],
+                    'color' => ['argb' => '000000'],
                 ],
             ],
         );
-        $sheet->getStyle('A1:I1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('00A7B5');
-        $sheet->getStyle('A1:I1')->applyFromArray($style);
+        $sheet->getStyle('A1:N1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('00A7B5');
+        $sheet->getStyle('A1:N1')->applyFromArray($style);
         $sheet->setTitle('Report');
     }
 }

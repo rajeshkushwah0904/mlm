@@ -60,4 +60,9 @@ class Distributor extends Model
         return $this->hasOne('App\Kyc', 'distributor_id', 'id');
     }
 
+    public function kycs()
+    {
+        return $this->hasMany('App\Kyc', 'distributor_id', 'id');
+    }
+
 }

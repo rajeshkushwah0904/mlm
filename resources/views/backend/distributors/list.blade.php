@@ -82,6 +82,19 @@
                         </select>
                     </div>
                 </div>
+
+                <div class="col-2">
+                    <div class="form-group">
+                        <label>Start Date</label>
+                        <input type="date" name="start_date" class="form-control" value="{{date('Y-m-d')}}">
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-group">
+                        <label>End Date</label>
+                        <input type="date" name="end_date" class="form-control" value="{{date('Y-m-d')}}">
+                    </div>
+                </div>
                 <div class="col-2">
                     <div class="form-group">
                         <label>Package</label>
@@ -91,6 +104,18 @@
                             @foreach($packages as $package)
                             <option value="{{$package->id}}">{{$package->package_name}}</option>
                             @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-group">
+                        <label>KYC</label>
+                        <select class="form-control select2 kyc_id" style="width: 100%;">
+                            <option value="5">Not Submitted</option>
+                            <option value="1">Waiting For Approvel</option>
+                            <option value="2">Reject By Admin</option>
+                            <option value="3">Resend For Approvel</option>
+                            <option value="4">Approved By Admin</option>
                         </select>
                     </div>
                 </div>
@@ -145,9 +170,7 @@
                                         <th>SPONSOR NAME</th>
                                         <th>SPONSOR MOBILE</th>
                                         <th>KYC</th>
-                                        <th>PACKAGE
-
-                                        </th>
+                                        <th>PACKAGE</th>
                                         <th>DISTRIBUTOR PAID</th>
                                     </tr>
                                 </thead>
@@ -163,7 +186,9 @@
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     <li>
-                                                        <a class="dropdown-item" href="http://distributor.{{$domain_name}}/distributors/as_login?distributor_tracking_id={{$distributor->distributor_tracking_id}}" target="_blank">Login as a Distributor</a>
+                                                        <a class="dropdown-item"
+                                                            href="http://distributor.{{$domain_name}}/distributors/as_login?distributor_tracking_id={{$distributor->distributor_tracking_id}}"
+                                                            target="_blank">Login as a Distributor</a>
                                                     </li>
                                                     <li>
                                                         <a class="dropdown-item"
@@ -216,7 +241,21 @@
                                         <td></td>
                                         <td></td>
                                         @endif
-                                        <td></td>
+                                        <td>
+                                            @if($distributor->kyc)
+                                            @if($distributor->kyc->status==1)
+                                            <button class="btn btn-sm btn-info">Waiting For Approvel</button>
+                                            @elseif($distributor->kyc->status==2)
+                                            <button class="btn btn-sm btn-danger">Reject By Admin</button>
+                                            @elseif($distributor->kyc->status==3)
+                                            <button class="btn btn-sm btn-primary">Resend For Approvel</button>
+                                            @elseif($distributor->kyc->status==4)
+                                            <button class="btn btn-sm btn-success">Approved By Admin</button>
+                                            @endif
+                                            @else
+                                            <button class="btn btn-sm btn-danger">Not Submitted</button>
+                                            @endif
+                                        </td>
                                         <td>
                                             @if($distributor->package)
                                             {{$distributor->package->package_name}}
@@ -257,6 +296,7 @@ function search_function() {
     var distributor_mobile = $('.distributor_mobile').val();
     var sponsor_id = $('.sponsor_id').val();
     var package_id = $('.package_id').val();
+    var kyc_id = $('.kyc_id').val();
 
     $.ajax({
         url: "{{route('backend.distributors.distributor_filter_data')}}",
@@ -267,6 +307,7 @@ function search_function() {
             distributor_mobile: distributor_mobile,
             sponsor_id: sponsor_id,
             package_id: package_id,
+            kyc_id: kyc_id
         },
         type: "POST",
         success: function(data) {

@@ -243,7 +243,8 @@ right connector from last child*/
                                                 </a>
                                             </div>
                                             <br>
-                                            <a href="#">{{$distributor->distributor_tracking_id}}</a>
+                                            <a
+                                                href="#">{{$distributor->distributor_tracking_id}}<br>{{$distributor->name}}</a>
                                             <ul>
                                                 @foreach($distributor->first_level_distributors as
                                                 $first_level_distributor1)
@@ -311,7 +312,7 @@ right connector from last child*/
                                                                 </a>
                                                             </div><br>
                                                             <a
-                                                                href="#">{{$first_level_distributor1->distributor_tracking_id}}</a>
+                                                                href="#">{{$first_level_distributor1->distributor_tracking_id}}<br>{{$first_level_distributor1->name}}</a>
                                                             <ul>
                                                                 @foreach($first_level_distributor1->first_level_distributors
                                                                 as
@@ -390,7 +391,7 @@ right connector from last child*/
                                                                                 </a>
                                                                             </div><br>
                                                                             <a
-                                                                                href="#">{{ $first_level_distributor2->distributor_tracking_id}}</a>
+                                                                                href="#">{{ $first_level_distributor2->distributor_tracking_id}}<br>{{$first_level_distributor2->name}}</a>
                                                                             <ul>
                                                                                 @foreach($first_level_distributor2->first_level_distributors
                                                                                 as
@@ -484,7 +485,7 @@ right connector from last child*/
                                                                                                 </a>
                                                                                             </div><br>
                                                                                             <a
-                                                                                                href="#">{{$first_level_distributor3->distributor_tracking_id}}</a>
+                                                                                                href="#">{{$first_level_distributor3->distributor_tracking_id}}<br>{{$first_level_distributor3->name}}</a>
                                                                                             <ul>
                                                                                                 @foreach($first_level_distributor3->first_level_distributors
                                                                                                 as
@@ -579,7 +580,7 @@ right connector from last child*/
                                                                                                                 </a>
                                                                                                             </div><br>
                                                                                                             <a
-                                                                                                                href="#">{{$first_level_distributor4->distributor_tracking_id}}</a>
+                                                                                                                href="#">{{$first_level_distributor4->distributor_tracking_id}}<br>{{$first_level_distributor4->name}}</a>
                                                                                                 </li>
                                                                                                 @endforeach
                                                                                             </ul>

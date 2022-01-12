@@ -251,6 +251,9 @@ class DistributorController extends Controller
                 )->get();
 
             }
+        } else if ($request->start_date && $request->end_date) {
+            $distributors = \App\Distributor::whereBetween('joining_date', [$request->start_date, $request->end_date])->get();
+
         } else {
             $distributors = \App\Distributor::whereIn('id', $distributor_levels->map(function ($value) {
                 return $value->L0;
@@ -280,6 +283,24 @@ class DistributorController extends Controller
                 $distributors = \App\Distributor::where('package_id', $request->package_id)->get();
 
             }
+        } else if ($request->kyc_id) {
+
+            if ($request->kyc_id == 5) {
+                $distributors = \App\Distributor::join('kycs as kyc', 'kyc.distributor_id', '=', 'distributors.id')
+                    ->where('kyc.status', '=', $request->kyc_id)
+                    ->select('distributors.*')
+                    ->with('kycs')
+                    ->get();
+
+            } else {
+
+                $distributors = \App\Distributor::join('kycs as kyc', 'kyc.distributor_id', '=', 'distributors.id')
+                    ->where('kyc.status', '=', $request->kyc_id)
+                    ->select('distributors.*')
+                    ->with('kycs')
+                    ->get();
+            }
+
         } else {
             $distributors = \App\Distributor::all();
         }

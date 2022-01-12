@@ -46,7 +46,8 @@ class BackendController extends Controller
         $today_distributors = \App\Distributor::whereDate('activate_date', date('Y-m-d'))->count();
         $today_active_distributors = \App\Distributor::whereDate('activate_date', date('Y-m-d'))->whereNotNull('package_id')->count();
         $total_distributors = \App\Distributor::count();
-        $total_business = \App\Income::sum('sponsor_amount');
+        $total_business = \App\Income::sum('amount');
+
         $total_repurchase = \App\Income::where('income_type', 2)->sum('sponsor_amount');
         $total_activies_business = \App\Income::where('income_type', 1)->sum('sponsor_amount');
 
@@ -70,8 +71,8 @@ class BackendController extends Controller
             ->count();
         $wallet_incomes = \App\Income::where('sponsor_id', \Auth::user()->distributor_id)->sum('sponsor_amount');
         $total_incomes = \App\Income::where('sponsor_id', \Auth::user()->distributor_id)->sum('sponsor_amount');
-        $self_business = \App\Income::where('sponsor_id', \Auth::user()->distributor_id)->sum('sponsor_amount');
-        $total_busness = \App\Income::where('sponsor_id', \Auth::user()->distributor_id)->sum('sponsor_amount');
+        $self_business = \App\Income::where('sponsor_id', \Auth::user()->distributor_id)->whereIn('level', ['L1'])->sum('amount');
+        $total_busness = \App\Income::where('sponsor_id', \Auth::user()->distributor_id)->sum('amount');
         return view('backend.distributor_dashboard', compact('my_direct', 'total_downline', 'site_route', 'total_incomes', 'wallet_incomes', 'distributor', 'total_busness', 'self_business'));
     }
 

@@ -117,14 +117,14 @@ class RewardController extends Controller
      */
     public function edit($id)
     {
-        $reward = \App\Reward::wfind($id);
+        $reward = \App\Reward::find($id);
         if ($reward) {
-            return view('backend.rewards.edit', compact('Reward'));
+            return view('backend.rewards.edit', compact('reward'));
         }
         return redirect()->route('backend.rewards.index');
     }
 
-    public function edit_store(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $this->validate($request, [
             'tag' => 'required',

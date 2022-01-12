@@ -60,7 +60,20 @@
      <td></td>
      <td></td>
      @endif
-     <td></td>
+     <td>@if($distributor->kyc)
+         @if($distributor->kyc->status==1)
+         <button class="btn btn-sm btn-info">Waiting For Approvel</button>
+         @elseif($distributor->kyc->status==2)
+         <button class="btn btn-sm btn-danger">Reject By Admin</button>
+         @elseif($distributor->kyc->status==3)
+         <button class="btn btn-sm btn-primary">Resend For Approvel</button>
+         @elseif($distributor->kyc->status==4)
+         <button class="btn btn-sm btn-success">Approved By Admin</button>
+         @endif
+         @else
+         <button class="btn btn-sm btn-danger">Not Submitted</button>
+         @endif
+     </td>
      <td>
          @if($distributor->package)
          {{$distributor->package->package_name}}

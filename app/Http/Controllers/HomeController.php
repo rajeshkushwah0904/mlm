@@ -29,8 +29,8 @@ class HomeController extends Controller
      */
     public function home()
     {
-        $popup_banner = \App\PopupBanner::orderBy('id','DESC')->first();
-        return view('home',compact('popup_banner'));
+        $popup_banner = \App\PopupBanner::orderBy('id', 'DESC')->first();
+        return view('home', compact('popup_banner'));
     }
 
     public function loginpage()
@@ -193,7 +193,6 @@ class HomeController extends Controller
         $distributor = \App\Distributor::find(\Auth::user()->distributor_id);
         $order = \App\Order::create([
             'distributor_id' => \Auth::user()->distributor_id,
-            'distributor_name' => \Auth::user()->distributor_tracking_id,
             'distributor_name' => $distributor->name,
             'email' => $distributor->email,
             'mobile' => $distributor->mobile,
@@ -249,6 +248,7 @@ class HomeController extends Controller
             $income = \App\Income::create([
                 'distributor_id' => \Auth::user()->distributor_id,
                 'amount' => $total_amount,
+                'business_volume' => $total_amount,
                 'income_type' => 2,
                 'status' => 1,
                 'level' => 'L0',
@@ -269,6 +269,7 @@ class HomeController extends Controller
             $income = \App\Income::create([
                 'distributor_id' => \Auth::user()->distributor_id,
                 'amount' => $total_amount,
+                'business_volume' => $total_amount,
                 'income_type' => 2,
                 'status' => 1,
                 'level' => 'L1',
@@ -282,7 +283,7 @@ class HomeController extends Controller
             $income = \App\Income::create([
                 'distributor_id' => \Auth::user()->distributor_id,
                 'amount' => $total_amount,
-
+                'business_volume' => $total_amount,
                 'income_type' => 2,
                 'status' => 1,
                 'level' => 'L2',
@@ -296,7 +297,7 @@ class HomeController extends Controller
             $income = \App\Income::create([
                 'distributor_id' => \Auth::user()->distributor_id,
                 'amount' => $total_amount,
-
+                'business_volume' => $total_amount,
                 'income_type' => 2,
                 'status' => 1,
                 'level' => 'L3',
@@ -321,7 +322,6 @@ class HomeController extends Controller
 
         $order = \App\Order::create([
             'distributor_id' => \Auth::user()->distributor_id,
-            'distributor_name' => \Auth::user()->distributor_tracking_id,
             'distributor_name' => $distributor->name,
             'email' => $distributor->email,
             'mobile' => $distributor->mobile,
@@ -376,6 +376,7 @@ class HomeController extends Controller
             $income = \App\Income::create([
                 'distributor_id' => \Auth::user()->distributor_id,
                 'amount' => $total_amount,
+                'business_volume' => $total_amount,
                 'income_type' => 2,
                 'status' => 1,
                 'level' => 'L0',
@@ -396,6 +397,7 @@ class HomeController extends Controller
             $income = \App\Income::create([
                 'distributor_id' => \Auth::user()->distributor_id,
                 'amount' => $total_amount,
+                'business_volume' => $total_amount,
                 'income_type' => 2,
                 'status' => 1,
                 'level' => 'L1',
@@ -409,7 +411,7 @@ class HomeController extends Controller
             $income = \App\Income::create([
                 'distributor_id' => \Auth::user()->distributor_id,
                 'amount' => $total_amount,
-
+                'business_volume' => $total_amount,
                 'income_type' => 2,
                 'status' => 1,
                 'level' => 'L2',
@@ -423,7 +425,7 @@ class HomeController extends Controller
             $income = \App\Income::create([
                 'distributor_id' => \Auth::user()->distributor_id,
                 'amount' => $total_amount,
-
+                'business_volume' => $total_amount,
                 'income_type' => 2,
                 'status' => 1,
                 'level' => 'L3',
@@ -463,11 +465,11 @@ class HomeController extends Controller
         return view('layouts.shipping_policy', compact('title', 'page_content'));
     }
 
-        public function legal()
+    public function legal()
     {
         $title = "Company Legal detail";
         $page_content = "Company Legal detail";
         $legal_documents = \App\LegalDocument::all();
-        return view('layouts.legal', compact('title', 'page_content','legal_documents'));
+        return view('layouts.legal', compact('title', 'page_content', 'legal_documents'));
     }
 }

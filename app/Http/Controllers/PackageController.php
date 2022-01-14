@@ -121,7 +121,8 @@ class PackageController extends Controller
                     $level1_income = $package->business_volume * $package->sponsor_income / 100;
                     $income = \App\Income::create([
                         'distributor_id' => \Auth::user()->distributor_id,
-                        'amount' => $package->business_volume,
+                        'business_volume' => $package->business_volume,
+                        'amount' => $package->amount,
                         'package_id' => $package->id,
                         'income_type' => 1,
                         'status' => 1,
@@ -135,7 +136,8 @@ class PackageController extends Controller
                     $level2_income = $package->business_volume * 5 / 100;
                     $income = \App\Income::create([
                         'distributor_id' => \Auth::user()->distributor_id,
-                        'amount' => $package->business_volume,
+                        'business_volume' => $package->business_volume,
+                        'amount' => $package->amount,
                         'package_id' => $package->id,
                         'income_type' => 1,
                         'status' => 1,
@@ -149,7 +151,8 @@ class PackageController extends Controller
                     $level3_income = $package->business_volume * 3 / 100;
                     $income = \App\Income::create([
                         'distributor_id' => \Auth::user()->distributor_id,
-                        'amount' => $package->business_volume,
+                        'business_volume' => $package->business_volume,
+                        'amount' => $package->amount,
                         'package_id' => $package->id,
                         'income_type' => 1,
                         'status' => 1,
@@ -163,7 +166,8 @@ class PackageController extends Controller
                     $level4_income = $package->business_volume * 2 / 100;
                     $income = \App\Income::create([
                         'distributor_id' => \Auth::user()->distributor_id,
-                        'amount' => $package->business_volume,
+                        'business_volume' => $package->business_volume,
+                        'amount' => $package->amount,
                         'package_id' => $package->id,
                         'income_type' => 1,
                         'status' => 1,
@@ -176,7 +180,6 @@ class PackageController extends Controller
 
                 $order = \App\Order::create([
                     'distributor_id' => \Auth::user()->distributor_id,
-                    'distributor_name' => \Auth::user()->distributor_tracking_id,
                     'distributor_name' => $distributor->name,
                     'email' => $distributor->email,
                     'mobile' => $distributor->mobile,
@@ -207,14 +210,14 @@ class PackageController extends Controller
                 }
 
                 $payment = \App\Payment::create([
-    'amount' => $total_amount,
-    'entity' => 'ABC',
-    'currency' => 'INR',
-    'amount_refunded' => 0.00,
-    'distributor_id' => $distributor->id,
-    'order_id' => $order->id,
-    'order_date' => date('Y-m-d'),
-]);
+                    'amount' => $total_amount,
+                    'entity' => 'ABC',
+                    'currency' => 'INR',
+                    'amount_refunded' => 0.00,
+                    'distributor_id' => $distributor->id,
+                    'order_id' => $order->id,
+                    'order_date' => date('Y-m-d'),
+                ]);
 
                 $order->invoice_no = date('Y/m') . "/FR/" . $order->id;
                 $order->total_taxable_amount = $total_taxable_amount;
@@ -258,7 +261,8 @@ class PackageController extends Controller
             $level1_income = $package->business_volume * $package->sponsor_income / 100;
             $income = \App\Income::create([
                 'distributor_id' => $input['distributor_id'],
-                'amount' => $package->business_volume,
+                'business_volume' => $package->business_volume,
+                'amount' => $package->amount,
                 'package_id' => $package->id,
                 'income_type' => 1,
                 'status' => 1,
@@ -272,7 +276,8 @@ class PackageController extends Controller
             $level2_income = $package->business_volume * 5 / 100;
             $income = \App\Income::create([
                 'distributor_id' => $input['distributor_id'],
-                'amount' => $package->business_volume,
+                'business_volume' => $package->business_volume,
+                'amount' => $package->amount,
                 'package_id' => $package->id,
                 'income_type' => 1,
                 'status' => 1,
@@ -286,7 +291,8 @@ class PackageController extends Controller
             $level3_income = $package->business_volume * 3 / 100;
             $income = \App\Income::create([
                 'distributor_id' => $input['distributor_id'],
-                'amount' => $package->business_volume,
+                'business_volume' => $package->business_volume,
+                'amount' => $package->amount,
                 'package_id' => $package->id,
                 'income_type' => 1,
                 'status' => 1,
@@ -300,7 +306,8 @@ class PackageController extends Controller
             $level4_income = $package->business_volume * 2 / 100;
             $income = \App\Income::create([
                 'distributor_id' => $input['distributor_id'],
-                'amount' => $package->business_volume,
+                'business_volume' => $package->business_volume,
+                'amount' => $package->amount,
                 'package_id' => $package->id,
                 'income_type' => 1,
                 'status' => 1,
@@ -312,7 +319,6 @@ class PackageController extends Controller
         }
         $order = \App\Order::create([
             'distributor_id' => $distributor->id,
-            'distributor_name' => $distributor->distributor_tracking_id,
             'distributor_name' => $distributor->name,
             'email' => $distributor->email,
             'mobile' => $distributor->mobile,

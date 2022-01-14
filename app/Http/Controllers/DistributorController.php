@@ -286,12 +286,10 @@ class DistributorController extends Controller
         } else if ($request->kyc_id) {
 
             if ($request->kyc_id == 5) {
-                $distributors = \App\Distributor::join('kycs as kyc', 'kyc.distributor_id', '=', 'distributors.id')
-                    ->where('kyc.status', '=', $request->kyc_id)
-                    ->select('distributors.*')
-                    ->with('kycs')
-                    ->get();
-
+                $kycs = \App\Kyc::all();
+                $distributors = \App\Distributor::whereNotIn('id', $kycs->map(function ($kyc) {
+                    return $kyc->distributor_id;
+                }))->get();
             } else {
 
                 $distributors = \App\Distributor::join('kycs as kyc', 'kyc.distributor_id', '=', 'distributors.id')

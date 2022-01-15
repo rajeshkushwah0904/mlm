@@ -129,14 +129,14 @@ class BankController extends Controller
      */
     public function edit($id)
     {
-        $bank = \App\Bank::where('distributor_id', '=', $id)->find($id);
+        $bank = \App\Bank::find($id);
         if ($bank) {
             return view('backend.banks.edit', compact('bank'));
         }
         return redirect()->route('backend.banks.index');
     }
 
-    public function edit_store(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $this->validate($request, [
             'account_holder_name' => 'required',
@@ -169,7 +169,7 @@ class BankController extends Controller
      */
     public function destroy($id)
     {
-        $bank = $this->group->find($id);
+        $bank = \App\Bank::find($id);
         if ($bank->count()) {
             $bank->delete();
             session()->flash('success', 'Selected Group deleted successfully.');

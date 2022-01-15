@@ -6,12 +6,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-md-6">
-                    <h1>Bank Detail Update</h1>
+                    <h1>Update Bank Detail</h1>
                 </div>
                 <div class="col-md-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Bank Detail Update</li>
+                        <li class="breadcrumb-item active">Update Bank Detail</li>
                     </ol>
                 </div>
             </div>
@@ -46,9 +46,20 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Account Type</label>
-                                        <input type="text" name="account_type" value="{{$bank->account_type}}"
-                                            class="form-control" id="exampleInputEmail1" placeholder="Account Type"
-                                            Required>
+                                        <select type="text" name="account_type" value="{{old('account_type')}}"
+                                            class="form-control" id="exampleInputEmail1" Required>
+                                            <option value="">Select Account Type</option>
+                                            <option value="Saving Account"
+                                                {{"Saving Account" == $bank->account_type ? 'selected' : ''}}>Saving
+                                                Account</option>
+                                            <option value="Current Account"
+                                                {{"Current Account" == $bank->account_type ? 'selected' : ''}}>Current
+                                                Account</option>
+                                            <option value="Recurring Account"
+                                                {{"Recurring Account" == $bank->account_type ? 'selected' : ''}}>
+                                                Recurring
+                                                Account</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>

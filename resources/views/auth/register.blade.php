@@ -15,40 +15,50 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
+                                    name="name" onkeydown="upperCaseF(this)" value="{{ old('name') }}" required
+                                    autocomplete="name" autofocus>
 
                                 @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                         </div>
-                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Sponsor Tracking ID') }}</label>
+                        <div class="form-group row">
+                            <label for="name"
+                                class="col-md-4 col-form-label text-md-right">{{ __('Sponsor Tracking ID') }}</label>
 
                             <div class="col-md-6">
-                                <input id="sponsor_tracking_id" type="text" class="form-control @error('sponsor_tracking_id') is-invalid @enderror" name="sponsor_tracking_id" value="{{ old('sponsor_tracking_id') }}" required autocomplete="sponsor_tracking_id" autofocus>
+                                <input id="sponsor_tracking_id" type="text"
+                                    class="form-control @error('sponsor_tracking_id') is-invalid @enderror"
+                                    name="sponsor_tracking_id" oninput="this.value = this.value.toUpperCase()"
+                                    value="{{ old('sponsor_tracking_id') }}" required autocomplete="sponsor_tracking_id"
+                                    autofocus>
 
                                 @error('sponsor_tracking_id')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                         </div>
 
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Mobile No.') }}</label>
+                            <label for="name"
+                                class="col-md-4 col-form-label text-md-right">{{ __('Mobile No.') }}</label>
 
                             <div class="col-md-6">
-                                <input id="sponsor_tracking_id" type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}" required autocomplete="mobile" autofocus>
+                                <input id="sponsor_tracking_id" type="text"
+                                    class="form-control @error('mobile') is-invalid @enderror" name="mobile"
+                                    value="{{ old('mobile') }}" required autocomplete="mobile" autofocus>
 
                                 @error('mobile')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                         </div>
@@ -57,42 +67,51 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}" required autocomplete="address" autofocus>
+                                <input id="address" type="text"
+                                    class="form-control @error('address') is-invalid @enderror" name="address"
+                                    value="{{ old('address') }}" oninput="this.value = this.value.toUpperCase()"
+                                    autocomplete="address" autofocus required>
 
                                 @error('address')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="nominee" class="col-md-4 col-form-label text-md-right">{{ __('Nominee') }}</label>
+                            <label for="nominee"
+                                class="col-md-4 col-form-label text-md-right">{{ __('Nominee') }}</label>
 
                             <div class="col-md-6">
-                                <input id="address" type="text" class="form-control @error('nominee') is-invalid @enderror" name="nominee" value="{{ old('nominee') }}" required autocomplete="nominee" autofocus>
+                                <input id="address" type="text"
+                                    class="form-control @error('nominee') is-invalid @enderror" name="nominee"
+                                    value="{{ old('nominee') }}" required autocomplete="nominee"
+                                    oninput="this.value = this.value.toUpperCase()" autofocus>
 
                                 @error('nominee')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                         </div>
 
-                        
+
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                            <label for="email"
+                                class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                                    name="email" value="{{ old('email') }}" required autocomplete="email">
 
                                 @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                         </div>

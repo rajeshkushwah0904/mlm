@@ -35,7 +35,7 @@
                                     <tr>
                                         <th>S. No. </th>
                                         <th>Distributer Tracking ID</th>
-                                        <th>Distributer Amount</th>
+                                        <th>Business Volume</th>
                                         <th>Sponsor Tracking ID</th>
                                         <th>
                                             Sponsor Level

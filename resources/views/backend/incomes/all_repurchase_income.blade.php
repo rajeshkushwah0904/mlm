@@ -34,7 +34,7 @@
                                     <tr>
                                         <th>S. No. </th>
                                         <th>Distributer Tracking ID</th>
-                                        <th>Distributer Amount</th>
+                                        <th>Business Volume</th>
                                         <th>Sponsor Tracking ID
                                             {!!Form::open(['method'=>'GET','files'=>true,'class'=>'form-horizontal'])!!}
                                             <div class="form-group">

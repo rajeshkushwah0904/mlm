@@ -8,7 +8,7 @@
              </button>
              <ul class="dropdown-menu">
                  <li>
-                     <a class="dropdown-item" href="http://distributor.mlmproject.testing/distributors/as_login
+                     <a class="dropdown-item" href="http: //distributor.{{$domain_name}/distributors/as_login
 ?distributor_tracking_id={{$distributor->distributor_tracking_id}}" target="_blank">Login as a Distributor</a>
                  </li>
                  <li>

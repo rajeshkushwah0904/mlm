@@ -210,7 +210,8 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = $this->group->find($id);
+        $product = \App\Product::find($id);
+
         if ($product->count()) {
             $product->delete();
             session()->flash('success', 'Selected Group deleted successfully.');

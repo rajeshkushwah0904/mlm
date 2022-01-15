@@ -204,7 +204,7 @@ right connector from last child*/
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                                                 <span
-                                                    class="dropdown-item dropdown-header">{{$distributor->distributor_tracking_id}}</span>
+                                                    class="dropdown-item dropdown-header">{{$distributor->name}}<br>{{$distributor->distributor_tracking_id}}</span>
                                                 <div class="dropdown-divider"></div>
                                                 <a href="#" class="dropdown-item">
                                                     Joining Date
@@ -272,7 +272,7 @@ right connector from last child*/
                                                             <div
                                                                 class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                                                                 <span
-                                                                    class="dropdown-item dropdown-header">{{$first_level_distributor1->distributor_tracking_id}}</span>
+                                                                    class="dropdown-item dropdown-header">{{$first_level_distributor1->name}}<br>{{$first_level_distributor1->distributor_tracking_id}}</span>
                                                                 <div class="dropdown-divider"></div>
                                                                 <a href="#" class="dropdown-item">
                                                                     Joining Date
@@ -343,7 +343,7 @@ right connector from last child*/
                                                                             <div
                                                                                 class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                                                                                 <span
-                                                                                    class="dropdown-item dropdown-header">{{$first_level_distributor2->distributor_tracking_id}}</span>
+                                                                                    class="dropdown-item dropdown-header">{{$first_level_distributor2->name}}<br>{{$first_level_distributor2->distributor_tracking_id}}</span>
                                                                                 <div class="dropdown-divider"></div>
                                                                                 <a href="#" class="dropdown-item">
                                                                                     Joining Date
@@ -425,7 +425,7 @@ right connector from last child*/
                                                                                             <div
                                                                                                 class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                                                                                                 <span
-                                                                                                    class="dropdown-item dropdown-header">{{$first_level_distributor3->distributor_tracking_id}}</span>
+                                                                                                    class="dropdown-item dropdown-header">{{$first_level_distributor3->name}}<br>{{$first_level_distributor3->distributor_tracking_id}}</span>
                                                                                                 <div
                                                                                                     class="dropdown-divider">
                                                                                                 </div>
@@ -519,7 +519,7 @@ right connector from last child*/
                                                                                                             <div
                                                                                                                 class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                                                                                                                 <span
-                                                                                                                    class="dropdown-item dropdown-header">{{$first_level_distributor4->distributor_tracking_id}}</span>
+                                                                                                                    class="dropdown-item dropdown-header">{{$first_level_distributor4->name}}<br>{{$first_level_distributor4->distributor_tracking_id}}</span>
                                                                                                                 <div
                                                                                                                     class="dropdown-divider">
                                                                                                                 </div>

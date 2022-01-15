@@ -73,6 +73,11 @@
                                                         <a class="dropdown-item"
                                                             href="{{route('backend.products.deactive',$product->id)}}">Deactive</a>
                                                     </li>
+
+                                                    <li>
+                                                        <a class="dropdown-item"
+                                                            href="{{route('backend.products.delete',$product->id)}}">Delate</a>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </td>

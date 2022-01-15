@@ -25,6 +25,7 @@
                             <h3 class="card-title">Identity Information</h3>
                         </div>
                         <div class="card-body">
+                            @if($kyc->status==2)
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Pancard</label>
                                 <input type="text" name="pancard_no" value="{{$kyc->pancard_no}}" class="form-control"
@@ -36,6 +37,19 @@
                                     value="{{$kyc->aadhaarcard_no}}" id="exampleInputEmail1"
                                     placeholder="Enter Aadhar Card" required>
                             </div>
+                            @else
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Pancard</label>
+                                <input type="text" name="pancard_no" value="{{$kyc->pancard_no}}" class="form-control"
+                                    id="exampleInputEmail1" placeholder="Pan Card" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Aadhar Card</label>
+                                <input type="number" name="aadhaarcard_no" class="form-control"
+                                    value="{{$kyc->aadhaarcard_no}}" id="exampleInputEmail1"
+                                    placeholder="Enter Aadhar Card" readonly>
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -45,6 +59,7 @@
                             <h3 class="card-title">Bank Information</h3>
                         </div>
                         <!-- /.card-header -->
+                        @if($kyc->status==2)
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-4">
@@ -115,6 +130,64 @@
 
                             </div>
                         </div>
+                        @else
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Account Holder Name</label>
+                                        <input type="text" name="account_holder_name"
+                                            value="{{$kyc->account_holder_name}}" class="form-control"
+                                            id="exampleInputEmail1" placeholder="Enter Account Holder Name" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Account Number</label>
+                                        <input type="number" name="account_number" class="form-control"
+                                            value="{{$kyc->account_number}}" id="exampleInputEmail1"
+                                            placeholder="Enter Account Number" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Account Type</label>
+                                        <input type="text" name="account_type" class="form-control"
+                                            value="{{$kyc->account_type}}" id="exampleInputEmail1"
+                                            placeholder="Enter Amount" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">IFSC Code</label>
+                                        <input type="text" name="ifsc_code" class="form-control"
+                                            value="{{$kyc->ifsc_code}}" id="exampleInputEmail1"
+                                            placeholder="Enter Amount" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Bank Name</label>
+                                        <input type="text" name="bank_name" value="{{$kyc->bank_name}}"
+                                            class="form-control" id="exampleInputEmail1" placeholder="Bank Name"
+                                            readonly>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Bank Branch</label>
+                                        <input type="text" name="bank_branch" value="{{$kyc->bank_branch}}"
+                                            class="form-control" id="exampleInputEmail1" placeholder="Enter Bank Branch"
+                                            readonly>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -236,9 +309,9 @@
                                         </center>
                                     </div>
                                     <p>
-                                       <strong> Note:</strong> If you want to make any updates in your KYC then
-please contact us on our WhatsApp number 7880006260
-or info@rightwayfuture.com
+                                        <strong> Note:</strong> If you want to make any updates in your KYC then
+                                        please contact us on our WhatsApp number 7880006260
+                                        or info@rightwayfuture.com
 
                                     </p>
                                 </div>

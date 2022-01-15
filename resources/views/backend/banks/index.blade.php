@@ -58,14 +58,18 @@
                                                 <ul class="dropdown-menu">
                                                     @if($bank->status==1)
                                                     <li><a class="dropdown-item"
-                                                            href="{{route('backend.banks.in_active',$bank->id)}}">In Active</a>
+                                                            href="{{route('backend.banks.in_active',$bank->id)}}">Inactive</a>
                                                     </li>
                                                     @else
- <li>
-     <a class="dropdown-item" href="{{route('backend.banks.active',$bank->id)}}">active</a>
+                                                    <li>
+                                                        <a class="dropdown-item"
+                                                            href="{{route('backend.banks.active',$bank->id)}}">Active</a>
                                                     </li>
                                                     @endif
-                                                     <li><a class="dropdown-item"
+                                                    <li><a class="dropdown-item"
+                                                            href="{{route('backend.banks.edit',$bank->id)}}">Edit</a>
+                                                    </li>
+                                                    <li><a class="dropdown-item"
                                                             href="{{route('backend.banks.delete',$bank->id)}}">Delete</a>
                                                     </li>
                                                 </ul>

@@ -100,7 +100,8 @@
                                         <div class="col-md-6">
                                             <div class="form-wrap form-wrap-validation validation-with-outside-label">
                                                 <label class="form-label-outside name" for="forms-name">Name</label>
-                                                <input class="form-input first_name_class" id="forms-name" type="text"
+                                                <input class="form-input first_name_class" id="forms-name"
+                                                    oninput="this.value = this.value.toUpperCase()" type="text"
                                                     name="name" placeholder="Your First Name" Required>
                                             </div>
                                         </div>
@@ -109,8 +110,9 @@
                                                 <label class="form-label-outside" for="forms-last-name">Sponsor Tracking
                                                     ID</label>
                                                 <input class="form-input" id="forms-last-name" type="text"
-                                                    name="sponsor_tracking_id" value="{{$sponsor_tracking_id}}"
-                                                    placeholder="Your Last Name">
+                                                    name="sponsor_tracking_id"
+                                                    oninput="this.value = this.value.toUpperCase()"
+                                                    value="{{$sponsor_tracking_id}}" placeholder="Your Last Name">
                                             </div>
                                         </div>
 
@@ -141,14 +143,16 @@
                                         <div class="col-md-6">
                                             <div class="form-wrap form-wrap-validation validation-with-outside-label">
                                                 <label class="form-label-outside" for="forms-last-name">Address</label>
-                                                <input class="form-input" id="forms-last-name" type="text"
+                                                <input class="form-input" id="forms-last-name"
+                                                    oninput="this.value = this.value.toUpperCase()" type="text"
                                                     name="address" placeholder="Address" Required>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-wrap form-wrap-validation validation-with-outside-label">
                                                 <label class="form-label-outside" for="forms-last-name">Nominee</label>
-                                                <input class="form-input" id="forms-last-name" type="text"
+                                                <input class="form-input" id="forms-last-name"
+                                                    oninput="this.value = this.value.toUpperCase()" type="text"
                                                     name="nominee" placeholder="Nominee" Required>
                                             </div>
                                         </div>

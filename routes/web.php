@@ -108,6 +108,7 @@ Route::group(['prefix' => 'kycs', 'middleware' => ['auth']], function () {
     Route::get('/', ['as' => 'backend.kycs.index', 'uses' => 'KycController@index']);
     Route::get('/{id}/approved', ['as' => 'backend.kycs.approved', 'uses' => 'KycController@approved']);
     Route::get('/{id}/rejected', ['as' => 'backend.kycs.rejected', 'uses' => 'KycController@rejected']);
+    Route::get('/{id}/show', ['as' => 'backend.kycs.show', 'uses' => 'KycController@show']);
 
     Route::get('/update', ['as' => 'backend.kycs.update', 'uses' => 'KycController@update']);
     Route::post('/update', ['as' => 'backend.kycs.update', 'uses' => 'KycController@update_store']);
@@ -118,6 +119,24 @@ Route::group(['prefix' => 'kycs', 'middleware' => ['auth']], function () {
     Route::post('/{id}/edit', ['as' => 'backend.kycs.edit', 'uses' => 'KycController@edit_store']);
     Route::get('/{id}/approve', ['as' => 'backend.kycs.approve', 'uses' => 'KycController@approve']);
     Route::get('/{id}/delete', ['as' => 'backend.kycs.delete', 'uses' => 'KycController@destroy']);
+
+});
+
+Route::group(['prefix' => 'nominees', 'middleware' => ['auth']], function () {
+    Route::get('/', ['as' => 'backend.nominees.index', 'uses' => 'NomineeController@index']);
+    Route::get('/{id}/approved', ['as' => 'backend.nominees.approved', 'uses' => 'NomineeController@approved']);
+    Route::get('/{id}/rejected', ['as' => 'backend.nominees.rejected', 'uses' => 'NomineeController@rejected']);
+    Route::get('/{id}/show', ['as' => 'backend.nominees.show', 'uses' => 'NomineeController@show']);
+
+    Route::get('/update', ['as' => 'backend.nominees.update', 'uses' => 'NomineeController@update']);
+    Route::post('/update', ['as' => 'backend.nominees.update', 'uses' => 'NomineeController@update_store']);
+
+    Route::get('/create', ['as' => 'backend.nominees.create', 'uses' => 'NomineeController@create']);
+    Route::post('/create', ['as' => 'backend.nominees.create', 'uses' => 'NomineeController@store']);
+    Route::get('/{id}/edit', ['as' => 'backend.nominees.edit', 'uses' => 'NomineeController@edit']);
+    Route::post('/{id}/edit', ['as' => 'backend.nominees.edit', 'uses' => 'NomineeController@edit_store']);
+    Route::get('/{id}/approve', ['as' => 'backend.nominees.approve', 'uses' => 'NomineeController@approve']);
+    Route::get('/{id}/delete', ['as' => 'backend.nominees.delete', 'uses' => 'NomineeController@destroy']);
 
 });
 
@@ -269,4 +288,16 @@ Route::group(['prefix' => 'users', 'middleware' => ['auth']], function () {
     Route::get('/{id}/product_list', ['as' => 'backend.users.product_list', 'uses' => 'UserController@product_list']);
     Route::get('/changepassword', ['as' => 'myaccount.changepassword', 'uses' => 'UserController@changepassword']);
     Route::post('/changepassword', ['as' => 'myaccount.changepassword', 'uses' => 'UserController@changepasswordpost']);
+});
+
+Route::group(['prefix' => 'payouts', 'middleware' => ['auth']], function () {
+    Route::get('/', ['as' => 'backend.payouts.index', 'uses' => 'SupportController@index'])->middleware('permission');
+    Route::get('/add', ['as' => 'backend.payouts.add', 'uses' => 'SupportController@add']);
+    Route::post('/add', ['as' => 'backend.payouts.add', 'uses' => 'SupportController@add_store']);
+    Route::get('/{id}/edit', ['as' => 'backend.payouts.edit', 'uses' => 'SupportController@edit'])->middleware('permission');
+    Route::post('/{id}/edit', ['as' => 'backend.payouts.edit', 'uses' => 'SupportController@update'])->middleware('permission');
+    Route::get('/{id}/open', ['as' => 'backend.payouts.open', 'uses' => 'SupportController@open']);
+    Route::get('/{id}/closed', ['as' => 'backend.payouts.closed', 'uses' => 'SupportController@closed']);
+    Route::get('/{id}/delete', ['as' => 'backend.payouts.delete', 'uses' => 'SupportController@destroy']);
+    Route::get('/{id}/single_view', ['as' => 'backend.payouts.single_view', 'uses' => 'SupportController@single_view']);
 });

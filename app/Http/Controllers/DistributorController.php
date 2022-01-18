@@ -267,6 +267,7 @@ class DistributorController extends Controller
 
     public function distributor_filter_data(Request $request)
     {
+        $domain_name = request()->getHost();
 
         if ($request->distributor_tracking_id) {
             $distributors = \App\Distributor::where('distributor_tracking_id', $request->distributor_tracking_id)->get();
@@ -302,7 +303,7 @@ class DistributorController extends Controller
         } else {
             $distributors = \App\Distributor::all();
         }
-        return view('backend.distributors.distributor_filter_data', compact('distributors'));
+        return view('backend.distributors.distributor_filter_data', compact('distributors', 'domain_name'));
 
     }
 

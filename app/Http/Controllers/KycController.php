@@ -182,6 +182,7 @@ class KycController extends Controller
 
     public function edit_store(Request $request, $id)
     {
+
         $this->validate($request, [
             'pancard_no' => 'required',
             'aadhaarcard_no' => 'required',
@@ -251,16 +252,15 @@ class KycController extends Controller
     {
         if ($request->distributor_id) {
             $distributor_id = $request->distributor_id;
+
         } else {
             $distributor_id = \Auth::user()->distributor_id;
         }
-        $kyc = \App\Kyc::where('distributor_id', $distributor_id)->first();
+        $distributor = \App\Distributor::find($distributor_id);
 
-        if ($kyc) {
-            return view('backend.kycs.kyc_view', compact('kyc'));
-        } else {
-            return view('backend.kycs.update', compact('distributor_id'));
-        }
+        $kyc = \App\Kyc::where('distributor_id', $distributor_id)->first();
+        $nominee = \App\Nominee::where('distributor_id', $distributor_id)->first();
+        return view('backend.kycs.update', compact('distributor_id', 'kyc', 'nominee', 'distributor'));
         return redirect()->back();
     }
 
@@ -272,6 +272,7 @@ class KycController extends Controller
      */
     public function update_store(Request $request)
     {
+
         $this->validate($request, [
             'pancard_no' => 'required',
             'aadhaarcard_no' => 'required',

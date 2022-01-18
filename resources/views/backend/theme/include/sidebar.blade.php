@@ -145,6 +145,14 @@ $distributor = \App\Distributor::where('distributor_tracking_id', \Auth::user()-
                          </li>
                      </ul>
                  </li>
+                 <li class="nav-item">
+                     <a href="{{route('backend.nominees.index')}}" class="nav-link">
+                         <i class="nav-icon far fa-image"></i>
+                         <p>
+                             Nominee
+                         </p>
+                     </a>
+                 </li>
 
                  <li class="nav-item has-treeview">
                      <a href="#" class="nav-link">

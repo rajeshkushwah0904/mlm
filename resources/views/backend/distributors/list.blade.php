@@ -86,13 +86,13 @@
                 <div class="col-2">
                     <div class="form-group">
                         <label>Start Date</label>
-                        <input type="date" name="start_date" class="form-control" value="{{date('Y-m-d')}}">
+                        <input type="date" name="start_date" class="form-control">
                     </div>
                 </div>
                 <div class="col-2">
                     <div class="form-group">
                         <label>End Date</label>
-                        <input type="date" name="end_date" class="form-control" value="{{date('Y-m-d')}}">
+                        <input type="date" name="end_date" class="form-control">
                     </div>
                 </div>
                 <div class="col-2">
@@ -111,6 +111,7 @@
                     <div class="form-group">
                         <label>KYC</label>
                         <select class="form-control select2 kyc_id" style="width: 100%;">
+                            <option value="">All</option>
                             <option value="5">Not Submitted</option>
                             <option value="1">Waiting For Approvel</option>
                             <option value="2">Reject By Admin</option>

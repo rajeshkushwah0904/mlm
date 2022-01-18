@@ -76,7 +76,7 @@
 
                                                     <li>
                                                         <a class="dropdown-item"
-                                                            href="{{route('backend.products.delete',$product->id)}}">Delate</a>
+                                                            href="{{route('backend.products.delete',$product->id)}}">Delete</a>
                                                     </li>
                                                 </ul>
                                             </div>

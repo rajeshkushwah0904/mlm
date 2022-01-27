@@ -18,33 +18,38 @@
             </div>
         </div><!-- /.container-fluid -->
     </section>
-     <section class="content">
+    <section class="content">
         <div class="container-fluid">
-              {!!Form::open(['route'=>['backend.orders.export'],'method'=>'GET','files'=>true,'class'=>'form-horizontal'])!!}
+            {!!Form::open(['method'=>'GET','files'=>true,'class'=>'form-horizontal'])!!}
             {{csrf_field()}}
             <div class="row">
                 <div class="col-3">
                     <div class="form-group">
                         <label>Start Date</label>
-                        <input class="form-control" type="date" name="start_date" value="{{date('Y-m-d')}}">
+                        <input class="form-control start_date" type="date" name="start_date" value="{{$start_date}}">
                     </div>
                 </div>
-                 <div class="col-3">
-                    <div class="form-group">
-                        <label>Start Date</label>
-                        <input class="form-control" type="date" name="end_date" value="{{date('Y-m-d')}}">
-                    </div>
-                </div>
-               
                 <div class="col-3">
                     <div class="form-group">
-                        <button type="submit"  class="btn btn-primary btn-sm" style="margin-top: 35px">
-                            Export
-                        </button>
+                        <label>extends Date</label>
+                        <input class="form-control end_date" type="date" name="end_date" value="{{$end_date}}">
                     </div>
                 </div>
+
+                <div class="col-3">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-sm" style="margin-top: 35px">
+                            Search
+                        </button>
+                        <a href="{{route('backend.orders.export')}}?start_date={{$start_date}}&end_date={{$end_date}}&distributor_id={{\Auth::user()->distributor_id}}"
+                            class="btn btn-danger btn-sm" style="margin-top: 35px">
+                            Export
+                        </a>
+                    </div>
+                </div>
+
             </div>
-             {!!Form::close()!!}
+            {!!Form::close()!!}
         </div>
     </section>
     <!-- Main content -->
@@ -63,6 +68,7 @@
                                     <tr>
                                         <th>S. No. </th>
                                         <th>Distributor ID</th>
+                                        <th>Invoice Date</th>
                                         <th>Invoice No.</th>
                                         <th>Invoice Type</th>
                                         <th>Total Amount</th>
@@ -78,9 +84,10 @@
                                             {{$order->distributor->name}}({{$order->distributor->distributor_tracking_id}})
                                             @endif
                                         </td>
+                                        <td>{{$order->updated_at->format('d-M-Y')}}</td>
                                         <td>{{$order->invoice_no}}</td>
                                         <td>@if($order->invoice_type==1)
-                                            Package invoice
+                                            Combo invoice
                                             @else
                                             Product Repurchase invoice
                                             @endif</td>
@@ -110,4 +117,24 @@
     </section>
     <!-- /.content -->
 </div>
+
+<script>
+function export_function() {
+    var start_date = $('.start_date').val();
+    var end_date = $('.end_date').val();
+    $.ajax({
+        type: "POST",
+        url: "{{ route('backend.orders.export') }}",
+        data: {
+            "_token": "{{ csrf_token() }}",
+            start_date: start_date,
+            end_date: end_date,
+
+        },
+        success: function(data) {
+
+        }
+    });
+}
+</script>
 @stop

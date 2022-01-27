@@ -6,12 +6,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Package Purchase For Other</h1>
+                    <h1>Combo Purchase For Other</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Package Purchase For Other</li>
+                        <li class="breadcrumb-item active">Combo Purchase For Other</li>
                     </ol>
                 </div>
             </div>
@@ -23,7 +23,7 @@
             <!-- SELECT2 EXAMPLE -->
             <div class="card card-default">
                 <div class="card-header">
-                    <h3 class="card-title">Package Purchase For Other</h3>
+                    <h3 class="card-title">Combo Purchase For Other</h3>
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
                                 class="fas fa-minus"></i></button>
@@ -33,7 +33,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-               
+
                     <div class="row">
                         <div class="col-md-12">
 
@@ -41,8 +41,8 @@
                             <div class="form-group">
                                 <label for="distributor_id" class="col-md-2 control-label">Distributor</label>
                                 <div class="col-md-10">
-                                    <select id="distributor_id" class="form-control" name="distributor_id" 
-                                        required autofocus>
+                                    <select id="distributor_id" class="form-control" name="distributor_id" required
+                                        autofocus>
                                         <option value="">---- Select ----</option>
                                         @foreach($distributors as $distributor)
                                         <option value="{{$distributor->id}}">
@@ -53,32 +53,31 @@
                                 </div>
 
 
-                                <label for="package_id" class="col-md-2 control-label">Package</label>
+                                <label for="package_id" class="col-md-2 control-label">Combo</label>
                                 <div class="col-md-10">
-                                    <select id="package_id" class="form-control" name="package_id" 
-                                        required autofocus>
+                                    <select id="package_id" class="form-control" name="package_id" required autofocus>
                                         <option value="">---- Select ----</option>
                                         @foreach($packages as $package)
-                                       
+
                                         <option value="{{$package->id}}">
                                             {{$package->package_name}} ( {{$package->amount}} )
                                         </option>
-                                      
+
 
                                         @endforeach
                                     </select>
                                 </div>
-<br>
+                                <br>
                                 <div class="form-group">
-                        <div class="col-md-8 col-md-offset-4">
-                            <button type="submit" class="btn btn-primary">
-                                Submit
-                            </button>
-                        </div>
-                    </div>
+                                    <div class="col-md-8 col-md-offset-4">
+                                        <button type="submit" class="btn btn-primary">
+                                            Submit
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                             {!!Form::close()!!}
-                            
+
                         </div>
                         <!-- /.col -->
                     </div>

@@ -6,12 +6,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Purchase Package</h1>
+                    <h1>Purchase Combo</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Purchase Package</li>
+                        <li class="breadcrumb-item active">Purchase Combo</li>
                     </ol>
                 </div>
             </div>
@@ -23,7 +23,7 @@
             <!-- SELECT2 EXAMPLE -->
             <div class="card card-default">
                 <div class="card-header">
-                    <h3 class="card-title">Purchase Package</h3>
+                    <h3 class="card-title">Purchase Combo</h3>
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
                                 class="fas fa-minus"></i></button>
@@ -38,7 +38,7 @@
                         <thead>
                             <tr>
                                 <th>S. No. </th>
-                                <th>Package Name</th>
+                                <th>Combo Name</th>
                                 <th>Amount</th>
                                 <th>Sponsor Income</th>
                                 <th>Download</th>

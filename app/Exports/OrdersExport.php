@@ -17,7 +17,20 @@ class OrdersExport implements FromCollection, WithHeadings, ShouldAutoSize, With
      */
     public function collection()
     {
-        $orders = \App\Order::whereBetween('created_at', [request()->start_date, request()->end_date])->get();
+        if (\Auth::user()->role == 'Admin') {
+            if (request()->start_date && request()->end_date) {
+                $orders = \App\Order::whereBetween('created_at', [request()->start_date, request()->end_date])->get();
+            } else {
+                $orders = \App\Order::whereBetween('created_at', [request()->start_date, request()->end_date])->get();
+            }
+        } else {
+            if (request()->start_date && request()->end_date) {
+                $orders = \App\Order::where('distributor_id', request()->distributor_id)->whereBetween('created_at', [request()->start_date, request()->end_date])->get();
+            } else {
+                $orders = \App\Order::where('distributor_id', request()->distributor_id)->whereBetween('created_at', [request()->start_date, request()->end_date])->get();
+            }
+
+        }
 
         $output = [];
         foreach ($orders as $key => $order) {

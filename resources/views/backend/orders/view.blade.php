@@ -80,7 +80,7 @@
                                 <b>Invoice Date:</b> {{$order->created_at}}<br>
                                 <b>Invoice Type:</b>
                                 @if($order->invoice_type=='1')
-                                Package invoice
+                                Combo invoice
                                 @else
                                 Product Repurchase Invoice
                                 @endif
@@ -98,11 +98,14 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Product Description </th>
-                                            <th>Unit Price</th>
-                                            <th>Qty</th>
-                                            <th>Total Taxable Amount</th>
-                                            <th>GST Amount</th>
-                                            <th>Product Amount</th>
+                                            <th class="text-center">MRP</th>
+                                            <th class="text-center">DP</th>
+                                            <th class="text-center">QTY</th>
+                                            <th class="text-center">SGT</th>
+                                            <th class="text-center">CGST</th>
+                                            <th class="text-center">IGT</th>
+                                            <th class="text-center">TAX AMOUNT</th>
+                                            <th class="text-center">TOTAL AMOUNT</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -110,11 +113,22 @@
                                         <tr>
                                             <td>{{$key+1}}</td>
                                             <td>{{$order_product->product_name}}</td>
-                                            <td>{{$order_product->product_taxable_amount}}</td>
-                                            <td>{{$order_product->qty}}</td>
-                                            <td>{{$order_product->total_product_taxable_amount}}</td>
-                                            <td>{{$order_product->product_gst_amount}}</td>
-                                            <td>{{$order_product->product_amount}}</td>
+                                            <td class="text-center">{{$order_product->mrp}}</td>
+                                            <td class="text-center">{{$order_product->product_taxable_amount}}</td>
+                                            <td class="text-center">{{$order_product->qty}}</td>
+                                            <td class="text-center">
+                                                @if($order_product->cgst_rate)
+                                                {{$order_product->cgst_amount}}({{$order_product->cgst_rate}}%)
+                                                @endif
+                                            </td>
+                                            <td class="text-center">
+                                                @if($order_product->sgst_rate)
+                                                {{$order_product->sgst_amount}}({{$order_product->sgst_rate}}%)
+                                                @endif
+                                            </td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center">{{$order_product->product_gst_amount}}</td>
+                                            <td class="text-center">{{$order_product->product_amount}}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>

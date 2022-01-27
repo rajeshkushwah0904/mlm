@@ -100,7 +100,7 @@ $distributor = \App\Distributor::where('distributor_tracking_id', \Auth::user()-
                      <a href="#" class="nav-link">
                          <i class="nav-icon fas fa-chart-pie"></i>
                          <p>
-                             Package
+                             Combo
                              <i class="right fas fa-angle-left"></i>
                          </p>
                      </a>
@@ -108,13 +108,13 @@ $distributor = \App\Distributor::where('distributor_tracking_id', \Auth::user()-
                          <li class="nav-item">
                              <a href="{{route('backend.packages.index')}}" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
-                                 <p>Package List</p>
+                                 <p>Combo List</p>
                              </a>
                          </li>
                          <li class="nav-item">
                              <a href="{{route('backend.packages.purchase_for_other')}}" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
-                                 <p>Purchase Package For Other Distributor</p>
+                                 <p>Purchase Combo For Other Distributor</p>
                              </a>
                          </li>
 

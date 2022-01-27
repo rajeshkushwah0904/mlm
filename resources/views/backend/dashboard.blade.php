@@ -106,7 +106,7 @@
                                 <span class="info-box-icon"><i class="far fa-heart"></i></span>
 
                                 <div class="info-box-content">
-                                    <span class="info-box-text">Totl Business</span>
+                                    <span class="info-box-text">Total BV</span>
                                     <span class="info-box-number">{{$total_business}}</span>
                                 </div>
                                 <!-- /.info-box-content -->
@@ -130,7 +130,7 @@
                                 <span class="info-box-icon"><i class="far fa-comment"></i></span>
 
                                 <div class="info-box-content">
-                                    <span class="info-box-text">Total Activaties Business</span>
+                                    <span class="info-box-text">Total Activaties BV</span>
                                     <span class="info-box-number">{{$total_activies_business}}</span>
                                 </div>
                                 <!-- /.info-box-content -->
@@ -162,7 +162,7 @@
                         <div class="inner">
                             <h3>{{count($packages)}}</h3>
 
-                            <p>Packages</p>
+                            <p>Combo</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>

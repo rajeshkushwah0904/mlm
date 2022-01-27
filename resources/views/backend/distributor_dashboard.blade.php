@@ -239,7 +239,7 @@
                         <span class="info-box-icon"><i class="far fa-bookmark"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Self Business2</span>
+                            <span class="info-box-text">Self BV</span>
                             <span class="info-box-number">{{$self_business}}</span>
 
                             <div class="progress">
@@ -259,7 +259,7 @@
                         <span class="info-box-icon"><i class="far fa-thumbs-up"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Total Business</span>
+                            <span class="info-box-text">Total BV</span>
                             <span class="info-box-number">{{$total_busness}}</span>
 
                             <div class="progress">

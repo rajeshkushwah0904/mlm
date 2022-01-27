@@ -28,7 +28,8 @@
             <div class="row">
                 <div class="col-12">
                     <h2 class="page-header">
-                        <img src="{{asset('logo.png')}}" style="width: 70%" alt="Rightway Future" class="brand-image" style="opacity: .8">
+                        <img src="{{asset('logo.png')}}" style="width: 70%" alt="Rightway Future" class="brand-image"
+                            style="opacity: .8">
                         <small class="float-right">Date: {{$order->created_at->format('d-M-Y')}}</small>
                     </h2>
                 </div>
@@ -68,6 +69,13 @@
                     <br>
                     <b>Order ID:</b> {{$order->id}}<br>
                     <b>Invoice Date:</b> {{$order->created_at}}<br>
+                    <b>Invoice Type:</b>
+                    @if($order->invoice_type=='1')
+                    Combo invoice
+                    @else
+                    Product Repurchase Invoice
+                    @endif
+                    <br>
                 </div>
                 <!-- /.col -->
             </div>
@@ -81,24 +89,37 @@
                             <tr>
                                 <th>#</th>
                                 <th>Product Description </th>
-                                <th>Unit Price</th>
-                                <th>Qty</th>
-                                <th>Total Taxable Amount</th>
-                                <th>GST Amount</th>
-                                <th>Product Amount</th>
+                                <th class="text-center">MRP</th>
+                                <th class="text-center">DP</th>
+                                <th class="text-center">QTY</th>
+                                <th class="text-center">SGT</th>
+                                <th class="text-center">CGST</th>
+                                <th class="text-center">IGT</th>
+                                <th class="text-center">TAX AMOUNT</th>
+                                <th class="text-center">TOTAL AMOUNT</th>
                             </tr>
                         </thead>
                         <tbody>
-
                             @foreach($order->order_products as $key=>$order_product)
                             <tr>
                                 <td>{{$key+1}}</td>
                                 <td>{{$order_product->product_name}}</td>
-                                <td>{{$order_product->product_taxable_amount}}</td>
-                                <td>{{$order_product->qty}}</td>
-                                <td>{{$order_product->total_product_taxable_amount}}</td>
-                                <td>{{$order_product->product_gst_amount}}</td>
-                                <td>{{$order_product->product_amount}}</td>
+                                <td class="text-center">{{$order_product->mrp}}</td>
+                                <td class="text-center">{{$order_product->product_taxable_amount}}</td>
+                                <td class="text-center">{{$order_product->qty}}</td>
+                                <td class="text-center">
+                                    @if($order_product->cgst_rate)
+                                    {{$order_product->cgst_amount}}({{$order_product->cgst_rate}}%)
+                                    @endif
+                                </td>
+                                <td class="text-center">
+                                    @if($order_product->sgst_rate)
+                                    {{$order_product->sgst_amount}}({{$order_product->sgst_rate}}%)
+                                    @endif
+                                </td>
+                                <td class="text-center"></td>
+                                <td class="text-center">{{$order_product->product_gst_amount}}</td>
+                                <td class="text-center">{{$order_product->product_amount}}</td>
                             </tr>
                             @endforeach
                         </tbody>

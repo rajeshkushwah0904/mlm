@@ -24,8 +24,6 @@
             @endif
 
             <br><br>
-            <p>Declaration:- I {{$distributor->name}} declare that after any mis-happening/deceased, all the business
-                goes to my nominee without any question/objections.</p>
             @if($nominee)
             @include('backend.nominees.show')
             @else

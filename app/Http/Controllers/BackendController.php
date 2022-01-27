@@ -46,7 +46,7 @@ class BackendController extends Controller
         $today_distributors = \App\Distributor::whereDate('activate_date', date('Y-m-d'))->count();
         $today_active_distributors = \App\Distributor::whereDate('activate_date', date('Y-m-d'))->whereNotNull('package_id')->count();
         $total_distributors = \App\Distributor::count();
-        $total_business = \App\Income::sum('amount');
+        $total_business = \App\Income::where('level', 'L1')->sum('amount');
 
         $total_repurchase = \App\Income::where('income_type', 2)->sum('sponsor_amount');
         $total_activies_business = \App\Income::where('income_type', 1)->sum('sponsor_amount');
@@ -72,31 +72,31 @@ class BackendController extends Controller
     }
     public function distributor_dashboard(Request $request)
     {
-       $abcd = null;
+        $abcd = null;
 
-$distributor = \App\Distributor::with('first_level_distributors')->find(\Auth::user()->distributor_id);
-foreach ($distributor->first_level_distributors as $first_level_distributor) {
-    $abcd[] = $first_level_distributor->id;
-    if ($this->get_all_distributor($first_level_distributor->id)) {
-        $abcd[] = $this->get_all_distributor($first_level_distributor->id);
-    }
+        $distributor = \App\Distributor::with('first_level_distributors')->find(\Auth::user()->distributor_id);
+        foreach ($distributor->first_level_distributors as $first_level_distributor) {
+            $abcd[] = $first_level_distributor->id;
+            if ($this->get_all_distributor($first_level_distributor->id)) {
+                $abcd[] = $this->get_all_distributor($first_level_distributor->id);
+            }
 
-}
-$str = json_encode($abcd);
-$str1 = str_replace(array('[', ']'), '', $str);
-$array_data = explode(',', $str1 . ',' . \Auth::user()->distributor_id);
+        }
+        $str = json_encode($abcd);
+        $str1 = str_replace(array('[', ']'), '', $str);
+        $array_data = explode(',', $str1 . ',' . \Auth::user()->distributor_id);
 
-$site_route = $request->getSchemeAndHttpHost();
-$my_direct = \App\DistributorLevel::where('L1', \Auth::user()->distributor_id)->count();
-$total_downline = count($array_data) - 1;
-$wallet_incomes = \App\Income::where('sponsor_id', \Auth::user()->distributor_id)->sum('sponsor_amount');
-$total_incomes = \App\Income::where('sponsor_id', \Auth::user()->distributor_id)->sum('sponsor_amount');
-$self_business1 = 0;
-$self_business2 = 0;
-$self_business1 = \App\Income::where('sponsor_id', \Auth::user()->distributor_id)->whereIn('level', ['L1'])->sum('amount');
-$self_business2 = \App\Income::where('sponsor_id', \Auth::user()->distributor_id)->whereIn('level', ['L0'])->sum('amount');
-$self_business = $self_business1 + $self_business2;
-$total_busness = \App\Income::whereIn('sponsor_id', $array_data)->sum('amount');
+        $site_route = $request->getSchemeAndHttpHost();
+        $my_direct = \App\DistributorLevel::where('L1', \Auth::user()->distributor_id)->count();
+        $total_downline = count($array_data) - 1;
+        $wallet_incomes = \App\Income::where('sponsor_id', \Auth::user()->distributor_id)->sum('sponsor_amount');
+        $total_incomes = \App\Income::where('sponsor_id', \Auth::user()->distributor_id)->sum('sponsor_amount');
+        $self_business1 = 0;
+        $self_business2 = 0;
+        $self_business1 = \App\Income::where('sponsor_id', \Auth::user()->distributor_id)->whereIn('level', ['L1'])->sum('amount');
+        $self_business2 = \App\Income::where('sponsor_id', \Auth::user()->distributor_id)->whereIn('level', ['L0'])->sum('amount');
+        $self_business = $self_business1 + $self_business2;
+        $total_busness = \App\Income::whereIn('sponsor_id', $array_data)->where('level', 'L1')->sum('amount');
 
         return view('backend.distributor_dashboard', compact('my_direct', 'total_downline', 'site_route', 'total_incomes', 'wallet_incomes', 'distributor', 'total_busness', 'self_business'));
     }

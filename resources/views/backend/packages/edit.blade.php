@@ -6,12 +6,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Package Information</h1>
+                    <h1>Combo Information</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Package Information</li>
+                        <li class="breadcrumb-item active">Combo Information</li>
                     </ol>
                 </div>
             </div>
@@ -24,7 +24,7 @@
             <!-- SELECT2 EXAMPLE -->
             <div class="card card-default">
                 <div class="card-header">
-                    <h3 class="card-title">Update Package Information</h3>
+                    <h3 class="card-title">Update Combo Information</h3>
 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
@@ -40,9 +40,9 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Package Name</label>
+                                <label for="exampleInputEmail1">Combo Name</label>
                                 <input type="text" name="package_name" value="{{$package->package_name}}"
-                                    class="form-control" id="exampleInputEmail1" placeholder="Package Name" Required>
+                                    class="form-control" id="exampleInputEmail1" placeholder="Combo Name" Required>
                             </div>
                         </div>
                         <div class="col-md-3">

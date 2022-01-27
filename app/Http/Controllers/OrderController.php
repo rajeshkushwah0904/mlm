@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\OrdersExport;
 use App\Http\Controllers\Controller;
 use App\Order;
 use Illuminate\Http\Request;
-use PDF;
-use App\Exports\OrdersExport;
 use Maatwebsite\Excel\Facades\Excel;
-
+use PDF;
 
 class OrderController extends Controller
 {
@@ -18,16 +17,27 @@ class OrderController extends Controller
         return Excel::download(new OrdersExport, 'invoice_list.xlsx');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        if (\Auth::user()->role == 1) {
-            $orders = \App\Order::all();
-        } else {
-            $orders = \App\Order::where('distributor_id', \Auth::user()->distributor_id)->get();
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
 
+        if ($start_date && $end_date) {
+            if (\Auth::user()->role == 1) {
+                $orders = \App\Order::whereBetween('created_at', [$request->start_date, $request->end_date])->get();
+            } else {
+                $orders = \App\Order::whereBetween('created_at', [$request->start_date, $request->end_date])->where('distributor_id', \Auth::user()->distributor_id)->get();
+            }
+
+        } else {
+            if (\Auth::user()->role == 1) {
+                $orders = \App\Order::all();
+            } else {
+                $orders = \App\Order::where('distributor_id', \Auth::user()->distributor_id)->get();
+            }
         }
 
-        return view('backend.orders.index', compact('orders'));
+        return view('backend.orders.index', compact('orders', 'start_date', 'end_date'));
     }
 
     public function download_pdf(Request $request, $id)

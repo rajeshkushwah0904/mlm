@@ -72,6 +72,7 @@ class DistributorController extends Controller
         curl_setopt($ch, CURLOPT_HEADER, 0); // DO NOT RETURN HTTP HEADERS
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // RETURN THE CONTENTS OF THE CALL
         $return_val = curl_exec($ch);
+        dd($return_val);
         if ($mobile) {
             return response()->json(['status' => true, 'message' => 'OTP Send Successfully'], 200)->cookie($cookie);
         } else {
@@ -198,7 +199,7 @@ class DistributorController extends Controller
 // Welcome SMS Stop
 
                 session()->flash('success', 'New Distributor Register Successfully');
-                return redirect()->route('backend.distributor_dashboard');
+                return redirect()->route('backend.distributor.dashboard');
             } else {
                 session()->flash('error', 'OTP does not Match ! Please try Again');
                 return redirect()->back();
@@ -284,6 +285,9 @@ class DistributorController extends Controller
                 $distributors = \App\Distributor::where('package_id', $request->package_id)->get();
 
             }
+        } else if ($request->start_date && $request->end_date) {
+            $distributors = \App\Distributor::whereBetween('joining_date', [$request->start_date, $request->end_date])->get();
+
         } else if ($request->kyc_id) {
 
             if ($request->kyc_id == 5) {

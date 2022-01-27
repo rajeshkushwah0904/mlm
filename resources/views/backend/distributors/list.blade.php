@@ -86,13 +86,13 @@
                 <div class="col-2">
                     <div class="form-group">
                         <label>Start Date</label>
-                        <input type="date" name="start_date" class="form-control">
+                        <input type="date" name="start_date" class="form-control start_date">
                     </div>
                 </div>
                 <div class="col-2">
                     <div class="form-group">
                         <label>End Date</label>
-                        <input type="date" name="end_date" class="form-control">
+                        <input type="date" name="end_date" class="form-control end_date">
                     </div>
                 </div>
                 <div class="col-2">
@@ -298,6 +298,8 @@ function search_function() {
     var sponsor_id = $('.sponsor_id').val();
     var package_id = $('.package_id').val();
     var kyc_id = $('.kyc_id').val();
+    var start_date = $('.start_date').val();
+    var end_date = $('.end_date').val();
 
     $.ajax({
         url: "{{route('backend.distributors.distributor_filter_data')}}",
@@ -308,7 +310,9 @@ function search_function() {
             distributor_mobile: distributor_mobile,
             sponsor_id: sponsor_id,
             package_id: package_id,
-            kyc_id: kyc_id
+            kyc_id: kyc_id,
+            start_date: start_date,
+            end_date: end_date
         },
         type: "POST",
         success: function(data) {

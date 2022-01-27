@@ -125,6 +125,11 @@
                      </div>
                      <br>
                      <div class="col-md-12">
+                         <h4 class="text-center"><u>Declaration</u></h4>
+                         <p> <input type="checkbox" required> I {{$distributor->name}} declare that after any
+                             mis-happening/deceased,
+                             all the business
+                             goes to my nominee without any question/objections.</p>
                          <center>
                              <button type="submit" class="btn btn-primary">
                                  Submit

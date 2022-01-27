@@ -97,7 +97,7 @@ class HomeController extends Controller
     {
         $title = "Banking";
         $page_content = "Manage your financial details.";
-        $banks = \App\Bank::where('status', 4)->get();
+        $banks = \App\Bank::where('status', 1)->get();
         return view('layouts.banking', compact('title', 'page_content', 'banks'));
     }
 

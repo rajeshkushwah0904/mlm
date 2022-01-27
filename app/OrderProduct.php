@@ -14,5 +14,17 @@ class OrderProduct extends Model
         'product_gst_amount',
         'product_amount',
         'qty',
+        'product_id',
+        'mrp',
+        'distributor_price',
+        'business_volume',
+        'cgst_rate',
+        'cgst_amount',
+        'sgst_rate',
+        'sgst_amount',
+        'igst_rate',
+        'igst_amount',
+        'tax_amount',
+        'total_amount',
     ];
 }

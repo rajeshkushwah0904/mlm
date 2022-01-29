@@ -217,6 +217,15 @@ $distributor = \App\Distributor::where('distributor_tracking_id', \Auth::user()-
                      </a>
                  </li>
                  @endif
+
+                 <li class="nav-item">
+                     <a href="{{route('backend.payout')}}" class="nav-link">
+                         <i class="nav-icon far fa-image"></i>
+                         <p>
+                             Payout
+                         </p>
+                     </a>
+                 </li>
                  @if(\Auth::user()->role==3)
                  <li class="nav-item">
                      <a href="{{route('backend.distributor.dashboard')}}" class="nav-link">

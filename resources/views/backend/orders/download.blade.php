@@ -33,7 +33,7 @@
                 <div class="col-12">
                     <h2 class="page-header">
                         <img src="{{asset('logo.png')}}" alt="Rightway Future" class="brand-image" style="opacity: .8">
-                        <small class="float-right">Date: {{$order->created_at->format('d-M-Y')}}</small>
+
                     </h2>
                 </div>
                 <!-- /.col -->

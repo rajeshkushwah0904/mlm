@@ -50,6 +50,8 @@ Route::get('distributor/dashboard', 'BackendController@distributor_dashboard')->
 Route::get('/dashboard/genealogy_tree', 'BackendController@genealogy_tree')->name('backend.genealogy_tree')->middleware('auth');
 
 Route::get('/profile', 'BackendController@profile')->name('backend.profile')->middleware('auth');
+Route::get('/payout', 'BackendController@payout')->name('backend.payout')->middleware('auth');
+Route::post('/payout_filter_data', 'BackendController@payout_filter_data')->name('backend.payout_filter_data')->middleware('auth');
 Route::post('/profile', 'BackendController@profile_update')->name('backend.profile')->middleware('auth');
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('auth.logout')->middleware('auth');
 Route::get('/distributors/register', ['as' => 'distributors.register', 'uses' => 'DistributorController@register']);

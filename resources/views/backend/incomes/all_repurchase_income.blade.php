@@ -83,7 +83,7 @@ $total = 0.00;
                                             {{$income->distributor->distributor_tracking_id}}
                                             @endif
                                         </td>
-                                        <td>{{$income->amount}}</td>
+                                        <td>{{$income->business_volume}}</td>
                                         <td>
                                             @if($income->sponsor)
                                             {{$income->sponsor->distributor_tracking_id}}

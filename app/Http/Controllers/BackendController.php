@@ -46,7 +46,7 @@ class BackendController extends Controller
         $today_distributors = \App\Distributor::whereDate('activate_date', date('Y-m-d'))->count();
         $today_active_distributors = \App\Distributor::whereDate('activate_date', date('Y-m-d'))->whereNotNull('package_id')->count();
         $total_distributors = \App\Distributor::count();
-        $total_business = \App\Income::where('level', 'L1')->sum('amount');
+        $total_business = \App\Income::where('level', 'L1')->sum('business_volume');
 
         $total_repurchase = \App\Income::where('income_type', 2)->sum('sponsor_amount');
         $total_activies_business = \App\Income::where('income_type', 1)->sum('sponsor_amount');
@@ -58,6 +58,7 @@ class BackendController extends Controller
         return view('backend.dashboard', compact('packages', 'total_distributors', 'total_active_distributors', 'today_distributors', 'today_active_distributors', 'products', 'pening_kycs', 'total_business', 'total_repurchase', 'total_activies_business'));
 
     }
+
     public function get_all_distributor($distributor_id)
     {
         $abcd = null;
@@ -70,6 +71,7 @@ class BackendController extends Controller
         }
         return $abcd;
     }
+
     public function distributor_dashboard(Request $request)
     {
         $abcd = null;
@@ -93,10 +95,10 @@ class BackendController extends Controller
         $total_incomes = \App\Income::where('sponsor_id', \Auth::user()->distributor_id)->sum('sponsor_amount');
         $self_business1 = 0;
         $self_business2 = 0;
-        $self_business1 = \App\Income::where('sponsor_id', \Auth::user()->distributor_id)->whereIn('level', ['L1'])->sum('amount');
-        $self_business2 = \App\Income::where('sponsor_id', \Auth::user()->distributor_id)->whereIn('level', ['L0'])->sum('amount');
+        $self_business1 = \App\Income::where('sponsor_id', \Auth::user()->distributor_id)->whereIn('level', ['L1'])->sum('business_volume');
+        $self_business2 = \App\Income::where('sponsor_id', \Auth::user()->distributor_id)->whereIn('level', ['L0'])->sum('business_volume');
         $self_business = $self_business1 + $self_business2;
-        $total_busness = \App\Income::whereIn('sponsor_id', $array_data)->where('level', 'L1')->sum('amount');
+        $total_busness = \App\Income::whereIn('sponsor_id', $array_data)->where('level', 'L1')->sum('business_volume');
 
         return view('backend.distributor_dashboard', compact('my_direct', 'total_downline', 'site_route', 'total_incomes', 'wallet_incomes', 'distributor', 'total_busness', 'self_business'));
     }
@@ -112,6 +114,66 @@ class BackendController extends Controller
         }
 
         return view('backend.genealogy_tree', compact('distributor'));
+
+    }
+
+    public function payout(Request $request)
+    {
+        if (\Auth::user()->role == 1) {
+            $packages = \App\Package::all();
+            $distributors = \App\Distributor::all();
+            $domain_name = request()->getHost();
+            return view('backend.payout', compact('distributors', 'packages', 'domain_name'));
+        } else {
+            $distributors = \App\Distributor::where('sponsor_tracking_id', '=', \Auth::user()->distributor_tracking_id)->get();
+        }
+
+        return view('backend.payout', compact('distributors'));
+
+    }
+
+    public function payout_filter_data(Request $request)
+    {
+        $domain_name = request()->getHost();
+
+        if ($request->distributor_tracking_id) {
+            $distributors = \App\Distributor::where('distributor_tracking_id', $request->distributor_tracking_id)->get();
+        } else if ($request->distributor_name) {
+            $distributors = \App\Distributor::where('name', $request->distributor_name)->get();
+        } else if ($request->distributor_mobile) {
+            $distributors = \App\Distributor::where('mobile', $request->distributor_mobile)->get();
+        } else if ($request->sponsor_id) {
+            $distributors = \App\Distributor::where('sponsor_id', $request->sponsor_id)->get();
+        } else if ($request->package_id) {
+            if ($request->package_id == 'Null') {
+                $distributors = \App\Distributor::whereNull('package_id')->get();
+            } else {
+                $distributors = \App\Distributor::where('package_id', $request->package_id)->get();
+
+            }
+        } else if ($request->start_date && $request->end_date) {
+            $distributors = \App\Distributor::whereBetween('joining_date', [$request->start_date, $request->end_date])->get();
+
+        } else if ($request->kyc_id) {
+
+            if ($request->kyc_id == 5) {
+                $kycs = \App\Kyc::all();
+                $distributors = \App\Distributor::whereNotIn('id', $kycs->map(function ($kyc) {
+                    return $kyc->distributor_id;
+                }))->get();
+            } else {
+
+                $distributors = \App\Distributor::join('kycs as kyc', 'kyc.distributor_id', '=', 'distributors.id')
+                    ->where('kyc.status', '=', $request->kyc_id)
+                    ->select('distributors.*')
+                    ->with('kycs')
+                    ->get();
+            }
+
+        } else {
+            $distributors = \App\Distributor::all();
+        }
+        return view('backend.payout_filter_data', compact('distributors', 'domain_name'));
 
     }
 

@@ -348,7 +348,7 @@ class PackageController extends Controller
             $product_price = \App\ProductPrice::where('product_id', $package_product->product->id)->first();
             $order_product = \App\OrderProduct::create([
                 'product_id' => $product_price->product_id,
-                'mrp' => $order->id,
+                'mrp' => $product_price->mrp * $package_product->qty,
                 'distributor_price' => $product_price->distributor_price,
                 'business_volume' => $product_price->bussiness_volume,
                 'cgst_rate' => $product_price->gst / 2,
